@@ -5,25 +5,24 @@ import {
   StyleSheet,
   Image,
   TouchableWithoutFeedback,
-  Keyboard
-} from "react-native";
-import { colors } from "../assets/styles/colors";
-
-import {
-  Container,
-  Header,
-  Content,
-  Form,
-  Item,
-  Input,
-  Label
-} from "native-base";
-import {
+  Keyboard,
   TouchableOpacity,
   TouchableHighlight
-} from "react-native-gesture-handler";
+} from "react-native";
 
-const LoginScreen = () => {
+// ASSETS
+import { colors } from "../assets/styles/colors";
+import SezinLogo from "../assets/images/sezin-logo.png";
+import DigriseLogo from "../assets/images/digrise-logo.png";
+
+// NATIVE BASE
+import { Item, Input, Label } from "native-base";
+
+// CUSTOM COMPONENTS
+import SezinButton from "../components/SezinButton";
+import SezinInput from "../components/SezinInput";
+
+const LoginScreen = props => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -31,7 +30,7 @@ const LoginScreen = () => {
         <View style={{ height: 100 }} />
         <View>
           <Image
-            source={require("../assets/images/sezin-logo.png")}
+            source={SezinLogo}
             style={{ height: 90, width: 90, resizeMode: "contain" }}
           />
         </View>
@@ -41,20 +40,14 @@ const LoginScreen = () => {
         {/* FORM CONTAINER */}
         <View style={{ paddingTop: 40 }}>
           {/* EMAIL */}
-          <View>
-            <Item floatingLabel>
-              <Label style={styles.labelStyle}>Email</Label>
-              <Input autoCapitalize="none" style={styles.inputStyle} />
-            </Item>
-          </View>
+          <SezinInput label="Email" />
 
           {/* PASSWORD */}
-          <View style={{ marginTop: 10 }}>
-            <Item floatingLabel>
-              <Label style={styles.labelStyle}>Şifre</Label>
-              <Input secureTextEntry={true} style={styles.inputStyle} />
-            </Item>
-          </View>
+          <SezinInput
+            label="Şifre"
+            secureEntry={true}
+            containerStyle={{ marginTop: 10 }}
+          />
         </View>
 
         {/* INLINE BLOCK WORK-AROUND FOR RN */}
@@ -65,15 +58,10 @@ const LoginScreen = () => {
         </View>
 
         <View style={{ flex: 1, justifyContent: "space-evenly" }}>
-          <View style={styles.buttonContainer}>
-            <TouchableHighlight
-              onPress={() => console.log("berklmas")}
-              underlayColor={colors.darkBlue}
-              style={styles.loginButton}
-            >
-              <Text style={styles.buttonText}>Giriş Yap</Text>
-            </TouchableHighlight>
-          </View>
+          <SezinButton
+            onPress={() => props.navigation.navigate("Home")}
+            color={colors.blue}
+          />
 
           {/* BOTTOM TEXT */}
           <View
@@ -85,7 +73,7 @@ const LoginScreen = () => {
             <Text style={styles.footerTextTop}>Sorun mu yaşıyorsunuz?</Text>
             <TouchableOpacity>
               <Image
-                source={require("../assets/images/digrise-logo.png")}
+                source={DigriseLogo}
                 style={{
                   height: 50,
                   width: 50,
@@ -137,30 +125,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingVertical: 8,
     color: colors.dark
-  },
-  loginButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    backgroundColor: colors.blue,
-    borderRadius: 8
-  },
-  buttonContainer: {
-    shadowColor: colors.blue,
-    shadowOffset: {
-      width: 0,
-      height: 7
-    },
-    shadowOpacity: 0.43,
-    shadowRadius: 9.51,
-
-    elevation: 15
-  },
-  buttonText: {
-    color: "white",
-    fontFamily: "Airbnb-Book",
-    fontSize: 25
   },
   footerTextTop: {
     fontFamily: "Airbnb-Light",
