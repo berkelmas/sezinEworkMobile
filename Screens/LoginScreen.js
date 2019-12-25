@@ -61,6 +61,8 @@ const LoginScreen = props => {
           <SezinButton
             onPress={() => props.navigation.navigate("Home")}
             color={colors.blue}
+            overlayColor={colors.darkBlue}
+            text="Giriş Yap"
           />
 
           {/* BOTTOM TEXT */}

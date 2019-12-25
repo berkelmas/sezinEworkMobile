@@ -1,11 +1,18 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ViewPropTypes
+} from "react-native";
+import PropTypes from "prop-types";
 import IcomoonIcon from "./IcomoonIcon";
 import { colors } from "../assets/styles/colors";
 
 const SezinHeader = props => {
   return (
-    <View style={styles.header}>
+    <View style={{ ...styles.header, ...props.containerStyle }}>
       <TouchableOpacity
         style={{ alignSelf: "flex-start" }}
         onPress={props.onPressLeft}
@@ -21,10 +28,6 @@ const SezinHeader = props => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20
-  },
   header: {
     height: 100,
     width: "100%",
@@ -32,5 +35,13 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+
+SezinHeader.propTypes = {
+  onPressLeft: PropTypes.func,
+  leftIconName: PropTypes.string,
+  leftIconSize: PropTypes.number,
+  leftIconColor: PropTypes.string,
+  containerStyle: ViewPropTypes.style
+};
 
 export default SezinHeader;

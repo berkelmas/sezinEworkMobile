@@ -1,12 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, ViewPropTypes } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
 import { colors } from "../assets/styles/colors";
 
 const SezinTitle = props => {
   return (
-    <Text style={{ ...styles.mainStyle, ...props.styles }}>{props.text}</Text>
+    <Text style={{ ...styles.mainStyle, ...props.textStyle }}>
+      {props.text}
+    </Text>
   );
 };
 
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
 
 SezinTitle.propTypes = {
   text: PropTypes.string,
-  style: ViewPropTypes.style
+  textStyle: Text.propTypes.style
 };
 
 export default SezinTitle;

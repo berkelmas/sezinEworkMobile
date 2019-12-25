@@ -11,7 +11,11 @@ const SezinInput = props => {
     <View style={{ ...props.containerStyle }}>
       <Item floatingLabel>
         <Label style={styles.labelStyle}>{props.label}</Label>
-        <Input secureTextEntry={props.secureEntry} style={styles.inputStyle} />
+        <Input
+          multiline={props.multiline ? props.multiline : false}
+          secureTextEntry={props.secureEntry}
+          style={styles.inputStyle}
+        />
       </Item>
     </View>
   );
@@ -32,7 +36,8 @@ const styles = StyleSheet.create({
 SezinInput.propTypes = {
   containerStyle: ViewPropTypes.style,
   label: PropTypes.string,
-  secureEntry: PropTypes.bool
+  secureEntry: PropTypes.bool,
+  multiline: PropTypes.bool
 };
 
 export default SezinInput;

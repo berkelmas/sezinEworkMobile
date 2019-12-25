@@ -1,17 +1,31 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableHighlight,
+  ViewPropTypes
+} from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../assets/styles/colors";
 
 const SezinButton = props => {
   return (
-    <View style={{ ...styles.buttonContainer, shadowColor: props.color }}>
+    <View
+      style={{
+        ...styles.buttonContainer,
+        ...props.containerStyle,
+        shadowColor: props.color
+      }}
+    >
       <TouchableHighlight
         onPress={props.onPress}
-        underlayColor={colors.darkBlue}
+        underlayColor={props.overlayColor}
         style={{ ...styles.loginButton, backgroundColor: props.color }}
       >
-        <Text style={styles.buttonText}>Giriş Yap</Text>
+        <Text style={{ ...styles.buttonText, ...props.buttonTextStyle }}>
+          {props.text}
+        </Text>
       </TouchableHighlight>
     </View>
   );
@@ -44,7 +58,11 @@ const styles = StyleSheet.create({
 
 SezinButton.propTypes = {
   color: PropTypes.string,
-  onPress: PropTypes.func
+  onPress: PropTypes.func,
+  text: PropTypes.string,
+  overlayColor: PropTypes.string,
+  containerStyle: ViewPropTypes.style,
+  buttonTextStyle: Text.propTypes.style
 };
 
 export default SezinButton;
