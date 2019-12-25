@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { createIconSetFromIcoMoon } from "@expo/vector-icons";
 import icoMoonConfig from "../assets/icomoon-selection.json";
@@ -11,13 +11,21 @@ const CustomIcon = createIconSetFromIcoMoon(
 );
 
 const IcomoonIcon = props => {
-  return <CustomIcon name={props.name} size={props.size} color={props.color} />;
+  return (
+    <CustomIcon
+      name={props.name}
+      size={props.size}
+      color={props.color}
+      style={props.style}
+    />
+  );
 };
 
 IcomoonIcon.propTypes = {
   name: PropTypes.string,
   size: PropTypes.number,
-  color: PropTypes.string
+  color: PropTypes.string,
+  style: ViewPropTypes.style
 };
 
 export default IcomoonIcon;
