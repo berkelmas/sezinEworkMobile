@@ -71,7 +71,9 @@ const LoginScreen = props => {
             }}
           >
             <Text style={styles.footerTextTop}>Sorun mu yaşıyorsunuz?</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate("GetHelp")}
+            >
               <Image
                 source={DigriseLogo}
                 style={{
@@ -141,6 +143,10 @@ const styles = StyleSheet.create({
     fontFamily: "Airbnb-Book",
     color: colors.blue
   }
+});
+
+LoginScreen.navigationOptions = ({ navigation }) => ({
+  header: null
 });
 
 export default LoginScreen;

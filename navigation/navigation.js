@@ -1,11 +1,15 @@
 import React from "react";
-import { Text } from "react-native";
+
+// NAVIGATION
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
+import { createStackNavigator } from "react-navigation-stack";
+
 import { connect, useSelector } from "react-redux";
 import HomeScreen from "../Screens/HomeScreen";
 import SecondScreen from "../Screens/SecondScreen";
 import LoginScreen from "../Screens/LoginScreen";
+import GetHelpScreen from "../Screens/GetHelpScreen";
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home: {
@@ -32,17 +36,31 @@ const customAppContainer = props => {
     }
   });
 
-  const switchNavigator = createSwitchNavigator(
+  const BeforeLogin = createStackNavigator(
     {
       Login: {
         screen: LoginScreen
+      },
+      GetHelp: {
+        screen: GetHelpScreen
+      }
+    },
+    {
+      initialRouteName: "Login"
+    }
+  );
+
+  const switchNavigator = createSwitchNavigator(
+    {
+      BeforeLogin: {
+        screen: BeforeLogin
       },
       Dashboard: {
         screen: SecondCase
       }
     },
     {
-      initialRouteName: "Login"
+      initialRouteName: "BeforeLogin"
     }
   );
 

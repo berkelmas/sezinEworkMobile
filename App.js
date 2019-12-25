@@ -29,7 +29,8 @@ const App = () => {
       "Airbnb-Book": require("./assets/fonts/AirbnbCerealBook.ttf"),
       "Airbnb-Extra-Bold": require("./assets/fonts/AirbnbCerealExtraBold.ttf"),
       "Airbnb-Light": require("./assets/fonts/AirbnbCerealLight.ttf"),
-      "Airbnb-Medium": require("./assets/fonts/AirbnbCerealMedium.ttf")
+      "Airbnb-Medium": require("./assets/fonts/AirbnbCerealMedium.ttf"),
+      Icomoon: require("./assets/fonts/icomoon.ttf")
     }).then(() => setLoaded(true));
   }, []);
 
