@@ -21,8 +21,9 @@ const SezinMainScroll = props => {
       snapToInterval={265}
       decelerationRate="fast"
       contentContainerStyle={{
-        height: (Dimensions.get("window").height * 10) / 32,
-        paddingHorizontal: 20
+        height: (Dimensions.get("window").height * 11) / 32,
+        paddingHorizontal: 20,
+        paddingVertical: 10
       }}
     >
       {mainScrollData.map((item, index) => (
@@ -45,7 +46,7 @@ const SezinMainScroll = props => {
 
 const styles = StyleSheet.create({
   singleView: {
-    height: (Dimensions.get("window").height * 9) / 32,
+    height: (Dimensions.get("window").height * 10) / 32,
     width: 250,
     backgroundColor: "white",
     borderRadius: 10,
