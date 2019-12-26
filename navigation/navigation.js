@@ -15,6 +15,7 @@ import BusinessOrdersScreen from "../Screens/BusinessOrdersScreen";
 import SezinDrawer from "./CustomDrawer";
 import IcomoonIcon from "../components/IcomoonIcon";
 import { colors } from "../assets/styles/colors";
+import NewBusinessOrderScreen from "../Screens/NewBusinessOrderScreen";
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home: {
@@ -32,6 +33,9 @@ const customAppContainer = props => {
     {
       Home: {
         screen: HomeScreen
+      },
+      NewBusinessOrder: {
+        screen: NewBusinessOrderScreen
       },
       GetHelpAfterLoginScreen: {
         screen: GetHelpScreen

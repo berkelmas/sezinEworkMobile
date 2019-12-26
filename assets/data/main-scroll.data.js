@@ -9,6 +9,7 @@ export const mainScrollData = [
     id: "123",
     image: IsEmri,
     title: "İş Emri",
+    link: "NewBusinessOrder",
     content: "Buradan Yeni İş Emirleri Düzenleyebilirsiniz."
   },
   {

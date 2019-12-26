@@ -120,7 +120,7 @@ const BusinessOrdersScreen = props => {
             {topLoadingState && (
               <View
                 style={{
-                  height: 100,
+                  height: 300,
                   width: 100,
                   backgroundColor: "white",
                   alignSelf: "center",
@@ -128,7 +128,7 @@ const BusinessOrdersScreen = props => {
                   justifyContent: "center"
                 }}
               >
-                <MaterialIndicator color={colors.blue} size={50} />
+                <MaterialIndicator color={colors.blue} size={80} />
               </View>
             )}
           </View>
