@@ -113,7 +113,7 @@ const HomeScreen = props => {
 
       <SezinOrders onPress={item => openOrderModal(item)} />
       <SezinButton
-        onPress={() => console.log("berkelmas")}
+        onPress={() => props.navigation.navigate("BusinessOrders")}
         color={colors.green}
         overlayColor={colors.darkGreen}
         text="Tümünü Gör"

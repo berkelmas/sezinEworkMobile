@@ -29,12 +29,16 @@ const BusinessOrdersScreen = props => {
   React.useEffect(() => {
     if (assignedByMe) {
       setTopLoadingState(true);
+      // EMPTY LIST
+      setBusinessOrders([]);
       setTimeout(() => {
         setBusinessOrders(fakeBusinessOrdersDataByMe.slice(0, 4));
         setTopLoadingState(false);
       }, 1000);
     } else {
       setTopLoadingState(true);
+      // EMPTY LIST
+      setBusinessOrders([]);
       setTimeout(() => {
         setBusinessOrders(fakeBusinessOrdersDataOnMe.slice(0, 4));
         setTopLoadingState(false);
