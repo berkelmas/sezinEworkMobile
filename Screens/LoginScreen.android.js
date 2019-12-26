@@ -1,154 +1,93 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TouchableOpacity,
-  TouchableHighlight
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 
-// ASSETS
-import { colors } from "../assets/styles/colors";
-import SezinLogo from "../assets/images/sezin-logo.png";
-import DigriseLogo from "../assets/images/digrise-logo.png";
-
-// NATIVE BASE
-import { Item, Input, Label } from "native-base";
+// REDUX
+import { connect, useSelector } from "react-redux";
 
 // CUSTOM COMPONENTS
+import SezinHeader from "../components/SezinHeader";
+import SezinTitle from "../components/SezinTitle";
+import SezinMainScroll from "../components/SezinMainScroll";
+import SezinDescription from "../components/SezinDescription";
+import SezinNotifications from "../components/SezinNotifications";
 import SezinButton from "../components/SezinButton";
-import SezinInput from "../components/SezinInput";
+import SezinOrders from "../components/SezinOrders";
+import { colors } from "../assets/styles/colors";
 
-const LoginScreen = props => {
+const HomeScreen = props => {
+  const username = useSelector(state => state.AuthReducer.username);
+
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        {/* TOP LOGO AND TEXT */}
-        <View style={{ height: 100 }} />
-        <View>
-          <Image
-            source={SezinLogo}
-            style={{ height: 90, width: 90, resizeMode: "contain" }}
-          />
-        </View>
-        <Text style={styles.headerTextBig}>Merhaba</Text>
-        <Text style={styles.headerTextSmall}>E-Work'e Giriş Yapın</Text>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.container}
+    >
+      {/* HEADER PART */}
+      <SezinHeader
+        onPressLeft={() => props.navigation.toggleDrawer()}
+        leftIconName="bars"
+        containerStyle={{ marginHorizontal: 20, paddingTop: 20 }}
+      />
 
-        {/* FORM CONTAINER */}
-        <View style={{ paddingTop: 40 }}>
-          {/* EMAIL */}
-          <SezinInput label="Email" />
+      {/* FIRST TITLE PART */}
+      <SezinTitle
+        text="Merhaba Sana Nasıl Yardım Edebilirim, Berk?"
+        textStyle={{ fontSize: 30, paddingHorizontal: 20, paddingBottom: 13 }}
+      />
 
-          {/* PASSWORD */}
-          <SezinInput
-            label="Şifre"
-            secureEntry={true}
-            containerStyle={{ marginTop: 10 }}
-          />
-        </View>
+      {/* MAIN SCROLL PART */}
+      <SezinMainScroll />
 
-        {/* INLINE BLOCK WORK-AROUND FOR RN */}
-        <View style={{ alignItems: "flex-end" }}>
-          <TouchableOpacity>
-            <Text style={styles.forgotPassword}>Şifremi Unuttum?</Text>
-          </TouchableOpacity>
-        </View>
+      {/* DUYURULAR PART */}
+      <SezinTitle
+        text="Son Duyurular"
+        textStyle={{ fontSize: 30, paddingHorizontal: 20, paddingBottom: 2 }}
+      />
+      <SezinDescription
+        containerStyle={{ paddingHorizontal: 20 }}
+        text="Şirket içi son bildirimlere buradan ulaşabilirsiniz. Tüm bildirimler için aşağıdaki butona tıklayabilirsiniz."
+      />
 
-        <View style={{ flex: 1, justifyContent: "space-evenly" }}>
-          <SezinButton
-            onPress={() => props.navigation.navigate("Home")}
-            color={colors.blue}
-            overlayColor={colors.darkBlue}
-            text="Giriş Yap"
-          />
+      <SezinNotifications />
 
-          {/* BOTTOM TEXT */}
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Text style={styles.footerTextTop}>Sorun mu yaşıyorsunuz?</Text>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate("GetHelp")}
-            >
-              <Image
-                source={DigriseLogo}
-                style={{
-                  height: 50,
-                  width: 50,
-                  resizeMode: "contain",
-                  paddingVertical: 55
-                }}
-              />
-            </TouchableOpacity>
-            <Text style={styles.footerTextBottom}>
-              Yukarıdaki linke tıklayarak
-              {"\n"}
-              <Text style={styles.footerTextBottomBlue}>Sistem Yöneticisi</Text>
-              'ne ulaşabilirsiniz.
-            </Text>
-          </View>
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
+      <SezinButton
+        onPress={() => console.log("Berkelmas")}
+        containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}
+        buttonTextStyle={{ fontSize: 22 }}
+        color={colors.green}
+        overlayColor={colors.darkGreen}
+        text="Tümünü Gör"
+      />
+
+      <SezinTitle
+        text="Üzerimdeki Görevler"
+        textStyle={{ paddingHorizontal: 20, paddingBottom: 2, marginTop: 20 }}
+      />
+      <SezinDescription
+        containerStyle={{ paddingHorizontal: 20 }}
+        text="Buradan üzerinize atanmış son görevlerinize erişebilirsiniz."
+      />
+
+      <SezinOrders />
+      <SezinButton
+        onPress={() => console.log("Berkelmas")}
+        color={colors.green}
+        overlayColor={colors.darkGreen}
+        text="Tümünü Gör"
+        containerStyle={{ paddingHorizontal: 20, marginTop: 20 }}
+      />
+
+      <View style={{ height: 50 }} />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20
-  },
-  headerTextBig: {
-    fontFamily: "Airbnb-Book",
-    fontSize: 35,
-    color: colors.dark,
-    paddingTop: 10
-  },
-  headerTextSmall: {
-    fontFamily: "Airbnb-Book",
-    fontSize: 25,
-    color: colors.gray
-  },
-  labelStyle: {
-    fontFamily: "Airbnb-Book",
-    fontSize: 17,
-    color: colors.dark
-  },
-  inputStyle: {
-    fontFamily: "Airbnb-Light",
-    color: colors.dark
-  },
-  forgotPassword: {
-    fontFamily: "Airbnb-Light",
-    fontSize: 14,
-    paddingVertical: 8,
-    color: colors.dark
-  },
-  footerTextTop: {
-    fontFamily: "Airbnb-Light",
-    fontSize: 15,
-    color: colors.dark
-  },
-  footerTextBottom: {
-    textAlign: "center",
-    fontFamily: "Airbnb-Light",
-    fontSize: 13,
-    color: colors.dark
-  },
-  footerTextBottomBlue: {
-    fontFamily: "Airbnb-Book",
-    color: colors.blue
-  }
+  container: {}
 });
 
-LoginScreen.navigationOptions = ({ navigation }) => ({
-  header: null
+const mapStateToProps = state => ({
+  username: state.AuthReducer.username
 });
 
-export default LoginScreen;
+export default connect(mapStateToProps)(HomeScreen);

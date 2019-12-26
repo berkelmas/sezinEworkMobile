@@ -7,11 +7,15 @@ import IcomoonIcon from "./IcomoonIcon";
 // FAKE DATA
 import { notifications } from "../assets/data/notifications.data";
 
-const SezinNotifications = () => {
+const SezinAnnouncements = props => {
   return (
     <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
       {notifications.map((res, index) => (
-        <TouchableOpacity key={res.id} style={styles.itemContainer}>
+        <TouchableOpacity
+          onPress={props.onPress.bind(this, res)}
+          key={res.id}
+          style={styles.itemContainer}
+        >
           <View>
             <Text style={styles.dateText}>{res.date}</Text>
             <Text style={styles.titleText}>{res.title}</Text>
@@ -45,4 +49,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SezinNotifications;
+SezinAnnouncements.propTypes = {
+  onPress: PropTypes.func
+};
+
+export default SezinAnnouncements;
