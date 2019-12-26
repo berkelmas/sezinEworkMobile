@@ -5,24 +5,27 @@ import { colors } from "../assets/styles/colors";
 import IcomoonIcon from "./IcomoonIcon";
 
 // FAKE DATA
-import { notifications } from "../assets/data/notifications.data";
+import { announcements } from "../assets/data/announcements.data";
 
 const SezinAnnouncements = props => {
   return (
     <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
-      {notifications.map((res, index) => (
-        <TouchableOpacity
-          onPress={props.onPress.bind(this, res)}
-          key={res.id}
-          style={styles.itemContainer}
-        >
-          <View>
-            <Text style={styles.dateText}>{res.date}</Text>
-            <Text style={styles.titleText}>{res.title}</Text>
-          </View>
-          <IcomoonIcon name="chevron-right" size={25} color={colors.gray} />
-        </TouchableOpacity>
-      ))}
+      {announcements.map(
+        (res, index) =>
+          index < 5 && (
+            <TouchableOpacity
+              onPress={props.onPress.bind(this, res)}
+              key={res.id}
+              style={styles.itemContainer}
+            >
+              <View>
+                <Text style={styles.dateText}>{res.date}</Text>
+                <Text style={styles.titleText}>{res.title}</Text>
+              </View>
+              <IcomoonIcon name="chevron-right" size={25} color={colors.gray} />
+            </TouchableOpacity>
+          )
+      )}
     </View>
   );
 };

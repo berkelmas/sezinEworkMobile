@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ViewPropTypes } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../assets/styles/colors";
 
 const SezinSingleAnnouncement = props => {
-  console.log(props);
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...props.contentContainerStyle }}>
       <Text style={styles.dateText}>{props.date}</Text>
       <Text style={styles.titleText}>{props.title}</Text>
       <Text style={styles.descriptionText}>{props.content}</Text>
@@ -46,5 +45,12 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 });
+
+SezinSingleAnnouncement.propTypes = {
+  date: PropTypes.string,
+  title: PropTypes.string,
+  content: PropTypes.string,
+  contentContainerStyle: ViewPropTypes.style
+};
 
 export default SezinSingleAnnouncement;

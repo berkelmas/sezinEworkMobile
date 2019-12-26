@@ -78,7 +78,7 @@ const HomeScreen = props => {
       {/* MAIN SCROLL PART */}
       <SezinMainScroll />
 
-      {/* DUYURULAR PART */}
+      {/* ANNOUNCEMENTS PART */}
       <SezinTitle
         text="Son Duyurular"
         textStyle={{ fontSize: 30, paddingHorizontal: 20, paddingBottom: 2 }}
@@ -91,7 +91,7 @@ const HomeScreen = props => {
       <SezinAnnouncements onPress={item => openAnnouncementModal(item)} />
 
       <SezinButton
-        onPress={() => console.log("Berkelmas")}
+        onPress={() => props.navigation.navigate("AllAnnouncements")}
         containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}
         buttonTextStyle={{ fontSize: 22 }}
         color={colors.green}

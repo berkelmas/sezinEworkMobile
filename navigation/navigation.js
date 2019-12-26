@@ -10,6 +10,7 @@ import HomeScreen from "../Screens/HomeScreen";
 import SecondScreen from "../Screens/SecondScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import GetHelpScreen from "../Screens/GetHelpScreen";
+import AllAnnouncementsScreen from "../Screens/AllAnnouncementsScreen";
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home: {
@@ -31,8 +32,8 @@ const customAppContainer = props => {
     Home: {
       screen: HomeScreen
     },
-    Second: {
-      screen: SecondScreen
+    AllAnnouncements: {
+      screen: AllAnnouncementsScreen
     }
   });
 
