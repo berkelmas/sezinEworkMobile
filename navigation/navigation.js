@@ -11,6 +11,10 @@ import SecondScreen from "../Screens/SecondScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import GetHelpScreen from "../Screens/GetHelpScreen";
 import AllAnnouncementsScreen from "../Screens/AllAnnouncementsScreen";
+import MyBusinessOrdersScreen from "../Screens/MyBusinessOrdersScreen";
+import SezinDrawer from "./CustomDrawer";
+import IcomoonIcon from "../components/IcomoonIcon";
+import { colors } from "../assets/styles/colors";
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home: {
@@ -28,14 +32,46 @@ const customAppContainer = props => {
       screen: HomeScreen
     }
   });
-  const SecondCase = createDrawerNavigator({
-    Home: {
-      screen: HomeScreen
+  const SecondCase = createDrawerNavigator(
+    {
+      Home: {
+        screen: HomeScreen,
+        navigationOptions: {
+          title: "Ana Sayfa",
+          drawerIcon: <IcomoonIcon name="home" size={30} color={colors.dark} />
+        }
+      },
+      AllAnnouncements: {
+        screen: AllAnnouncementsScreen,
+        navigationOptions: {
+          title: "Duyurular",
+          drawerIcon: (
+            <IcomoonIcon name="megaphone" size={30} color={colors.dark} />
+          )
+        }
+      },
+      MyBusinessOrders: {
+        screen: MyBusinessOrdersScreen
+      }
     },
-    AllAnnouncements: {
-      screen: AllAnnouncementsScreen
+    {
+      contentComponent: SezinDrawer,
+      contentOptions: {
+        inactiveTintColor: colors.dark,
+        activeTintColor: colors.dark,
+        activeBackgroundColor: "#F5F7F9",
+        labelStyle: {
+          fontSize: 18,
+          fontFamily: "Airbnb-Medium"
+        },
+        iconContainerStyle: {
+          height: 35,
+          width: 34,
+          opacity: 1
+        }
+      }
     }
-  });
+  );
 
   const BeforeLogin = createStackNavigator(
     {

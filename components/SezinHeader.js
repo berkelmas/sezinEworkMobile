@@ -3,6 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Animated,
   TouchableOpacity,
   ViewPropTypes
 } from "react-native";
@@ -12,7 +13,13 @@ import { colors } from "../assets/styles/colors";
 
 const SezinHeader = props => {
   return (
-    <View style={{ ...styles.header, ...props.containerStyle }}>
+    <Animated.View
+      style={{
+        ...styles.header,
+        ...props.containerStyle,
+        height: props.height ? props.height : 100
+      }}
+    >
       <TouchableOpacity
         style={{ alignSelf: "flex-start" }}
         onPress={props.onPressLeft}
@@ -23,13 +30,12 @@ const SezinHeader = props => {
           color={props.leftIconColor ? props.leftIconColor : colors.dark}
         />
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    height: 100,
     width: "100%",
     backgroundColor: "white",
     justifyContent: "center"
@@ -41,7 +47,8 @@ SezinHeader.propTypes = {
   leftIconName: PropTypes.string,
   leftIconSize: PropTypes.number,
   leftIconColor: PropTypes.string,
-  containerStyle: ViewPropTypes.style
+  containerStyle: ViewPropTypes.style,
+  height: PropTypes.instanceOf(Animated.Value)
 };
 
 export default SezinHeader;

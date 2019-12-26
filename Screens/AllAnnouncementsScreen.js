@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from "react";
-import { View, StyleSheet, FlatList, Animated } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import SezinHeader from "../components/SezinHeader";
 import SezinTitle from "../components/SezinTitle";
 import { colors } from "../assets/styles/colors";
@@ -40,13 +40,6 @@ const AllAnnouncementsScreen = props => {
 
   return (
     <View style={styles.container}>
-      {/* HEADER PART */}
-      <SezinHeader
-        onPressLeft={() => props.navigation.toggleDrawer()}
-        leftIconName="bars"
-        containerStyle={{ paddingTop: 30, paddingHorizontal: 20 }}
-      />
-
       <FlatList
         data={announcements}
         keyExtractor={(item, index) => String(index)}
@@ -64,7 +57,17 @@ const AllAnnouncementsScreen = props => {
         onEndReachedThreshold={0.2}
         onEndReached={() => _loadData()}
         ListHeaderComponent={() => (
-          <SezinTitle text="Duyurular" textStyle={{}} />
+          <View>
+            {/* HEADER PART */}
+            <SezinHeader
+              onPressLeft={() => props.navigation.toggleDrawer()}
+              leftIconName="bars"
+              containerStyle={{
+                paddingTop: 30
+              }}
+            />
+            <SezinTitle text="Duyurular" textStyle={{}} />
+          </View>
         )}
         ListFooterComponent={() => {
           if (loadingState) {
