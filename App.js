@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusBar } from "react-native";
 import * as Font from "expo-font";
 
 // REDUX
@@ -32,6 +33,7 @@ const App = () => {
       "Airbnb-Medium": require("./assets/fonts/AirbnbCerealMedium.ttf"),
       Icomoon: require("./assets/fonts/icomoon.ttf")
     }).then(() => setLoaded(true));
+    StatusBar.setHidden(true);
   }, []);
 
   return (

@@ -76,7 +76,9 @@ const HomeScreen = props => {
       />
 
       {/* MAIN SCROLL PART */}
-      <SezinMainScroll />
+      <SezinMainScroll
+        onPress={link => link && props.navigation.navigate(link)}
+      />
 
       {/* ANNOUNCEMENTS PART */}
       <SezinTitle
@@ -139,6 +141,10 @@ const HomeScreen = props => {
       <View style={{ height: 50 }} />
     </ScrollView>
   );
+};
+
+HomeScreen.navigationOptions = {
+  header: null
 };
 
 const styles = StyleSheet.create({});

@@ -1,10 +1,52 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ViewPropTypes } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ViewPropTypes,
+  TouchableOpacity
+} from "react-native";
 import PropTypes from "prop-types";
 import IsTakibi from "../assets/images/saha-takibi.jpg";
 import { colors } from "../assets/styles/colors";
 
 const SezinSingleBusinessOrder = props => {
+  const [statusColor, setStatusColor] = React.useState("white");
+  const [businessStatus, setBusinessStatus] = React.useState(props.status);
+
+  React.useEffect(() => {
+    switch (businessStatus) {
+      case "Tamamlandı":
+        setStatusColor(colors.green);
+        break;
+      case "Başlanmadı":
+        setStatusColor(colors.red);
+        break;
+      case "Yapılıyor":
+        setStatusColor(colors.blue);
+        break;
+      default:
+        break;
+    }
+  }, [businessStatus]);
+
+  const _changeStatus = () => {
+    switch (businessStatus) {
+      case "Tamamlandı":
+        setBusinessStatus("Başlanmadı");
+        break;
+      case "Başlanmadı":
+        setBusinessStatus("Yapılıyor");
+        break;
+      case "Yapılıyor":
+        setBusinessStatus("Tamamlandı");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
       <Image source={IsTakibi} style={styles.imageStyle} />
@@ -29,7 +71,9 @@ const SezinSingleBusinessOrder = props => {
             marginTop: 10
           }}
         >
-          <Text style={styles.bottomTexts}>Oluşturan:</Text>
+          <Text style={styles.bottomTexts}>
+            {props.assignedByMe ? "Verilen:" : "Oluşturan:"}
+          </Text>
           <Text style={styles.bottomRightTexts}>{props.createdBy}</Text>
         </View>
         <View
@@ -42,7 +86,8 @@ const SezinSingleBusinessOrder = props => {
           <Text style={styles.bottomTexts}>Bitiş Tarihi:</Text>
           <Text style={styles.bottomRightTexts}>{props.deadline}</Text>
         </View>
-        <View
+        <TouchableOpacity
+          onPress={_changeStatus.bind(this)}
           style={{
             alignItems: "center",
             flexDirection: "row",
@@ -50,8 +95,10 @@ const SezinSingleBusinessOrder = props => {
           }}
         >
           <Text style={styles.bottomTexts}>Durum:</Text>
-          <Text style={styles.bottomRightTexts}>{props.status}</Text>
-        </View>
+          <Text style={{ ...styles.bottomRightTexts, color: statusColor }}>
+            {businessStatus}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -98,7 +145,6 @@ const styles = StyleSheet.create({
     fontFamily: "Airbnb-Light"
   },
   bottomRightTexts: {
-    color: colors.green,
     fontSize: 20,
     fontFamily: "Airbnb-Light"
   }
@@ -111,7 +157,8 @@ SezinSingleBusinessOrder.propTypes = {
   description: PropTypes.string,
   createdBy: PropTypes.string,
   deadline: PropTypes.string,
-  status: PropTypes.string
+  status: PropTypes.string,
+  assignedByMe: PropTypes.bool
 };
 
 export default SezinSingleBusinessOrder;

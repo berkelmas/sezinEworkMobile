@@ -27,7 +27,7 @@ const LoginScreen = props => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         {/* TOP LOGO AND TEXT */}
-        <View style={{ height: 100 }} />
+        <View style={{ height: 30 }} />
         <View>
           <Image
             source={SezinLogo}

@@ -33,6 +33,7 @@ export const mainScrollData = [
     id: "443",
     image: Yardim,
     title: "Yardım",
+    link: "GetHelpAfterLoginScreen",
     content: "Buradan Uygulama İçi Sorunlarınız İçin Yardım Alabilirsiniz."
   }
 ];

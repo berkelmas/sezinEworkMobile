@@ -11,7 +11,7 @@ import SecondScreen from "../Screens/SecondScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import GetHelpScreen from "../Screens/GetHelpScreen";
 import AllAnnouncementsScreen from "../Screens/AllAnnouncementsScreen";
-import MyBusinessOrdersScreen from "../Screens/MyBusinessOrdersScreen";
+import BusinessOrdersScreen from "../Screens/BusinessOrdersScreen";
 import SezinDrawer from "./CustomDrawer";
 import IcomoonIcon from "../components/IcomoonIcon";
 import { colors } from "../assets/styles/colors";
@@ -27,15 +27,25 @@ const MyDrawerNavigator = createDrawerNavigator({
 
 const customAppContainer = props => {
   const username = useSelector(state => state.AuthReducer.username);
-  const FirstCase = createAppContainer({
-    Home: {
-      screen: HomeScreen
+
+  const HomeStack = createStackNavigator(
+    {
+      Home: {
+        screen: HomeScreen
+      },
+      GetHelpAfterLoginScreen: {
+        screen: GetHelpScreen
+      }
+    },
+    {
+      initialRouteName: "Home"
     }
-  });
+  );
+
   const SecondCase = createDrawerNavigator(
     {
       Home: {
-        screen: HomeScreen,
+        screen: HomeStack,
         navigationOptions: {
           title: "Ana Sayfa",
           drawerIcon: <IcomoonIcon name="home" size={30} color={colors.dark} />
@@ -50,8 +60,14 @@ const customAppContainer = props => {
           )
         }
       },
-      MyBusinessOrders: {
-        screen: MyBusinessOrdersScreen
+      BusinessOrders: {
+        screen: BusinessOrdersScreen,
+        navigationOptions: {
+          title: "İş Emirleri",
+          drawerIcon: (
+            <IcomoonIcon name="briefcase" size={30} color={colors.dark} />
+          )
+        }
       }
     },
     {

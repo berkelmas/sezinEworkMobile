@@ -27,7 +27,11 @@ const SezinMainScroll = props => {
       }}
     >
       {mainScrollData.map((item, index) => (
-        <TouchableOpacity key={item.id} style={styles.singleViewWrapper}>
+        <TouchableOpacity
+          onPress={props.onPress.bind(this, item.link)}
+          key={item.id}
+          style={styles.singleViewWrapper}
+        >
           <View style={styles.singleView}>
             <Image
               source={item.image}
