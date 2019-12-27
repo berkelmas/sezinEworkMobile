@@ -9,10 +9,12 @@ import {
 import SezinTitle from "../components/SezinTitle";
 import SezinHeader from "../components/SezinHeader";
 import SezinInput from "../components/SezinInput";
-import SezinButton from "../components/SezinButton";
+import SezinLoadingButton from "../components/SezinLoadingButton";
 import { colors } from "../assets/styles/colors";
 
 const GetHelpScreen = props => {
+  const [loadingState, setLoadingState] = React.useState(false);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -32,8 +34,17 @@ const GetHelpScreen = props => {
             multiline={true}
           />
         </View>
-        <SezinButton
-          onPress={() => console.log("GET CLOCKED")}
+        <SezinLoadingButton
+          onPress={() => {
+            setLoadingState(true);
+            setTimeout(() => {
+              setLoadingState(false);
+              props.navigation.navigate("Login", {
+                toastText: "Destek Talebiniz Başarı İle Gönderilmiştir."
+              });
+            }, 1000);
+          }}
+          loading={loadingState}
           color={colors.green}
           overlayColor={colors.darkGreen}
           text="Gönder"

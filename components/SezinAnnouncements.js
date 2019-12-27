@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  PixelRatio
+} from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../assets/styles/colors";
 import IcomoonIcon from "./IcomoonIcon";
@@ -43,12 +49,12 @@ const styles = StyleSheet.create({
   dateText: {
     color: colors.green,
     fontFamily: "Airbnb-Light",
-    fontSize: 12
+    fontSize: 12 / PixelRatio.getFontScale()
   },
   titleText: {
     color: colors.dark,
     fontFamily: "Airbnb-Light",
-    fontSize: 15
+    fontSize: 15 / PixelRatio.getFontScale()
   }
 });
 

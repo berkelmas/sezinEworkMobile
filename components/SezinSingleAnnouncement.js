@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, ViewPropTypes } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ViewPropTypes,
+  PixelRatio
+} from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../assets/styles/colors";
 
@@ -31,16 +37,16 @@ const styles = StyleSheet.create({
   dateText: {
     color: colors.green,
     fontFamily: "Airbnb-Book",
-    fontSize: 15
+    fontSize: 15 / PixelRatio.getFontScale()
   },
   titleText: {
     fontFamily: "Airbnb-Book",
-    fontSize: 21,
+    fontSize: 21 / PixelRatio.getFontScale(),
     color: colors.dark
   },
   descriptionText: {
     fontFamily: "Airbnb-Light",
-    fontSize: 15,
+    fontSize: 15 / PixelRatio.getFontScale(),
     color: colors.gray,
     marginTop: 10
   }

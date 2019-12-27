@@ -1,4 +1,5 @@
 import React from "react";
+import { PixelRatio } from "react-native";
 
 // NAVIGATION
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
@@ -81,7 +82,7 @@ const customAppContainer = props => {
         activeTintColor: colors.dark,
         activeBackgroundColor: "#F5F7F9",
         labelStyle: {
-          fontSize: 18,
+          fontSize: 18 / PixelRatio.getFontScale(),
           fontFamily: "Airbnb-Medium"
         },
         iconContainerStyle: {

@@ -5,7 +5,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Dimensions
+  PixelRatio
 } from "react-native";
 import PropTypes from "prop-types";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     marginTop: 30
   },
   textStyle: {
-    fontSize: 17,
+    fontSize: 17 / PixelRatio.getFontScale(),
     paddingLeft: 2,
     color: colors.dark,
     paddingBottom: 6,

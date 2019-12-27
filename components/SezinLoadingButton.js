@@ -5,7 +5,8 @@ import {
   Text,
   StyleSheet,
   ViewPropTypes,
-  TouchableHighlight
+  TouchableHighlight,
+  PixelRatio
 } from "react-native";
 import PropTypes from "prop-types";
 
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontFamily: "Airbnb-Book",
-    fontSize: 25
+    fontSize: 25 / PixelRatio.getFontScale()
   }
 });
 

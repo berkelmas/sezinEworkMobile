@@ -6,23 +6,37 @@ import {
   Image,
   TouchableWithoutFeedback,
   Keyboard,
-  TouchableOpacity,
-  TouchableHighlight
+  TouchableOpacity
 } from "react-native";
+import Toast from "react-native-easy-toast";
 
 // ASSETS
 import { colors } from "../assets/styles/colors";
 import SezinLogo from "../assets/images/sezin-logo.png";
 import DigriseLogo from "../assets/images/digrise-logo.png";
 
-// NATIVE BASE
-import { Item, Input, Label } from "native-base";
-
 // CUSTOM COMPONENTS
-import SezinButton from "../components/SezinButton";
+import SezinLoadingButton from "../components/SezinLoadingButton";
 import SezinInput from "../components/SezinInput";
 
 const LoginScreen = props => {
+  const [loadingState, setLoadingState] = React.useState(false);
+  const toast = React.useRef(null);
+  React.useEffect(() => {
+    const didBlurSubscription = props.navigation.addListener(
+      "didFocus",
+      payload => {
+        if (props.navigation.getParam("toastText", null)) {
+          toast.current.show(
+            props.navigation.getParam("toastText", null),
+            1000
+          );
+        }
+      }
+    );
+    return () => didBlurSubscription.remove();
+  }, [props.navigation.getParam("toastText", null)]);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -58,8 +72,15 @@ const LoginScreen = props => {
         </View>
 
         <View style={{ flex: 1, justifyContent: "space-evenly" }}>
-          <SezinButton
-            onPress={() => props.navigation.navigate("Home")}
+          <SezinLoadingButton
+            loading={loadingState}
+            onPress={() => {
+              setLoadingState(true);
+              setTimeout(() => {
+                setLoadingState(false);
+                props.navigation.navigate("Home");
+              }, 1000);
+            }}
             color={colors.blue}
             overlayColor={colors.darkBlue}
             text="Giriş Yap"
@@ -94,6 +115,14 @@ const LoginScreen = props => {
             </Text>
           </View>
         </View>
+        <Toast
+          position="top"
+          positionValue={50}
+          opacity={0.8}
+          textStyle={styles.toastText}
+          ref={toast}
+          style={styles.toastContainerStyle}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -144,6 +173,18 @@ const styles = StyleSheet.create({
   footerTextBottomBlue: {
     fontFamily: "Airbnb-Book",
     color: colors.blue
+  },
+  toastText: {
+    fontFamily: "Airbnb-Book",
+    color: "white",
+    fontSize: 16
+  },
+  toastContainerStyle: {
+    backgroundColor: colors.green,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

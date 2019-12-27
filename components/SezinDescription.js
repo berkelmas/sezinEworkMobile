@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, ViewPropTypes } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ViewPropTypes,
+  PixelRatio
+} from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../assets/styles/colors";
 
@@ -15,7 +21,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Airbnb-Light",
     color: colors.gray,
-    fontSize: 16
+    fontSize: 16 / PixelRatio.getFontScale()
   }
 });
 

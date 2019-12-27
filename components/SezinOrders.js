@@ -6,7 +6,8 @@ import {
   ViewPropTypes,
   Dimensions,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  PixelRatio
 } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../assets/styles/colors";
@@ -82,17 +83,17 @@ const styles = StyleSheet.create({
   },
   placeStyle: {
     color: colors.green,
-    fontSize: 15,
+    fontSize: 15 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Light"
   },
   titleStyle: {
     color: colors.dark,
-    fontSize: 16,
+    fontSize: 16 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Light"
   },
   dateStyle: {
     color: colors.gray,
-    fontSize: 12,
+    fontSize: 12 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Light"
   }
 });

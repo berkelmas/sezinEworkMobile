@@ -1,10 +1,17 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  PixelRatio
+} from "react-native";
+import Modal from "react-native-modal";
+import Toast from "react-native-easy-toast";
 
 // REDUX
 import { connect, useSelector } from "react-redux";
-
-import Modal from "react-native-modal";
 
 // CUSTOM COMPONENTS
 import SezinHeader from "../components/SezinHeader";
@@ -20,6 +27,8 @@ import SezinSingleAnnouncement from "../components/SezinSingleAnnouncement";
 
 const HomeScreen = props => {
   const username = useSelector(state => state.AuthReducer.username);
+
+  const toast = React.useRef(null);
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
   const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
     false
@@ -57,6 +66,21 @@ const HomeScreen = props => {
     }));
   };
 
+  React.useEffect(() => {
+    const didBlurSubscription = props.navigation.addListener(
+      "didFocus",
+      payload => {
+        if (props.navigation.getParam("toastText", null)) {
+          toast.current.show(
+            props.navigation.getParam("toastText", null),
+            1000
+          );
+        }
+      }
+    );
+    return () => didBlurSubscription.remove();
+  }, [props.navigation.getParam("toastText", null)]);
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -72,16 +96,27 @@ const HomeScreen = props => {
       {/* FIRST TITLE PART */}
       <SezinTitle
         text="Merhaba Sana Nasıl Yardım Edebilirim, Berk?"
-        textStyle={{ fontSize: 30, paddingHorizontal: 20, paddingBottom: 13 }}
+        textStyle={{
+          fontSize: 28 / PixelRatio.getFontScale(),
+          paddingHorizontal: 20,
+          paddingBottom: 13
+        }}
       />
 
       {/* MAIN SCROLL PART */}
-      <SezinMainScroll />
+      <SezinMainScroll
+        onPress={link => link && props.navigation.navigate(link)}
+      />
 
       {/* ANNOUNCEMENTS PART */}
       <SezinTitle
         text="Son Duyurular"
-        textStyle={{ fontSize: 30, paddingHorizontal: 20, paddingBottom: 2 }}
+        textStyle={{
+          fontSize: 30 / PixelRatio.getFontScale(),
+          marginTop: 15,
+          paddingHorizontal: 20,
+          paddingBottom: 2
+        }}
       />
       <SezinDescription
         containerStyle={{ paddingHorizontal: 20 }}
@@ -93,7 +128,6 @@ const HomeScreen = props => {
       <SezinButton
         onPress={() => props.navigation.navigate("AllAnnouncements")}
         containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}
-        buttonTextStyle={{ fontSize: 22 }}
         color={colors.green}
         overlayColor={colors.darkGreen}
         text="Tümünü Gör"
@@ -111,7 +145,7 @@ const HomeScreen = props => {
 
       <SezinOrders onPress={item => openOrderModal(item)} />
       <SezinButton
-        onPress={() => console.log("berkelmas")}
+        onPress={() => props.navigation.navigate("BusinessOrders")}
         color={colors.green}
         overlayColor={colors.darkGreen}
         text="Tümünü Gör"
@@ -136,12 +170,38 @@ const HomeScreen = props => {
         <SezinSingleAnnouncement {...selectedAnnouncement} />
       </Modal>
 
+      <Toast
+        position="top"
+        positionValue={50}
+        opacity={0.8}
+        textStyle={styles.toastText}
+        ref={toast}
+        style={styles.toastContainerStyle}
+      />
+
       <View style={{ height: 50 }} />
     </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({});
+HomeScreen.navigationOptions = {
+  header: null
+};
+
+const styles = StyleSheet.create({
+  toastText: {
+    fontFamily: "Airbnb-Book",
+    color: "white",
+    fontSize: 16 / PixelRatio.getFontScale()
+  },
+  toastContainerStyle: {
+    backgroundColor: colors.green,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 
 const mapStateToProps = state => ({
   username: state.AuthReducer.username

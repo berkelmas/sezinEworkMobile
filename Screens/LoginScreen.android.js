@@ -7,22 +7,37 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-  TouchableHighlight
+  PixelRatio
 } from "react-native";
+import Toast from "react-native-easy-toast";
 
 // ASSETS
 import { colors } from "../assets/styles/colors";
 import SezinLogo from "../assets/images/sezin-logo.png";
 import DigriseLogo from "../assets/images/digrise-logo.png";
 
-// NATIVE BASE
-import { Item, Input, Label } from "native-base";
-
 // CUSTOM COMPONENTS
-import SezinButton from "../components/SezinButton";
+import SezinLoadingButton from "../components/SezinLoadingButton";
 import SezinInput from "../components/SezinInput";
 
 const LoginScreen = props => {
+  const [loadingState, setLoadingState] = React.useState(false);
+  const toast = React.useRef(null);
+  React.useEffect(() => {
+    const didBlurSubscription = props.navigation.addListener(
+      "didFocus",
+      payload => {
+        if (props.navigation.getParam("toastText", null)) {
+          toast.current.show(
+            props.navigation.getParam("toastText", null),
+            1000
+          );
+        }
+      }
+    );
+    return () => didBlurSubscription.remove();
+  }, [props.navigation.getParam("toastText", null)]);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -58,8 +73,15 @@ const LoginScreen = props => {
         </View>
 
         <View style={{ flex: 1, justifyContent: "space-evenly" }}>
-          <SezinButton
-            onPress={() => props.navigation.navigate("Home")}
+          <SezinLoadingButton
+            loading={loadingState}
+            onPress={() => {
+              setLoadingState(true);
+              setTimeout(() => {
+                setLoadingState(false);
+                props.navigation.navigate("Home");
+              }, 1000);
+            }}
             color={colors.blue}
             overlayColor={colors.darkBlue}
             text="Giriş Yap"
@@ -94,6 +116,14 @@ const LoginScreen = props => {
             </Text>
           </View>
         </View>
+        <Toast
+          position="top"
+          positionValue={50}
+          opacity={0.8}
+          textStyle={styles.toastText}
+          ref={toast}
+          style={styles.toastContainerStyle}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -106,18 +136,18 @@ const styles = StyleSheet.create({
   },
   headerTextBig: {
     fontFamily: "Airbnb-Book",
-    fontSize: 35,
+    fontSize: 35 / PixelRatio.getFontScale(),
     color: colors.dark,
     paddingTop: 10
   },
   headerTextSmall: {
     fontFamily: "Airbnb-Book",
-    fontSize: 25,
+    fontSize: 25 / PixelRatio.getFontScale(),
     color: colors.gray
   },
   labelStyle: {
     fontFamily: "Airbnb-Book",
-    fontSize: 17,
+    fontSize: 17 / PixelRatio.getFontScale(),
     color: colors.dark
   },
   inputStyle: {
@@ -126,24 +156,36 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     fontFamily: "Airbnb-Light",
-    fontSize: 14,
+    fontSize: 14 / PixelRatio.getFontScale(),
     paddingVertical: 8,
     color: colors.dark
   },
   footerTextTop: {
     fontFamily: "Airbnb-Light",
-    fontSize: 15,
+    fontSize: 15 / PixelRatio.getFontScale(),
     color: colors.dark
   },
   footerTextBottom: {
     textAlign: "center",
     fontFamily: "Airbnb-Light",
-    fontSize: 13,
+    fontSize: 13 / PixelRatio.getFontScale(),
     color: colors.dark
   },
   footerTextBottomBlue: {
     fontFamily: "Airbnb-Book",
     color: colors.blue
+  },
+  toastText: {
+    fontFamily: "Airbnb-Book",
+    color: "white",
+    fontSize: 16 / PixelRatio.getFontScale()
+  },
+  toastContainerStyle: {
+    backgroundColor: colors.green,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import Modal from "react-native-modal";
-import Toast, { DURATION } from "react-native-easy-toast";
+import Toast from "react-native-easy-toast";
 
 // REDUX
 import { connect, useSelector } from "react-redux";
@@ -63,11 +63,13 @@ const HomeScreen = props => {
     const didBlurSubscription = props.navigation.addListener(
       "didFocus",
       payload => {
+        console.log(props.navigation.getParam("toastText", null));
         if (props.navigation.getParam("toastText", null)) {
           toast.current.show(
             props.navigation.getParam("toastText", null),
             1000
           );
+          props.navigation.setParams({ toastText: null });
         }
       }
     );
@@ -161,7 +163,10 @@ const HomeScreen = props => {
         opacity={0.8}
         textStyle={styles.toastText}
         ref={toast}
-        style={styles.toastContainerStyle}
+        style={{
+          ...styles.toastContainerStyle,
+          backgroundColor: props.navigation.getParam("toastColor", null)
+        }}
       />
 
       <View style={{ height: 50 }} />
@@ -180,7 +185,6 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   toastContainerStyle: {
-    backgroundColor: colors.green,
     paddingHorizontal: 15,
     paddingVertical: 10,
     justifyContent: "center",

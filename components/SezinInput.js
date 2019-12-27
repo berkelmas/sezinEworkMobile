@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ViewPropTypes } from "react-native";
+import { View, StyleSheet, ViewPropTypes, PixelRatio } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../assets/styles/colors";
 
@@ -24,7 +24,7 @@ const SezinInput = props => {
 const styles = StyleSheet.create({
   labelStyle: {
     fontFamily: "Airbnb-Book",
-    fontSize: 17,
+    fontSize: 17 / PixelRatio.getFontScale(),
     color: colors.dark
   },
   inputStyle: {

@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Image,
   ViewPropTypes,
-  TouchableOpacity
+  TouchableOpacity,
+  PixelRatio
 } from "react-native";
 import PropTypes from "prop-types";
 import IsTakibi from "../assets/images/saha-takibi.jpg";
@@ -126,26 +127,26 @@ const styles = StyleSheet.create({
   },
   placeText: {
     color: colors.green,
-    fontSize: 15,
+    fontSize: 15 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Book"
   },
   titleText: {
     color: colors.dark,
-    fontSize: 21,
+    fontSize: 21 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Book"
   },
   descriptionText: {
     color: colors.gray,
-    fontSize: 15,
+    fontSize: 15 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Light"
   },
   bottomTexts: {
     color: colors.dark,
-    fontSize: 15,
+    fontSize: 15 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Light"
   },
   bottomRightTexts: {
-    fontSize: 20,
+    fontSize: 20 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Light"
   }
 });

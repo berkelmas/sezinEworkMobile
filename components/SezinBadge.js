@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ViewPropTypes,
-  Dimensions
+  PixelRatio
 } from "react-native";
 import PropTypes from "prop-types";
 
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: "Airbnb-Book",
-    fontSize: 18
+    fontSize: 18 / PixelRatio.getFontScale()
   }
 });
 
