@@ -70,11 +70,13 @@ const HomeScreen = props => {
     const didBlurSubscription = props.navigation.addListener(
       "didFocus",
       payload => {
+        console.log(props.navigation.getParam("toastText", null));
         if (props.navigation.getParam("toastText", null)) {
           toast.current.show(
             props.navigation.getParam("toastText", null),
             1000
           );
+          props.navigation.setParams({ toastText: null });
         }
       }
     );
