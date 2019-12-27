@@ -1,10 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import Modal from "react-native-modal";
+import Toast, { DURATION } from "react-native-easy-toast";
 
 // REDUX
 import { connect, useSelector } from "react-redux";
-
-import Modal from "react-native-modal";
 
 // CUSTOM COMPONENTS
 import SezinHeader from "../components/SezinHeader";
@@ -20,6 +20,8 @@ import SezinSingleAnnouncement from "../components/SezinSingleAnnouncement";
 
 const HomeScreen = props => {
   const username = useSelector(state => state.AuthReducer.username);
+
+  const toast = React.useRef(null);
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
   const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
     false
@@ -56,6 +58,21 @@ const HomeScreen = props => {
       content: item.content
     }));
   };
+
+  React.useEffect(() => {
+    const didBlurSubscription = props.navigation.addListener(
+      "didFocus",
+      payload => {
+        if (props.navigation.getParam("toastText", null)) {
+          toast.current.show(
+            props.navigation.getParam("toastText", null),
+            1000
+          );
+        }
+      }
+    );
+    return () => didBlurSubscription.remove();
+  }, [props.navigation.getParam("toastText", null)]);
 
   return (
     <ScrollView
@@ -138,6 +155,15 @@ const HomeScreen = props => {
         <SezinSingleAnnouncement {...selectedAnnouncement} />
       </Modal>
 
+      <Toast
+        position="top"
+        positionValue={50}
+        opacity={0.8}
+        textStyle={styles.toastText}
+        ref={toast}
+        style={styles.toastContainerStyle}
+      />
+
       <View style={{ height: 50 }} />
     </ScrollView>
   );
@@ -147,7 +173,20 @@ HomeScreen.navigationOptions = {
   header: null
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  toastText: {
+    fontFamily: "Airbnb-Book",
+    color: "white",
+    fontSize: 16
+  },
+  toastContainerStyle: {
+    backgroundColor: colors.green,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 
 const mapStateToProps = state => ({
   username: state.AuthReducer.username

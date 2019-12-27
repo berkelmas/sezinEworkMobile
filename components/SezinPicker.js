@@ -21,10 +21,6 @@ const SezinPicker = props => {
     label: props.placeholderText
   });
 
-  React.useEffect(() => {
-    console.log(selectedItem);
-  }, [selectedItem]);
-
   return (
     <View style={styles.container}>
       <TouchableOpacity

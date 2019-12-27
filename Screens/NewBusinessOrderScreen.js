@@ -7,14 +7,18 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from "react-native";
+import { colors } from "../assets/styles/colors";
 import SezinHeader from "../components/SezinHeader";
 import SezinTitle from "../components/SezinTitle";
 import SezinInput from "../components/SezinInput";
 import SezinPicker from "../components/SezinPicker";
 import SezinDatePicker from "../components/SezinDatePicker";
+import SezinLoadingButton from "../components/SezinLoadingButton";
 
 // create a component
 const NewBusinessOrderScreen = props => {
+  const [loadingState, setLoadingState] = React.useState(false);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -60,7 +64,25 @@ const NewBusinessOrderScreen = props => {
           ]}
         />
 
-        <SezinDatePicker />
+        <SezinDatePicker placeholderText="Bitiş Tarihi" />
+
+        <SezinLoadingButton
+          color={colors.blue}
+          overlayColor={colors.darkBlue}
+          text="Kaydet"
+          containerStyle={{ marginTop: 50 }}
+          onPress={() => {
+            setLoadingState(true);
+            setTimeout(() => {
+              setLoadingState(false);
+              props.navigation.navigate("Home", {
+                toastColor: colors.green,
+                toastText: "İş Emri Başarı İle Kaydedildi."
+              });
+            }, 1500);
+          }}
+          loading={loadingState}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
