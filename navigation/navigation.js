@@ -82,8 +82,9 @@ const customAppContainer = props => {
         activeTintColor: colors.dark,
         activeBackgroundColor: "#F5F7F9",
         labelStyle: {
+          fontFamily: "Airbnb-Medium",
           fontSize: 18 / PixelRatio.getFontScale(),
-          fontFamily: "Airbnb-Medium"
+          color: colors.dark
         },
         iconContainerStyle: {
           height: 35,

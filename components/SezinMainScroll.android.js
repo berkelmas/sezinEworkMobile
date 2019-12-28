@@ -33,17 +33,15 @@ const SezinMainScroll = props => {
     >
       {mainScrollData.map((item, index) => (
         <TouchableNativeFeedback
-          onPress={props.onPress.bind(this, item.link)}
           key={item.id}
+          onPress={props.onPress.bind(this, item.link)}
         >
           <View style={styles.singleView}>
             <Image
               source={item.image}
               style={{
                 height: "70%",
-                width: "100%",
-                borderTopRightRadius: 10,
-                borderTopLeftRadius: 10
+                width: "100%"
               }}
             />
             <View style={styles.contentWrapper}>
@@ -61,7 +59,6 @@ const styles = StyleSheet.create({
   singleView: {
     width: 250,
     backgroundColor: "white",
-    borderRadius: 10,
     elevation: 4,
     marginRight: 25
   },
