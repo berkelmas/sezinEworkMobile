@@ -21,6 +21,8 @@ const store = createStore(
 
 import MyApp from "./navigation/navigation";
 
+import { LocaleConfig } from "react-native-calendars";
+
 const App = () => {
   const [loaded, setLoaded] = React.useState(false);
   React.useEffect(() => {
@@ -35,6 +37,52 @@ const App = () => {
     }).then(() => setLoaded(true));
     StatusBar.setHidden(true);
   }, []);
+
+  {
+    /* REACT NATIVE CALENDAR LOCALIZATION */
+  }
+  LocaleConfig.locales["tr"] = {
+    monthNames: [
+      "Ocak",
+      "Şubat",
+      "Mart",
+      "Nisan",
+      "Mayıs",
+      "Haziran",
+      "Temmuz",
+      "Ağustos",
+      "Eylül",
+      "Ekim",
+      "Kasım",
+      "Aralık"
+    ],
+    monthNamesShort: [
+      "Ock.",
+      "Şbt.",
+      "Mrt.",
+      "Nisn ",
+      "Mys.",
+      "Hzr.",
+      "Tem.",
+      "Auğ.",
+      "Eyl.",
+      "Ekm.",
+      "Ksm.",
+      "Arlk."
+    ],
+    dayNames: [
+      "Pazar",
+      "Pazartesi",
+      "Salı",
+      "Çarşamba",
+      "Perşembe",
+      "Cuma",
+      "Cumartesi"
+    ],
+    dayNamesShort: ["Paz.", "Pzt.", "Sal.", "Çrs.", "Prş.", "Cum.", "Cmt."],
+    today: "Bugün"
+  };
+  LocaleConfig.defaultLocale = "tr";
 
   return (
     loaded && (

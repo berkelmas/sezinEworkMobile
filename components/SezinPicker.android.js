@@ -5,9 +5,11 @@ import {
   StyleSheet,
   ViewPropTypes,
   Picker,
-  TouchableOpacity,
   Text,
-  PixelRatio
+  PixelRatio,
+  ScrollView,
+  TouchableNativeFeedback,
+  TouchableOpacity
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import PropTypes, { instanceOf } from "prop-types";
@@ -52,6 +54,7 @@ const SezinPicker = props => {
         />
       </TouchableOpacity>
       <RBSheet ref={bottomSheet}>
+        {/* 
         <Picker
           selectedValue={selectedItem ? selectedItem.value : null}
           style={{ height: 50, width: "100%" }}
@@ -66,6 +69,41 @@ const SezinPicker = props => {
             <Picker.Item key={index} label={res.label} value={res.value} />
           ))}
         </Picker>
+      */}
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {items.map((res, index) => (
+            <TouchableNativeFeedback
+              onPress={() => {
+                setSelectedItem({
+                  value: res.value,
+                  label: res.label
+                });
+                bottomSheet.current.close();
+              }}
+              background={TouchableNativeFeedback.Ripple(colors.lightGray)}
+              key={index}
+              style={{
+                width: "100%",
+                marginTop: 10
+              }}
+            >
+              {/* CONTAINER FOR TOUCHABLE NATIVE FEEDBACK */}
+              <View>
+                <Text
+                  style={{
+                    paddingVertical: 20,
+                    paddingHorizontal: 15,
+                    fontFamily: index === 0 ? "Airbnb-Medium" : "Airbnb-Book",
+                    fontSize: 18,
+                    color: colors.dark
+                  }}
+                >
+                  {res.label}
+                </Text>
+              </View>
+            </TouchableNativeFeedback>
+          ))}
+        </ScrollView>
       </RBSheet>
     </View>
   );

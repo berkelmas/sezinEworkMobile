@@ -7,7 +7,8 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  PixelRatio
+  PixelRatio,
+  TouchableNativeFeedback
 } from "react-native";
 import IsEmri from "../assets/images/is-emri.jpg";
 import { colors } from "../assets/styles/colors";
@@ -31,25 +32,26 @@ const SezinMainScroll = props => {
       }}
     >
       {mainScrollData.map((item, index) => (
-        <TouchableOpacity
+        <TouchableNativeFeedback
           onPress={props.onPress.bind(this, item.link)}
           key={item.id}
-          style={styles.singleView}
         >
-          <Image
-            source={item.image}
-            style={{
-              height: "70%",
-              width: "100%",
-              borderTopRightRadius: 10,
-              borderTopLeftRadius: 10
-            }}
-          />
-          <View style={styles.contentWrapper}>
-            <Text style={styles.contentHeader}>{item.title}</Text>
-            <Text style={styles.contentDescription}>{item.content}</Text>
+          <View style={styles.singleView}>
+            <Image
+              source={item.image}
+              style={{
+                height: "70%",
+                width: "100%",
+                borderTopRightRadius: 10,
+                borderTopLeftRadius: 10
+              }}
+            />
+            <View style={styles.contentWrapper}>
+              <Text style={styles.contentHeader}>{item.title}</Text>
+              <Text style={styles.contentDescription}>{item.content}</Text>
+            </View>
           </View>
-        </TouchableOpacity>
+        </TouchableNativeFeedback>
       ))}
     </ScrollView>
   );
