@@ -17,6 +17,13 @@ import IcomoonIcon from "./IcomoonIcon";
 // create a component
 const SezinPicker = props => {
   const bottomSheet = React.useRef(null);
+  const [items, setItems] = React.useState([
+    {
+      label: `${props.placeholderText} Seçiniz`,
+      value: null
+    },
+    ...props.items
+  ]);
   const [selectedItem, setSelectedItem] = React.useState({
     value: null,
     label: props.placeholderText
@@ -51,7 +58,7 @@ const SezinPicker = props => {
           onValueChange={(itemValue, itemIndex) =>
             setSelectedItem({
               value: itemValue,
-              label: props.items[itemIndex].label
+              label: itemIndex - 1 < 0 ? 0 : props.items[itemIndex - 1].label
             })
           }
         >
@@ -61,7 +68,7 @@ const SezinPicker = props => {
             value={null}
           />
           */}
-          {props.items.map((res, index) => (
+          {items.map((res, index) => (
             <Picker.Item key={index} label={res.label} value={res.value} />
           ))}
         </Picker>
