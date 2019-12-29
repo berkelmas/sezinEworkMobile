@@ -24,10 +24,14 @@ const SezinPicker = props => {
     },
     ...props.items
   ]);
-  const [selectedItem, setSelectedItem] = React.useState({
-    value: null,
-    label: props.placeholderText
-  });
+  const [selectedItem, setSelectedItem] = React.useState(
+    props.initialSelection
+      ? props.initialSelection
+      : {
+          value: null,
+          label: props.placeholderText
+        }
+  );
 
   return (
     <View style={styles.container}>
@@ -55,12 +59,13 @@ const SezinPicker = props => {
         <Picker
           selectedValue={selectedItem ? selectedItem.value : null}
           style={{ height: 50, width: "100%" }}
-          onValueChange={(itemValue, itemIndex) =>
+          onValueChange={(itemValue, itemIndex) => {
             setSelectedItem({
               value: itemValue,
               label: itemIndex - 1 < 0 ? 0 : props.items[itemIndex - 1].label
-            })
-          }
+            });
+            props.onValueChange && props.onValueChange(itemValue);
+          }}
         >
           {/* 
           <Picker.Item
@@ -99,7 +104,12 @@ SezinPicker.propTypes = {
     })
   ),
   placeholderText: PropTypes.string,
-  contentContainerStyle: ViewPropTypes.style
+  contentContainerStyle: ViewPropTypes.style,
+  onValueChange: PropTypes.func,
+  initialSelection: PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  })
 };
 
 //make this component available to the app

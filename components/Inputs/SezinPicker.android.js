@@ -26,10 +26,14 @@ const SezinPicker = props => {
     },
     ...props.items
   ]);
-  const [selectedItem, setSelectedItem] = React.useState({
-    value: null,
-    label: props.placeholderText
-  });
+  const [selectedItem, setSelectedItem] = React.useState(
+    props.initialSelection
+      ? props.initialSelection
+      : {
+          value: null,
+          label: props.placeholderText
+        }
+  );
 
   return (
     <View style={styles.container}>
@@ -54,22 +58,6 @@ const SezinPicker = props => {
         />
       </TouchableOpacity>
       <RBSheet ref={bottomSheet}>
-        {/* 
-        <Picker
-          selectedValue={selectedItem ? selectedItem.value : null}
-          style={{ height: 50, width: "100%" }}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedItem({
-              value: itemValue,
-              label: itemIndex - 1 < 0 ? 0 : props.items[itemIndex - 1].label
-            })
-          }
-        >
-          {items.map((res, index) => (
-            <Picker.Item key={index} label={res.label} value={res.value} />
-          ))}
-        </Picker>
-      */}
         <ScrollView showsVerticalScrollIndicator={false}>
           {items.map((res, index) => (
             <TouchableNativeFeedback
@@ -78,6 +66,7 @@ const SezinPicker = props => {
                   value: res.value,
                   label: res.label
                 });
+                props.onValueChange && props.onValueChange(res.value);
                 bottomSheet.current.close();
               }}
               background={TouchableNativeFeedback.Ripple(colors.lightGray)}
@@ -131,7 +120,8 @@ SezinPicker.propTypes = {
     })
   ),
   placeholderText: PropTypes.string,
-  contentContainerStyle: ViewPropTypes.style
+  contentContainerStyle: ViewPropTypes.style,
+  onValueChange: PropTypes.func
 };
 
 //make this component available to the app

@@ -16,6 +16,7 @@ export const mainScrollData = [
     id: "233",
     image: TeknikOda,
     title: "Teknik Oda",
+    link: "TechnicalRoom",
     content: "Buradan Teknik Odalarla İlgili Bildirimlerinizi Yapabilirsiniz."
   },
   {
