@@ -1,8 +1,8 @@
 //import liraries
 import React, { Component } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
-import SezinHeader from "../components/SezinHeader";
-import SezinTitle from "../components/SezinTitle";
+import SezinHeader from "../components/General/SezinHeader";
+import SezinTitle from "../components/Typography/SezinTitle";
 import { colors } from "../assets/styles/colors";
 
 // MATERIAL INDICATOR
@@ -12,7 +12,7 @@ import { MaterialIndicator } from "react-native-indicators";
 import { announcements as announcementsFakeData } from "../assets/data/announcements.data";
 
 // CUSTOM COMPONENT
-import SezinSingleAnnouncement from "../components/SezinSingleAnnouncement";
+import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
 
 // create a component
 const AllAnnouncementsScreen = props => {

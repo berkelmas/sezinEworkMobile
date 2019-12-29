@@ -6,10 +6,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from "react-native";
-import SezinTitle from "../components/SezinTitle";
-import SezinHeader from "../components/SezinHeader";
-import SezinInput from "../components/SezinInput";
-import SezinLoadingButton from "../components/SezinLoadingButton";
+import SezinTitle from "../components/Typography/SezinTitle";
+import SezinHeader from "../components/General/SezinHeader";
+import SezinInput from "../components/Inputs/SezinInput";
+import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
 import { colors } from "../assets/styles/colors";
 
 const GetHelpScreen = props => {

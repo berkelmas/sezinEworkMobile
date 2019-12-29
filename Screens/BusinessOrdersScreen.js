@@ -3,9 +3,9 @@ import React from "react";
 import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
 
 // SEZIN COMPONENTS
-import SezinSingleBusinessOrder from "../components/SezinSingleBusinessOrder";
-import SezinHeader from "../components/SezinHeader";
-import SezinTitle from "../components/SezinTitle";
+import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
+import SezinHeader from "../components/General/SezinHeader";
+import SezinTitle from "../components/Typography/SezinTitle";
 import { colors } from "../assets/styles/colors";
 
 // MATERIAL INDICATOR
@@ -16,7 +16,7 @@ import {
   businessOrdersData as fakeBusinessOrdersDataOnMe,
   businessOrdersDataByMe as fakeBusinessOrdersDataByMe
 } from "../assets/data/business-orders.data";
-import SezinBadge from "../components/SezinBadge";
+import SezinBadge from "../components/Buttons/SezinBadge";
 
 // create a component
 const BusinessOrdersScreen = props => {

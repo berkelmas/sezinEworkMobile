@@ -13,8 +13,8 @@ import {
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import PropTypes, { instanceOf } from "prop-types";
-import { colors } from "../assets/styles/colors";
-import IcomoonIcon from "./IcomoonIcon";
+import { colors } from "../../assets/styles/colors";
+import IcomoonIcon from "../Typography/IcomoonIcon";
 
 // create a component
 const SezinPicker = props => {

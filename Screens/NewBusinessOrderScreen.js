@@ -8,12 +8,12 @@ import {
   Keyboard
 } from "react-native";
 import { colors } from "../assets/styles/colors";
-import SezinHeader from "../components/SezinHeader";
-import SezinTitle from "../components/SezinTitle";
-import SezinInput from "../components/SezinInput";
-import SezinPicker from "../components/SezinPicker";
-import SezinDatePicker from "../components/SezinDatePicker";
-import SezinLoadingButton from "../components/SezinLoadingButton";
+import SezinHeader from "../components/General/SezinHeader";
+import SezinTitle from "../components/Typography/SezinTitle";
+import SezinInput from "../components/Inputs/SezinInput";
+import SezinPicker from "../components/Inputs/SezinPicker";
+import SezinDatePicker from "../components/Inputs/SezinDatePicker";
+import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
 
 // create a component
 const NewBusinessOrderScreen = props => {

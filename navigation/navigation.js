@@ -14,7 +14,7 @@ import GetHelpScreen from "../Screens/GetHelpScreen";
 import AllAnnouncementsScreen from "../Screens/AllAnnouncementsScreen";
 import BusinessOrdersScreen from "../Screens/BusinessOrdersScreen";
 import SezinDrawer from "./CustomDrawer";
-import IcomoonIcon from "../components/IcomoonIcon";
+import IcomoonIcon from "../components/Typography/IcomoonIcon";
 import { colors } from "../assets/styles/colors";
 import NewBusinessOrderScreen from "../Screens/NewBusinessOrderScreen";
 

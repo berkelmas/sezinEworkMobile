@@ -10,9 +10,9 @@ import {
   PixelRatio,
   TouchableNativeFeedback
 } from "react-native";
-import IsEmri from "../assets/images/is-emri.jpg";
-import { colors } from "../assets/styles/colors";
-import { mainScrollData } from "../assets/data/main-scroll.data";
+import IsEmri from "../../assets/images/is-emri.jpg";
+import { colors } from "../../assets/styles/colors";
+import { mainScrollData } from "../../assets/data/main-scroll.data";
 
 const SezinMainScroll = props => {
   console.log(PixelRatio.getFontScale());

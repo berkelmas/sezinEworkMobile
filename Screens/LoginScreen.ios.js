@@ -16,8 +16,8 @@ import SezinLogo from "../assets/images/sezin-logo.png";
 import DigriseLogo from "../assets/images/digrise-logo.png";
 
 // CUSTOM COMPONENTS
-import SezinLoadingButton from "../components/SezinLoadingButton";
-import SezinInput from "../components/SezinInput";
+import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
+import SezinInput from "../components/Inputs/SezinInput";
 
 const LoginScreen = props => {
   const [loadingState, setLoadingState] = React.useState(false);

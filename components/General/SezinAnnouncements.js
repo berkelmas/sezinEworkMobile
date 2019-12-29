@@ -7,11 +7,11 @@ import {
   PixelRatio
 } from "react-native";
 import PropTypes from "prop-types";
-import { colors } from "../assets/styles/colors";
-import IcomoonIcon from "./IcomoonIcon";
+import { colors } from "../../assets/styles/colors";
+import IcomoonIcon from "../Typography/IcomoonIcon";
 
 // FAKE DATA
-import { announcements } from "../assets/data/announcements.data";
+import { announcements } from "../../assets/data/announcements.data";
 
 const SezinAnnouncements = props => {
   return (

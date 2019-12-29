@@ -9,8 +9,8 @@ import {
   PixelRatio
 } from "react-native";
 import PropTypes from "prop-types";
-import IsTakibi from "../assets/images/saha-takibi.jpg";
-import { colors } from "../assets/styles/colors";
+import IsTakibi from "../../assets/images/saha-takibi.jpg";
+import { colors } from "../../assets/styles/colors";
 
 const SezinSingleBusinessOrder = props => {
   const [statusColor, setStatusColor] = React.useState("white");

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, ViewPropTypes, PixelRatio } from "react-native";
 import PropTypes from "prop-types";
-import { colors } from "../assets/styles/colors";
+import { colors } from "../../assets/styles/colors";
 
 // NATIVE BASE
 import { Item, Input, Label } from "native-base";

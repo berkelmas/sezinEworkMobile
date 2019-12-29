@@ -8,8 +8,8 @@ import {
   ViewPropTypes
 } from "react-native";
 import PropTypes from "prop-types";
-import IcomoonIcon from "./IcomoonIcon";
-import { colors } from "../assets/styles/colors";
+import IcomoonIcon from "../Typography/IcomoonIcon";
+import { colors } from "../../assets/styles/colors";
 
 const SezinHeader = props => {
   return (

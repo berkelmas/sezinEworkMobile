@@ -2,7 +2,7 @@ import React from "react";
 import { Text, StyleSheet, PixelRatio } from "react-native";
 import PropTypes from "prop-types";
 
-import { colors } from "../assets/styles/colors";
+import { colors } from "../../assets/styles/colors";
 
 const SezinTitle = props => {
   return (

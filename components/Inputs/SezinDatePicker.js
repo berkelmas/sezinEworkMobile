@@ -10,8 +10,8 @@ import {
 import PropTypes from "prop-types";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { Calendar } from "react-native-calendars";
-import { colors } from "../assets/styles/colors";
-import IcomoonIcon from "./IcomoonIcon";
+import { colors } from "../../assets/styles/colors";
+import IcomoonIcon from "../Typography/IcomoonIcon";
 
 // create a component
 const SezinDatePicker = props => {

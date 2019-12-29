@@ -7,13 +7,14 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  PixelRatio
+  PixelRatio,
+  TouchableNativeFeedback
 } from "react-native";
 import PropTypes from "prop-types";
-import { colors } from "../assets/styles/colors";
+import { colors } from "../../assets/styles/colors";
 
 // FAKE DATA
-import { businessOrdersData } from "../assets/data/business-orders.data";
+import { businessOrdersData } from "../../assets/data/business-orders.data";
 
 const SezinOrders = props => {
   return (
@@ -26,30 +27,33 @@ const SezinOrders = props => {
       {Array(4)
         .fill(0)
         .map((item, index) => (
-          <TouchableOpacity
+          <TouchableNativeFeedback
             onPress={props.onPress.bind(this, businessOrdersData[index])}
             key={index}
-            style={{
-              ...styles.singleItem,
-              marginRight: index % 2 === 0 ? 20 : 0
-            }}
           >
-            <Image
-              source={businessOrdersData[index].image}
-              style={styles.imageStyle}
-            />
-            <View style={{ height: "40%", padding: 5 }}>
-              <Text style={styles.placeStyle}>
-                {businessOrdersData[index].place}
-              </Text>
-              <Text style={styles.titleStyle}>
-                {businessOrdersData[index].title}
-              </Text>
-              <Text style={styles.dateStyle}>
-                {businessOrdersData[index].date}
-              </Text>
+            <View
+              style={{
+                ...styles.singleItem,
+                marginRight: index % 2 === 0 ? 20 : 0
+              }}
+            >
+              <Image
+                source={businessOrdersData[index].image}
+                style={styles.imageStyle}
+              />
+              <View style={{ height: "40%", padding: 5 }}>
+                <Text style={styles.placeStyle}>
+                  {businessOrdersData[index].place}
+                </Text>
+                <Text style={styles.titleStyle}>
+                  {businessOrdersData[index].title}
+                </Text>
+                <Text style={styles.dateStyle}>
+                  {businessOrdersData[index].date}
+                </Text>
+              </View>
             </View>
-          </TouchableOpacity>
+          </TouchableNativeFeedback>
         ))}
     </View>
   );

@@ -14,16 +14,16 @@ import Toast from "react-native-easy-toast";
 import { connect, useSelector } from "react-redux";
 
 // CUSTOM COMPONENTS
-import SezinHeader from "../components/SezinHeader";
-import SezinTitle from "../components/SezinTitle";
-import SezinMainScroll from "../components/SezinMainScroll";
-import SezinDescription from "../components/SezinDescription";
-import SezinAnnouncements from "../components/SezinAnnouncements";
-import SezinButton from "../components/SezinButton";
-import SezinOrders from "../components/SezinOrders";
+import SezinHeader from "../components/General/SezinHeader";
+import SezinTitle from "../components/Typography/SezinTitle";
+import SezinMainScroll from "../components/General/SezinMainScroll";
+import SezinDescription from "../components/Typography/SezinDescription";
+import SezinAnnouncements from "../components/General/SezinAnnouncements";
+import SezinButton from "../components/Buttons/SezinButton";
+import SezinOrders from "../components/General/SezinOrders";
 import { colors } from "../assets/styles/colors";
-import SezinSingleBusinessOrder from "../components/SezinSingleBusinessOrder";
-import SezinSingleAnnouncement from "../components/SezinSingleAnnouncement";
+import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
+import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
 
 const HomeScreen = props => {
   const username = useSelector(state => state.AuthReducer.username);
