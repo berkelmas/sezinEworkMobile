@@ -14,7 +14,7 @@ import { colors } from "../assets/styles/colors";
 
 const GetHelpScreen = props => {
   const [loadingState, setLoadingState] = React.useState(false);
-
+  console.log(props.navigation.state.routeName);
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -39,9 +39,15 @@ const GetHelpScreen = props => {
             setLoadingState(true);
             setTimeout(() => {
               setLoadingState(false);
-              props.navigation.navigate("Login", {
-                toastText: "Destek Talebiniz Başarı İle Gönderilmiştir."
-              });
+              props.navigation.navigate(
+                props.navigation.state.routeName === "GetHelp"
+                  ? "Login"
+                  : "Home",
+                {
+                  toastColor: colors.green,
+                  toastText: "Destek Talebiniz Başarı ile Gönderilmiştir."
+                }
+              );
             }, 1000);
           }}
           loading={loadingState}

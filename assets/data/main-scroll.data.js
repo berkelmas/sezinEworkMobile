@@ -23,6 +23,7 @@ export const mainScrollData = [
     id: "1221",
     image: SahaTakibi,
     title: "Saha Takibi",
+    link: "BusinessReport",
     content: "Buradan Saha Takip Raporu Düzenleyebilirsiniz."
   },
   {
@@ -36,6 +37,6 @@ export const mainScrollData = [
     image: Yardim,
     title: "Yardım",
     link: "GetHelpAfterLoginScreen",
-    content: "Buradan Uygulama İçi Sorunlarınız İçin Yardım Alabilirsiniz."
+    content: "Buradan Uygulama Sorunlarınız İçin Yardım Alabilirsiniz."
   }
 ];

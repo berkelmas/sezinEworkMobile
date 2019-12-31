@@ -8,7 +8,6 @@ import { createStackNavigator } from "react-navigation-stack";
 
 import { connect, useSelector } from "react-redux";
 import HomeScreen from "../Screens/HomeScreen";
-import SecondScreen from "../Screens/SecondScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import GetHelpScreen from "../Screens/GetHelpScreen";
 import AllAnnouncementsScreen from "../Screens/AllAnnouncementsScreen";
@@ -18,15 +17,7 @@ import IcomoonIcon from "../components/Typography/IcomoonIcon";
 import { colors } from "../assets/styles/colors";
 import NewBusinessOrderScreen from "../Screens/NewBusinessOrderScreen";
 import TechnicalRoomScreen from "../Screens/TechnicalRoomScreen";
-
-const MyDrawerNavigator = createDrawerNavigator({
-  Home: {
-    screen: HomeScreen
-  },
-  Second: {
-    screen: SecondScreen
-  }
-});
+import BusinessReportScreen from "../Screens/BusinessReportScreen";
 
 const customAppContainer = props => {
   const username = useSelector(state => state.AuthReducer.username);
@@ -41,6 +32,9 @@ const customAppContainer = props => {
       },
       TechnicalRoom: {
         screen: TechnicalRoomScreen
+      },
+      BusinessReport: {
+        screen: BusinessReportScreen
       },
       GetHelpAfterLoginScreen: {
         screen: GetHelpScreen
