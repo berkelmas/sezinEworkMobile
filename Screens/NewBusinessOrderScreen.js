@@ -5,7 +5,8 @@ import {
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  ScrollView
 } from "react-native";
 import { colors } from "../assets/styles/colors";
 import SezinHeader from "../components/General/SezinHeader";
@@ -21,69 +22,71 @@ const NewBusinessOrderScreen = props => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        <SezinHeader
-          onPressLeft={() => props.navigation.goBack()}
-          leftIconName="chevron-left"
-        />
-        <SezinTitle text="Yeni İş Emri" />
+      <ScrollView>
+        <View style={styles.container}>
+          <SezinHeader
+            onPressLeft={() => props.navigation.goBack()}
+            leftIconName="chevron-left"
+          />
+          <SezinTitle text="Yeni İş Emri" />
 
-        <SezinInput label="Başlık" containerStyle={{ marginTop: 10 }} />
-        <SezinInput
-          label="Açıklama"
-          containerStyle={{ marginTop: 10 }}
-          multiline={true}
-        />
-        <SezinPicker
-          placeholderText="Görev Verilen Kişi"
-          contentContainerStyle={{ marginTop: 30 }}
-          items={[
-            { label: "Berk Elmas", value: "football" },
-            { label: "Ali Yilmaz", value: "baseball" },
-            { label: "Emre Kara", value: "hockey" }
-          ]}
-        />
+          <SezinInput label="Başlık" containerStyle={{ marginTop: 10 }} />
+          <SezinInput
+            label="Açıklama"
+            containerStyle={{ marginTop: 10 }}
+            multiline={true}
+          />
+          <SezinPicker
+            placeholderText="Görev Verilen Kişi"
+            contentContainerStyle={{ marginTop: 30 }}
+            items={[
+              { label: "Berk Elmas", value: "football" },
+              { label: "Ali Yilmaz", value: "baseball" },
+              { label: "Emre Kara", value: "hockey" }
+            ]}
+          />
 
-        <SezinPicker
-          placeholderText="Personel Grubu"
-          contentContainerStyle={{ marginTop: 30 }}
-          items={[
-            { label: "Ankara GMK Devlet Hastanesi", value: "football" },
-            { label: "Sadi Konuk Devlet Hastanesi", value: "baseball" },
-            { label: "Mazhar Osman Devlet Hastanesi", value: "hockey" }
-          ]}
-        />
+          <SezinPicker
+            placeholderText="Personel Grubu"
+            contentContainerStyle={{ marginTop: 30 }}
+            items={[
+              { label: "Ankara GMK Devlet Hastanesi", value: "football" },
+              { label: "Sadi Konuk Devlet Hastanesi", value: "baseball" },
+              { label: "Mazhar Osman Devlet Hastanesi", value: "hockey" }
+            ]}
+          />
 
-        <SezinPicker
-          placeholderText="Öncelik Durumu"
-          contentContainerStyle={{ marginTop: 30 }}
-          items={[
-            { label: "Kritik", value: "football" },
-            { label: "Normal", value: "baseball" },
-            { label: "Acil Degil", value: "hockey" }
-          ]}
-        />
+          <SezinPicker
+            placeholderText="Öncelik Durumu"
+            contentContainerStyle={{ marginTop: 30 }}
+            items={[
+              { label: "Kritik", value: "football" },
+              { label: "Normal", value: "baseball" },
+              { label: "Acil Degil", value: "hockey" }
+            ]}
+          />
 
-        <SezinDatePicker placeholderText="Bitiş Tarihi" />
+          <SezinDatePicker placeholderText="Bitiş Tarihi" />
 
-        <SezinLoadingButton
-          color={colors.blue}
-          overlayColor={colors.darkBlue}
-          text="Kaydet"
-          containerStyle={{ marginTop: 50 }}
-          onPress={() => {
-            setLoadingState(true);
-            setTimeout(() => {
-              setLoadingState(false);
-              props.navigation.navigate("Home", {
-                toastColor: colors.green,
-                toastText: "İş Emri Başarı İle Kaydedildi."
-              });
-            }, 1500);
-          }}
-          loading={loadingState}
-        />
-      </View>
+          <SezinLoadingButton
+            color={colors.blue}
+            overlayColor={colors.darkBlue}
+            text="Kaydet"
+            containerStyle={{ marginTop: 50 }}
+            onPress={() => {
+              setLoadingState(true);
+              setTimeout(() => {
+                setLoadingState(false);
+                props.navigation.navigate("Home", {
+                  toastColor: colors.green,
+                  toastText: "İş Emri Başarı İle Kaydedildi."
+                });
+              }, 1500);
+            }}
+            loading={loadingState}
+          />
+        </View>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 };

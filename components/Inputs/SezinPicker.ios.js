@@ -34,7 +34,7 @@ const SezinPicker = props => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...props.contentContainerStyle }}>
       <TouchableOpacity
         onPress={() => bottomSheet.current.open()}
         style={{
@@ -85,7 +85,7 @@ const SezinPicker = props => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30
+    marginTop: 40
   },
   textStyle: {
     fontSize: 17 / PixelRatio.getFontScale(),

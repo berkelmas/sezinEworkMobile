@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -30,7 +30,7 @@ const TechnicalRoomScreen = props => {
         <SezinHeader
           onPressLeft={() => props.navigation.goBack()}
           leftIconName="chevron-left"
-          containerStyle={{ paddingTop: 5 }}
+          containerStyle={{}}
         />
         <SezinTitle text="Teknik Oda Takibi" />
 
@@ -54,7 +54,7 @@ TechnicalRoomScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
+    paddingHorizontal: 20
   }
 });
 

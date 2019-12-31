@@ -12,6 +12,7 @@ const SezinInput = props => {
       <Item floatingLabel>
         <Label style={styles.labelStyle}>{props.label}</Label>
         <Input
+          {...props.inputProps}
           multiline={props.multiline ? props.multiline : false}
           secureTextEntry={props.secureEntry}
           style={styles.inputStyle}
@@ -37,7 +38,8 @@ SezinInput.propTypes = {
   containerStyle: ViewPropTypes.style,
   label: PropTypes.string,
   secureEntry: PropTypes.bool,
-  multiline: PropTypes.bool
+  multiline: PropTypes.bool,
+  inputProps: PropTypes.any
 };
 
 export default SezinInput;

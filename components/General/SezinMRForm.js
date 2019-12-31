@@ -26,33 +26,59 @@ const SezinMRForm = props => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <SezinInput label="Helyum Seviyesi" containerStyle={{ marginTop: 20 }} />
-      <SezinInput label="Basınç Seviyesi" containerStyle={{ marginTop: 20 }} />
-      <SezinInput label="Su Sıcaklığı" containerStyle={{ marginTop: 20 }} />
-      <SezinInput label="Oda Nem Seviyesi" containerStyle={{ marginTop: 20 }} />
-      <SezinInput label="Klima Sıcaklığı" containerStyle={{ marginTop: 20 }} />
-      <SezinPicker
-        placeholderText="UPS Durumu"
-        items={[
-          { label: "Çalışıyor", value: "calisiyor" },
-          { label: "Çalışmıyor", value: "calismiyor" }
-        ]}
-      />
-      <SezinPicker
-        placeholderText="Chiller Durumu"
-        items={[
-          { label: "Çalışıyor", value: "calisiyor" },
-          { label: "Çalışmıyor", value: "calismiyor" }
-        ]}
-      />
-      <SezinPicker
-        placeholderText="Oda Temizliği"
-        items={[
-          { label: "Rutin", value: "rutin" },
-          { label: "Yapılmadı", value: "yapilmadi" }
-        ]}
-      />
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+        <SezinInput
+          inputProps={{ keyboardType: "numeric" }}
+          label="Helyum Seviyesi"
+          containerStyle={{ marginTop: 20, width: "45%", marginRight: "10%" }}
+        />
+        <SezinInput
+          inputProps={{ keyboardType: "numeric" }}
+          label="Basınç Seviyesi"
+          containerStyle={{ marginTop: 20, width: "45%" }}
+        />
+        <SezinInput
+          inputProps={{ keyboardType: "numeric" }}
+          label="Su Sıcaklığı"
+          containerStyle={{ marginTop: 20, width: "45%", marginRight: "10%" }}
+        />
+        <SezinInput
+          inputProps={{ keyboardType: "numeric" }}
+          label="Oda Nem Seviyesi"
+          containerStyle={{ marginTop: 20, width: "45%" }}
+        />
+        <SezinInput
+          inputProps={{ keyboardType: "numeric" }}
+          label="Klima Sıcaklığı"
+          containerStyle={{ marginTop: 20, width: "45%", marginRight: "10%" }}
+        />
+
+        <SezinPicker
+          contentContainerStyle={{ width: "45%" }}
+          placeholderText="UPS Durumu"
+          items={[
+            { label: "Çalışıyor", value: "calisiyor" },
+            { label: "Çalışmıyor", value: "calismiyor" }
+          ]}
+        />
+        <SezinPicker
+          contentContainerStyle={{ width: "45%", marginRight: "10%" }}
+          placeholderText="Chiller Durumu"
+          items={[
+            { label: "Çalışıyor", value: "calisiyor" },
+            { label: "Çalışmıyor", value: "calismiyor" }
+          ]}
+        />
+        <SezinPicker
+          contentContainerStyle={{ width: "45%" }}
+          placeholderText="Oda Temizliği"
+          items={[
+            { label: "Rutin", value: "rutin" },
+            { label: "Yapılmadı", value: "yapilmadi" }
+          ]}
+        />
+      </View>
       <SezinLoadingButton
         onPress={submitForm.bind(this)}
         color={colors.green}
