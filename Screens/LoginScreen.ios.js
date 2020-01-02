@@ -10,6 +10,10 @@ import {
 } from "react-native";
 import Toast from "react-native-easy-toast";
 
+// REDUX
+import { connect, useSelector, useDispatch } from "react-redux";
+import { loginStartAction } from "../store/actions/AuthActions";
+
 // ASSETS
 import { colors } from "../assets/styles/colors";
 import SezinLogo from "../assets/images/sezin-logo.png";
@@ -20,7 +24,17 @@ import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
 import SezinInput from "../components/Inputs/SezinInput";
 
 const LoginScreen = props => {
+  const loadingRedux = useSelector(state => state.AuthReducer.loading);
+
   const [loadingState, setLoadingState] = React.useState(false);
+  const [userState, setUserState] = React.useState({
+    username: null,
+    password: null
+  });
+
+  // REDUX DISPATCH FOR HOOKS
+  const dispatch = useDispatch();
+
   const toast = React.useRef(null);
   React.useEffect(() => {
     const didBlurSubscription = props.navigation.addListener(
@@ -54,10 +68,18 @@ const LoginScreen = props => {
         {/* FORM CONTAINER */}
         <View style={{ paddingTop: 40 }}>
           {/* EMAIL */}
-          <SezinInput label="Email" />
+          <SezinInput
+            onChangeText={username =>
+              setUserState(prev => ({ ...prev, username }))
+            }
+            label="Email"
+          />
 
           {/* PASSWORD */}
           <SezinInput
+            onChangeText={password =>
+              setUserState(prev => ({ ...prev, password }))
+            }
             label="Şifre"
             secureEntry={true}
             containerStyle={{ marginTop: 10 }}
@@ -73,13 +95,15 @@ const LoginScreen = props => {
 
         <View style={{ flex: 1, justifyContent: "space-evenly" }}>
           <SezinLoadingButton
-            loading={loadingState}
+            loading={loadingRedux}
             onPress={() => {
-              setLoadingState(true);
-              setTimeout(() => {
-                setLoadingState(false);
-                props.navigation.navigate("Home");
-              }, 1000);
+              dispatch(
+                loginStartAction(userState.username, userState.password)
+              );
+              // setTimeout(() => {
+              //   setLoadingState(false);
+              //   props.navigation.navigate("Home");
+              // }, 1000);
             }}
             color={colors.blue}
             overlayColor={colors.darkBlue}
@@ -192,4 +216,4 @@ LoginScreen.navigationOptions = ({ navigation }) => ({
   header: null
 });
 
-export default LoginScreen;
+export default connect()(LoginScreen);

@@ -13,6 +13,7 @@ const SezinInput = props => {
         <Label style={styles.labelStyle}>{props.label}</Label>
         <Input
           {...props.inputProps}
+          onChangeText={text => props.onChangeText(text)}
           multiline={props.multiline ? props.multiline : false}
           secureTextEntry={props.secureEntry}
           style={styles.inputStyle}
@@ -39,7 +40,8 @@ SezinInput.propTypes = {
   label: PropTypes.string,
   secureEntry: PropTypes.bool,
   multiline: PropTypes.bool,
-  inputProps: PropTypes.any
+  inputProps: PropTypes.any,
+  onChangeText: PropTypes.func
 };
 
 export default SezinInput;

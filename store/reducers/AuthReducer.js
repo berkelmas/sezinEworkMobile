@@ -3,8 +3,14 @@ import * as authTypes from "../types/AuthTypes";
 
 const initialState = {
   loggedIn: false,
-  username: "berkelmas",
-  loading: false
+  username: null,
+  loading: false,
+  accessToken: null,
+  fullName: null,
+  userImage: null,
+  userGroup: null,
+  userHospitalName: null,
+  userEmail: null
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -12,16 +18,44 @@ const AuthReducer = (state = initialState, action) => {
     case authTypes.START_LOGIN:
       return { ...state, loading: true };
     case authTypes.LOGOUT:
-      return { ...state, loggedIn: false, username: "" };
+      return {
+        ...state,
+        loggedIn: false,
+        username: null,
+        loading: false,
+        accessToken: null,
+        fullName: null,
+        userImage: null,
+        userGroup: null,
+        userHospitalName: null,
+        userEmail: null
+      };
     case authTypes.SUCCESS_LOGIN:
       return {
         ...state,
         loggedIn: true,
-        username: action.payload.username,
-        loading: action.payload.loading
+        username: action.payload.userName,
+        loading: false,
+        accessToken: action.payload.access_token,
+        fullName: action.payload.userInformation,
+        userImage: action.payload.userImage,
+        userGroup: action.payload.userGroup,
+        userHospitalName: action.payload.userHospitalName,
+        userEmail: action.payload.userEmail
       };
     case authTypes.FAILED_LOGIN:
-      return { ...state, loggedIn: false, loading: action.payload.loading };
+      return {
+        ...state,
+        loggedIn: false,
+        username: null,
+        loading: false,
+        accessToken: null,
+        fullName: null,
+        userImage: null,
+        userGroup: null,
+        userHospitalName: null,
+        userEmail: null
+      };
     default:
       return state;
   }
