@@ -4,7 +4,8 @@ import {
   START_LOGIN,
   FAILED_LOGIN,
   SUCCESS_LOGIN,
-  FAILED_LOGIN_TIMEOUT
+  FAILED_LOGIN_TIMEOUT,
+  GET_MENU
 } from "../types/AuthTypes";
 import NavigationService from "../../navigation/NavigationService";
 
@@ -13,9 +14,17 @@ export const loginStartAction = (username, password) => {
     dispatch({ type: START_LOGIN });
     loginService(username, password)
       .then(res => {
-        dispatch(loginSuccessAction(res.data));
         AsyncStorage.setItem("auth-values", JSON.stringify(res.data));
-        NavigationService.navigate("Home");
+        menuService(res.data.access_token).then(menuItems => {
+          // console.log(menuItems.data.result);
+          AsyncStorage.setItem(
+            "menu-items",
+            JSON.stringify(menuItems.data.result)
+          );
+          dispatch(loginSuccessAction(res.data));
+          dispatch(getMenuAction(menuItems.data.result));
+          NavigationService.navigate("Home");
+        });
       })
       .catch(err => {
         dispatch(loginFailedAction());
@@ -31,12 +40,17 @@ export const loginSuccessAction = res => ({
   payload: { ...res }
 });
 
-const loginFailedAction = () => ({
+export const loginFailedAction = () => ({
   type: FAILED_LOGIN
 });
 
-const failedLoginTimeoutAction = () => ({
+export const failedLoginTimeoutAction = () => ({
   type: FAILED_LOGIN_TIMEOUT
+});
+
+export const getMenuAction = menuItems => ({
+  type: GET_MENU,
+  payload: { menuItems }
 });
 
 // loginService(username, password).then(res => ({

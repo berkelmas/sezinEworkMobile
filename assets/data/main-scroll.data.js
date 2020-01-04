@@ -10,6 +10,7 @@ export const mainScrollData = [
     image: IsEmri,
     title: "İş Emri",
     link: "NewBusinessOrder",
+    backendNames: ["NewWork"],
     content: "Buradan Yeni İş Emirleri Düzenleyebilirsiniz."
   },
   {
@@ -17,6 +18,7 @@ export const mainScrollData = [
     image: TeknikOda,
     title: "Teknik Oda",
     link: "TechnicalRoom",
+    backendNames: ["MR", "CT"],
     content: "Buradan Teknik Odalarla İlgili Bildirimlerinizi Yapabilirsiniz."
   },
   {
@@ -24,12 +26,19 @@ export const mainScrollData = [
     image: SahaTakibi,
     title: "Saha Takibi",
     link: "BusinessReport",
+    backendNames: ["NewArea"],
     content: "Buradan Saha Takip Raporu Düzenleyebilirsiniz."
   },
   {
     id: "999",
     image: GunlukRapor,
     title: "Günlük Rapor",
+    backendNames: [
+      "AnalysisKMD",
+      "AnalysisMAMO",
+      "AnalysisUSG",
+      "AnalysisRAPOR"
+    ],
     content: "Buradan Günlük Raporlarınızı Oluşturabilirsiniz."
   },
   {
@@ -37,6 +46,7 @@ export const mainScrollData = [
     image: Yardim,
     title: "Yardım",
     link: "GetHelpAfterLoginScreen",
+    backendNames: ["shown"],
     content: "Buradan Uygulama Sorunlarınız İçin Yardım Alabilirsiniz."
   }
 ];

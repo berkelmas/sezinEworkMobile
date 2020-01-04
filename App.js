@@ -38,7 +38,7 @@ const App = () => {
     StatusBar.setHidden(true);
 
     /// FOR DEVELOPMENT PURPOSES
-    AsyncStorage.clear();
+    // AsyncStorage.clear();
   }, []);
 
   {

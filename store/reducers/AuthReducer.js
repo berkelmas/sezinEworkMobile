@@ -11,7 +11,8 @@ const initialState = {
   userGroup: null,
   userHospitalName: null,
   userEmail: null,
-  failedLogin: false
+  failedLogin: false,
+  menuItems: []
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -63,6 +64,11 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         failedLogin: false
+      };
+    case authTypes.GET_MENU:
+      return {
+        ...state,
+        menuItems: action.payload.menuItems
       };
     default:
       return state;

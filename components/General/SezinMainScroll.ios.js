@@ -8,11 +8,19 @@ import {
   Dimensions,
   TouchableOpacity
 } from "react-native";
-import IsEmri from "../../assets/images/is-emri.jpg";
+import { useSelector } from "react-redux";
 import { colors } from "../../assets/styles/colors";
 import { mainScrollData } from "../../assets/data/main-scroll.data";
 
 const SezinMainScroll = props => {
+  const menuItems = useSelector(state => state.AuthReducer.menuItems).map(
+    item => item.mobilePath
+  );
+
+  React.useEffect(() => {
+    console.log(menuItems);
+  }, [menuItems]);
+
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}
@@ -26,24 +34,36 @@ const SezinMainScroll = props => {
         paddingVertical: 10
       }}
     >
-      {mainScrollData.map((item, index) => (
-        <TouchableOpacity
-          onPress={props.onPress.bind(this, item.link)}
-          key={item.id}
-          style={styles.singleViewWrapper}
-        >
-          <View style={styles.singleView}>
-            <Image
-              source={item.image}
-              style={{ height: "70%", width: "100%" }}
-            />
-            <View style={styles.contentWrapper}>
-              <Text style={styles.contentHeader}>{item.title}</Text>
-              <Text style={styles.contentDescription}>{item.content}</Text>
-            </View>
+      {mainScrollData.map((item, index) => {
+        return (
+          <View
+            style={{
+              display: item.backendNames.some(item => {
+                return menuItems.indexOf(item) >= 0 || item === "shown";
+              })
+                ? "block"
+                : "none"
+            }}
+            key={item.id}
+          >
+            <TouchableOpacity
+              onPress={props.onPress.bind(this, item.link)}
+              style={styles.singleViewWrapper}
+            >
+              <View style={styles.singleView}>
+                <Image
+                  source={item.image}
+                  style={{ height: "70%", width: "100%" }}
+                />
+                <View style={styles.contentWrapper}>
+                  <Text style={styles.contentHeader}>{item.title}</Text>
+                  <Text style={styles.contentDescription}>{item.content}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      ))}
+        );
+      })}
     </ScrollView>
   );
 };

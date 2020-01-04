@@ -1,10 +1,8 @@
 import React from "react";
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
-  Dimensions,
   PixelRatio,
   AsyncStorage
 } from "react-native";
@@ -13,7 +11,10 @@ import Toast from "react-native-easy-toast";
 
 // REDUX
 import { connect, useSelector, useDispatch } from "react-redux";
-import { loginSuccessAction } from "../store/actions/AuthActions";
+import {
+  loginSuccessAction,
+  getMenuAction
+} from "../store/actions/AuthActions";
 
 // CUSTOM COMPONENTS
 import SezinHeader from "../components/General/SezinHeader";
@@ -32,6 +33,8 @@ const HomeScreen = props => {
   const firstName =
     useSelector(state => state.AuthReducer.fullName) &&
     useSelector(state => state.AuthReducer.fullName).split(" ")[0];
+  const menuler = useSelector(state => state.AuthReducer.menuItems);
+
   const toast = React.useRef(null);
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
   const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
@@ -88,10 +91,17 @@ const HomeScreen = props => {
   }, [props.navigation.getParam("toastText", null)]);
 
   React.useEffect(() => {
-    AsyncStorage.getItem("auth-values").then(authValue => {
+    (async function getValues() {
+      const authValue = await AsyncStorage.getItem("auth-values");
+      const menuItems = await AsyncStorage.getItem("menu-items");
       dispatch(loginSuccessAction(JSON.parse(authValue)));
-    });
+      dispatch(getMenuAction(JSON.parse(menuItems)));
+    })();
   }, []);
+
+  React.useEffect(() => {
+    console.log(menuler);
+  }, [menuler]);
 
   return (
     <ScrollView

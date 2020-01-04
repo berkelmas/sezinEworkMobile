@@ -17,7 +17,10 @@ import SezinOrders from "../components/General/SezinOrders";
 import { colors } from "../assets/styles/colors";
 import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
 import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
-import { loginSuccessAction } from "../store/actions/AuthActions";
+import {
+  loginSuccessAction,
+  getMenuAction
+} from "../store/actions/AuthActions";
 
 const HomeScreen = props => {
   const firstName =
@@ -64,9 +67,12 @@ const HomeScreen = props => {
   };
 
   React.useEffect(() => {
-    AsyncStorage.getItem("auth-values").then(authValue => {
+    (async function getValues() {
+      const authValue = await AsyncStorage.getItem("auth-values");
+      const menuItems = await AsyncStorage.getItem("menu-items");
       dispatch(loginSuccessAction(JSON.parse(authValue)));
-    });
+      dispatch(getMenuAction(JSON.parse(menuItems)));
+    })();
   }, []);
 
   React.useEffect(() => {

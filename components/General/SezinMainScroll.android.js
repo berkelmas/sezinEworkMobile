@@ -10,7 +10,7 @@ import {
   PixelRatio,
   TouchableNativeFeedback
 } from "react-native";
-import IsEmri from "../../assets/images/is-emri.jpg";
+import { useSelector } from "react-redux";
 import { colors } from "../../assets/styles/colors";
 import { mainScrollData } from "../../assets/data/main-scroll.data";
 
