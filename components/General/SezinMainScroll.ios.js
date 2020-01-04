@@ -17,10 +17,6 @@ const SezinMainScroll = props => {
     item => item.mobilePath
   );
 
-  React.useEffect(() => {
-    console.log(menuItems);
-  }, [menuItems]);
-
   return (
     <ScrollView
       showsHorizontalScrollIndicator={false}

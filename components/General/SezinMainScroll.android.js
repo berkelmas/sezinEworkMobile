@@ -15,7 +15,9 @@ import { colors } from "../../assets/styles/colors";
 import { mainScrollData } from "../../assets/data/main-scroll.data";
 
 const SezinMainScroll = props => {
-  console.log(PixelRatio.getFontScale());
+  const menuItems = useSelector(state => state.AuthReducer.menuItems).map(
+    item => item.mobilePath
+  );
 
   return (
     <ScrollView
@@ -31,26 +33,35 @@ const SezinMainScroll = props => {
         paddingVertical: 10
       }}
     >
-      {mainScrollData.map((item, index) => (
-        <TouchableNativeFeedback
-          key={item.id}
-          onPress={props.onPress.bind(this, item.link)}
-        >
-          <View style={styles.singleView}>
-            <Image
-              source={item.image}
-              style={{
-                height: "70%",
-                width: "100%"
-              }}
-            />
-            <View style={styles.contentWrapper}>
-              <Text style={styles.contentHeader}>{item.title}</Text>
-              <Text style={styles.contentDescription}>{item.content}</Text>
+      {mainScrollData.map((item, index) => {
+        return (
+          <TouchableNativeFeedback
+            style={{
+              display: item.backendNames.some(item => {
+                return menuItems.indexOf(item) >= 0 || item === "shown";
+              })
+                ? "block"
+                : "none"
+            }}
+            key={item.id}
+            onPress={props.onPress.bind(this, item.link)}
+          >
+            <View style={styles.singleView}>
+              <Image
+                source={item.image}
+                style={{
+                  height: "70%",
+                  width: "100%"
+                }}
+              />
+              <View style={styles.contentWrapper}>
+                <Text style={styles.contentHeader}>{item.title}</Text>
+                <Text style={styles.contentDescription}>{item.content}</Text>
+              </View>
             </View>
-          </View>
-        </TouchableNativeFeedback>
-      ))}
+          </TouchableNativeFeedback>
+        );
+      })}
     </ScrollView>
   );
 };
