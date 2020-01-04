@@ -1,10 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View, Text, StyleSheet, ScrollView, AsyncStorage } from "react-native";
 import Modal from "react-native-modal";
 import Toast from "react-native-easy-toast";
 
 // REDUX
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 
 // CUSTOM COMPONENTS
 import SezinHeader from "../components/General/SezinHeader";
@@ -17,10 +17,14 @@ import SezinOrders from "../components/General/SezinOrders";
 import { colors } from "../assets/styles/colors";
 import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
 import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
+import { loginSuccessAction } from "../store/actions/AuthActions";
 
 const HomeScreen = props => {
-  const username = useSelector(state => state.AuthReducer.username);
+  const firstName =
+    useSelector(state => state.AuthReducer.fullName) &&
+    useSelector(state => state.AuthReducer.fullName).split(" ")[0];
 
+  const dispatch = useDispatch();
   const toast = React.useRef(null);
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
   const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
@@ -60,6 +64,12 @@ const HomeScreen = props => {
   };
 
   React.useEffect(() => {
+    AsyncStorage.getItem("auth-values").then(authValue => {
+      dispatch(loginSuccessAction(JSON.parse(authValue)));
+    });
+  }, []);
+
+  React.useEffect(() => {
     const didBlurSubscription = props.navigation.addListener(
       "didFocus",
       payload => {
@@ -90,7 +100,7 @@ const HomeScreen = props => {
 
       {/* FIRST TITLE PART */}
       <SezinTitle
-        text="Merhaba Sana Nasıl Yardım Edebilirim, Berk?"
+        text={"Merhaba Sana Nasıl Yardım Edebilirim, " + firstName + "?"}
         textStyle={{ fontSize: 30, paddingHorizontal: 20, paddingBottom: 13 }}
       />
 

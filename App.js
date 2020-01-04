@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar } from "react-native";
+import { StatusBar, AsyncStorage } from "react-native";
 import * as Font from "expo-font";
 
 // REDUX
@@ -36,6 +36,9 @@ const App = () => {
       Icomoon: require("./assets/fonts/icomoon.ttf")
     }).then(() => setLoaded(true));
     StatusBar.setHidden(true);
+
+    /// FOR DEVELOPMENT PURPOSES
+    AsyncStorage.clear();
   }, []);
 
   {

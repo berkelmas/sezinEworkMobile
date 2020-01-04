@@ -25,6 +25,7 @@ import SezinInput from "../components/Inputs/SezinInput";
 
 const LoginScreen = props => {
   const loadingRedux = useSelector(state => state.AuthReducer.loading);
+  const failedRedux = useSelector(state => state.AuthReducer.failedLogin);
 
   const [loadingState, setLoadingState] = React.useState(false);
   const [userState, setUserState] = React.useState({
@@ -51,6 +52,12 @@ const LoginScreen = props => {
     return () => didBlurSubscription.remove();
   }, [props.navigation.getParam("toastText", null)]);
 
+  React.useEffect(() => {
+    if (failedRedux) {
+      toast.current.show("Giriş işlemi başarısız.", 1000);
+    }
+  }, [failedRedux]);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -68,10 +75,18 @@ const LoginScreen = props => {
         {/* FORM CONTAINER */}
         <View style={{ paddingTop: 40 }}>
           {/* EMAIL */}
-          <SezinInput label="Email" />
+          <SezinInput
+            onChangeText={username =>
+              setUserState(prev => ({ ...prev, username }))
+            }
+            label="Email"
+          />
 
           {/* PASSWORD */}
           <SezinInput
+            onChangeText={password =>
+              setUserState(prev => ({ ...prev, password }))
+            }
             label="Şifre"
             secureEntry={true}
             containerStyle={{ marginTop: 10 }}
@@ -137,7 +152,10 @@ const LoginScreen = props => {
           opacity={0.8}
           textStyle={styles.toastText}
           ref={toast}
-          style={styles.toastContainerStyle}
+          style={{
+            ...styles.toastContainerStyle,
+            ...(failedRedux && { backgroundColor: colors.red })
+          }}
         />
       </View>
     </TouchableWithoutFeedback>

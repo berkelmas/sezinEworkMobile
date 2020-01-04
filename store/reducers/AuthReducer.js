@@ -10,7 +10,8 @@ const initialState = {
   userImage: null,
   userGroup: null,
   userHospitalName: null,
-  userEmail: null
+  userEmail: null,
+  failedLogin: false
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -41,7 +42,8 @@ const AuthReducer = (state = initialState, action) => {
         userImage: action.payload.userImage,
         userGroup: action.payload.userGroup,
         userHospitalName: action.payload.userHospitalName,
-        userEmail: action.payload.userEmail
+        userEmail: action.payload.userEmail,
+        failedLogin: false
       };
     case authTypes.FAILED_LOGIN:
       return {
@@ -54,7 +56,13 @@ const AuthReducer = (state = initialState, action) => {
         userImage: null,
         userGroup: null,
         userHospitalName: null,
-        userEmail: null
+        userEmail: null,
+        failedLogin: true
+      };
+    case authTypes.FAILED_LOGIN_TIMEOUT:
+      return {
+        ...state,
+        failedLogin: false
       };
     default:
       return state;

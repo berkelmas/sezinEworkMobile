@@ -5,6 +5,7 @@ import { PixelRatio } from "react-native";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
+import NavigationService from "./NavigationService";
 
 import { connect, useSelector } from "react-redux";
 import HomeScreen from "../Screens/HomeScreen";
@@ -18,10 +19,9 @@ import { colors } from "../assets/styles/colors";
 import NewBusinessOrderScreen from "../Screens/NewBusinessOrderScreen";
 import TechnicalRoomScreen from "../Screens/TechnicalRoomScreen";
 import BusinessReportScreen from "../Screens/BusinessReportScreen";
+import LoadingScreen from "../Screens/LoadingScreen";
 
 const customAppContainer = props => {
-  const username = useSelector(state => state.AuthReducer.username);
-
   const HomeStack = createStackNavigator(
     {
       Home: {
@@ -45,7 +45,7 @@ const customAppContainer = props => {
     }
   );
 
-  const SecondCase = createDrawerNavigator(
+  const DrawerNav = createDrawerNavigator(
     {
       Home: {
         screen: HomeStack,
@@ -113,17 +113,26 @@ const customAppContainer = props => {
         screen: BeforeLogin
       },
       Dashboard: {
-        screen: SecondCase
+        screen: DrawerNav
+      },
+      Loading: {
+        screen: LoadingScreen
       }
     },
     {
-      initialRouteName: "BeforeLogin"
+      initialRouteName: "Loading"
     }
   );
 
   const ContainerNavigator = createAppContainer(switchNavigator);
 
-  return <ContainerNavigator />;
+  return (
+    <ContainerNavigator
+      ref={navigatorRef => {
+        NavigationService.setTopLevelNavigator(navigatorRef);
+      }}
+    />
+  );
 };
 
 const mapStateToProps = state => ({

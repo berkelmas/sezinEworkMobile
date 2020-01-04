@@ -6,13 +6,17 @@ import {
   Image,
   TouchableWithoutFeedback,
   Keyboard,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from "react-native";
 import Toast from "react-native-easy-toast";
 
 // REDUX
 import { connect, useSelector, useDispatch } from "react-redux";
-import { loginStartAction } from "../store/actions/AuthActions";
+import {
+  loginStartAction,
+  loginSuccessAction
+} from "../store/actions/AuthActions";
 
 // ASSETS
 import { colors } from "../assets/styles/colors";
@@ -25,6 +29,7 @@ import SezinInput from "../components/Inputs/SezinInput";
 
 const LoginScreen = props => {
   const loadingRedux = useSelector(state => state.AuthReducer.loading);
+  const failedRedux = useSelector(state => state.AuthReducer.failedLogin);
 
   const [loadingState, setLoadingState] = React.useState(false);
   const [userState, setUserState] = React.useState({
@@ -50,6 +55,12 @@ const LoginScreen = props => {
     );
     return () => didBlurSubscription.remove();
   }, [props.navigation.getParam("toastText", null)]);
+
+  React.useEffect(() => {
+    if (failedRedux) {
+      toast.current.show("Giriş işlemi başarısız.", 1000);
+    }
+  }, [failedRedux]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -100,10 +111,6 @@ const LoginScreen = props => {
               dispatch(
                 loginStartAction(userState.username, userState.password)
               );
-              // setTimeout(() => {
-              //   setLoadingState(false);
-              //   props.navigation.navigate("Home");
-              // }, 1000);
             }}
             color={colors.blue}
             overlayColor={colors.darkBlue}
@@ -145,7 +152,10 @@ const LoginScreen = props => {
           opacity={0.8}
           textStyle={styles.toastText}
           ref={toast}
-          style={styles.toastContainerStyle}
+          style={{
+            ...styles.toastContainerStyle,
+            ...(failedRedux && { backgroundColor: colors.red })
+          }}
         />
       </View>
     </TouchableWithoutFeedback>

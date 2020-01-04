@@ -5,13 +5,15 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  PixelRatio
+  PixelRatio,
+  AsyncStorage
 } from "react-native";
 import Modal from "react-native-modal";
 import Toast from "react-native-easy-toast";
 
 // REDUX
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { loginSuccessAction } from "../store/actions/AuthActions";
 
 // CUSTOM COMPONENTS
 import SezinHeader from "../components/General/SezinHeader";
@@ -26,8 +28,10 @@ import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessO
 import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
 
 const HomeScreen = props => {
-  const username = useSelector(state => state.AuthReducer.username);
-
+  const dispatch = useDispatch();
+  const firstName =
+    useSelector(state => state.AuthReducer.fullName) &&
+    useSelector(state => state.AuthReducer.fullName).split(" ")[0];
   const toast = React.useRef(null);
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
   const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
@@ -83,6 +87,12 @@ const HomeScreen = props => {
     return () => didBlurSubscription.remove();
   }, [props.navigation.getParam("toastText", null)]);
 
+  React.useEffect(() => {
+    AsyncStorage.getItem("auth-values").then(authValue => {
+      dispatch(loginSuccessAction(JSON.parse(authValue)));
+    });
+  }, []);
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -97,7 +107,7 @@ const HomeScreen = props => {
 
       {/* FIRST TITLE PART */}
       <SezinTitle
-        text="Merhaba Sana Nasıl Yardım Edebilirim, Berk?"
+        text={"Merhaba Sana Nasıl Yardım Edebilirim, " + firstName + "?"}
         textStyle={{
           fontSize: 28 / PixelRatio.getFontScale(),
           paddingHorizontal: 20,
