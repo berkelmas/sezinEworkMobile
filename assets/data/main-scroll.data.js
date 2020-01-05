@@ -33,6 +33,7 @@ export const mainScrollData = [
     id: "999",
     image: GunlukRapor,
     title: "Günlük Rapor",
+    link: "DailyReport",
     backendNames: [
       "AnalysisKMD",
       "AnalysisMAMO",

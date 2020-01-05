@@ -20,6 +20,7 @@ import NewBusinessOrderScreen from "../Screens/NewBusinessOrderScreen";
 import TechnicalRoomScreen from "../Screens/TechnicalRoomScreen";
 import BusinessReportScreen from "../Screens/BusinessReportScreen";
 import LoadingScreen from "../Screens/LoadingScreen";
+import DailyReportScreen from "../Screens/DailyReportScreen";
 
 const customAppContainer = props => {
   const HomeStack = createStackNavigator(
@@ -35,6 +36,9 @@ const customAppContainer = props => {
       },
       BusinessReport: {
         screen: BusinessReportScreen
+      },
+      DailyReport: {
+        screen: DailyReportScreen
       },
       GetHelpAfterLoginScreen: {
         screen: GetHelpScreen

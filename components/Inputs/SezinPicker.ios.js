@@ -16,14 +16,9 @@ import IcomoonIcon from "../Typography/IcomoonIcon";
 
 // create a component
 const SezinPicker = props => {
+  console.log("PICKER RENDERED...", props.items);
   const bottomSheet = React.useRef(null);
-  const [items, setItems] = React.useState([
-    {
-      label: `${props.placeholderText} Seçiniz`,
-      value: null
-    },
-    ...props.items
-  ]);
+  const [items, setItems] = React.useState([]);
   const [selectedItem, setSelectedItem] = React.useState(
     props.initialSelection
       ? props.initialSelection
@@ -32,6 +27,18 @@ const SezinPicker = props => {
           label: props.placeholderText
         }
   );
+
+  // set initial props for picker items and
+  // render them again when items prop changes.
+  React.useEffect(() => {
+    setItems([
+      {
+        label: `${props.placeholderText} Seçiniz`,
+        value: null
+      },
+      ...props.items
+    ]);
+  }, [props.items]);
 
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
