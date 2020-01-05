@@ -35,10 +35,13 @@ export const loginStartAction = (username, password) => {
   };
 };
 
-export const loginSuccessAction = res => ({
-  type: SUCCESS_LOGIN,
-  payload: { ...res }
-});
+export const loginSuccessAction = res => {
+  console.log(res.userName);
+  return {
+    type: SUCCESS_LOGIN,
+    payload: { ...res }
+  };
+};
 
 export const loginFailedAction = () => ({
   type: FAILED_LOGIN

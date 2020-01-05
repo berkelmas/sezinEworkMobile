@@ -31,7 +31,6 @@ const LoginScreen = props => {
   const loadingRedux = useSelector(state => state.AuthReducer.loading);
   const failedRedux = useSelector(state => state.AuthReducer.failedLogin);
 
-  const [loadingState, setLoadingState] = React.useState(false);
   const [userState, setUserState] = React.useState({
     username: null,
     password: null
@@ -61,6 +60,10 @@ const LoginScreen = props => {
       toast.current.show("Giriş işlemi başarısız.", 1000);
     }
   }, [failedRedux]);
+
+  React.useEffect(() => {
+    console.log("LOGIN RENDERED");
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

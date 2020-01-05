@@ -3,7 +3,7 @@ import * as authTypes from "../types/AuthTypes";
 
 const initialState = {
   loggedIn: false,
-  username: null,
+  userName: null,
   loading: false,
   accessToken: null,
   fullName: null,
@@ -23,7 +23,7 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         loggedIn: false,
-        username: null,
+        userName: null,
         loading: false,
         accessToken: null,
         fullName: null,
@@ -36,7 +36,7 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         loggedIn: true,
-        username: action.payload.userName,
+        userName: action.payload.userName,
         loading: false,
         accessToken: action.payload.access_token,
         fullName: action.payload.userInformation,
@@ -50,7 +50,7 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         loggedIn: false,
-        username: null,
+        userName: null,
         loading: false,
         accessToken: null,
         fullName: null,

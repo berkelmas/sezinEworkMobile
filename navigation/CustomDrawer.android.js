@@ -5,13 +5,14 @@ import {
   Text,
   View,
   PixelRatio,
-  TouchableOpacity,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  AsyncStorage
 } from "react-native";
 import { DrawerItems } from "react-navigation-drawer";
 import { AntDesign } from "@expo/vector-icons";
 import SezinLogoText from "../assets/images/sezin-logo-text.png";
 import { colors } from "../assets/styles/colors";
+import NavigationService from "./NavigationService";
 
 const SezinDrawer = props => {
   handleLogout = () => {

@@ -10,11 +10,7 @@ import Modal from "react-native-modal";
 import Toast from "react-native-easy-toast";
 
 // REDUX
-import { connect, useSelector, useDispatch } from "react-redux";
-import {
-  loginSuccessAction,
-  getMenuAction
-} from "../store/actions/AuthActions";
+import { connect, useSelector } from "react-redux";
 
 // CUSTOM COMPONENTS
 import SezinHeader from "../components/General/SezinHeader";
@@ -29,11 +25,15 @@ import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessO
 import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
 
 const HomeScreen = props => {
-  const dispatch = useDispatch();
-  const firstName =
-    useSelector(state => state.AuthReducer.fullName) &&
-    useSelector(state => state.AuthReducer.fullName).split(" ")[0];
-  const menuler = useSelector(state => state.AuthReducer.menuItems);
+  const fullName = useSelector(state => state.AuthReducer.fullName);
+  const [firstName, setFirstName] = React.useState(null);
+
+  // WORKAROUND TO MODIFY FULL NAME
+  React.useEffect(() => {
+    if (fullName) {
+      setFirstName(fullName.split(" ")[0]);
+    }
+  }, [fullName]);
 
   const toast = React.useRef(null);
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
@@ -89,19 +89,6 @@ const HomeScreen = props => {
     );
     return () => didBlurSubscription.remove();
   }, [props.navigation.getParam("toastText", null)]);
-
-  React.useEffect(() => {
-    (async function getValues() {
-      const authValue = await AsyncStorage.getItem("auth-values");
-      const menuItems = await AsyncStorage.getItem("menu-items");
-      dispatch(loginSuccessAction(JSON.parse(authValue)));
-      dispatch(getMenuAction(JSON.parse(menuItems)));
-    })();
-  }, []);
-
-  React.useEffect(() => {
-    console.log(menuler);
-  }, [menuler]);
 
   return (
     <ScrollView

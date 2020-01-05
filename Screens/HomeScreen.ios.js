@@ -23,11 +23,21 @@ import {
 } from "../store/actions/AuthActions";
 
 const HomeScreen = props => {
-  const firstName =
-    useSelector(state => state.AuthReducer.fullName) &&
-    useSelector(state => state.AuthReducer.fullName).split(" ")[0];
+  const fullName = useSelector(state => state.AuthReducer.fullName);
+  const [firstName, setFirstName] = React.useState(null);
 
-  const dispatch = useDispatch();
+  // WORKAROUND TO MODIFY FULL NAME
+  React.useEffect(() => {
+    if (fullName) {
+      setFirstName(fullName.split(" ")[0]);
+    }
+  }, [fullName]);
+
+  // const allAuthState = useSelector(state => state.AuthReducer);
+  // React.useEffect(() => {
+  //   console.log(allAuthState);
+  // }, [allAuthState]);
+
   const toast = React.useRef(null);
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
   const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
@@ -67,12 +77,7 @@ const HomeScreen = props => {
   };
 
   React.useEffect(() => {
-    (async function getValues() {
-      const authValue = await AsyncStorage.getItem("auth-values");
-      const menuItems = await AsyncStorage.getItem("menu-items");
-      dispatch(loginSuccessAction(JSON.parse(authValue)));
-      dispatch(getMenuAction(JSON.parse(menuItems)));
-    })();
+    console.log("home rendered");
   }, []);
 
   React.useEffect(() => {
@@ -208,8 +213,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state => ({
-  username: state.AuthReducer.username
-});
-
-export default connect(mapStateToProps)(HomeScreen);
+export default connect()(HomeScreen);
