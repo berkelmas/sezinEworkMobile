@@ -14,9 +14,10 @@ import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
 
 // FAKE DATA
-import { businessOrdersData } from "../../assets/data/business-orders.data";
+import { izinlerData } from "../../assets/data/izinler.data";
 
-const SezinOrders = props => {
+// create a component
+const SezinIzinler = props => {
   return (
     <View
       style={{
@@ -30,7 +31,7 @@ const SezinOrders = props => {
           <View key={index}>
             <TouchableNativeFeedback
               useForeground={true}
-              onPress={props.onPress.bind(this, businessOrdersData[index])}
+              onPress={() => console.log("BERKELMAS")}
             >
               <View
                 style={{
@@ -39,18 +40,18 @@ const SezinOrders = props => {
                 }}
               >
                 <Image
-                  source={businessOrdersData[index].image}
+                  source={izinlerData[index].image}
                   style={styles.imageStyle}
                 />
                 <View style={{ height: "40%", padding: 5 }}>
                   <Text style={styles.placeStyle}>
-                    {businessOrdersData[index].place}
+                    {izinlerData[index].status}
                   </Text>
                   <Text style={styles.titleStyle}>
-                    {businessOrdersData[index].title}
+                    {izinlerData[index].title}
                   </Text>
                   <Text style={styles.dateStyle}>
-                    {businessOrdersData[index].date}
+                    {izinlerData[index].date}
                   </Text>
                 </View>
               </View>
@@ -61,6 +62,7 @@ const SezinOrders = props => {
   );
 };
 
+// define your styles
 const styles = StyleSheet.create({
   container: {
     flexWrap: "wrap",
@@ -104,9 +106,5 @@ const styles = StyleSheet.create({
   }
 });
 
-SezinOrders.propTypes = {
-  containerStyle: ViewPropTypes.style,
-  onPress: PropTypes.func
-};
-
-export default SezinOrders;
+//make this component available to the app
+export default SezinIzinler;

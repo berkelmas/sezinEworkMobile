@@ -1,66 +1,50 @@
+//import liraries
 import React from "react";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
-  Image,
-  Dimensions,
   TouchableOpacity,
-  PixelRatio,
-  TouchableNativeFeedback
+  Image,
+  Dimensions
 } from "react-native";
-import { useSelector } from "react-redux";
 import { colors } from "../../assets/styles/colors";
-import { mainScrollData } from "../../assets/data/main-scroll.data";
+import { izinMainScrollData } from "../../assets/data/izin-main-scroll.data";
 
-const SezinMainScroll = props => {
-  const menuItems = useSelector(state => state.AuthReducer.menuItems).map(
-    item => item.mobilePath
-  );
-
+// create a component
+const SezinMainIzinScroll = props => {
   return (
     <ScrollView
-      disableIntervalMomentum={true}
       showsHorizontalScrollIndicator={false}
       horizontal={true}
       snapToAlignment="start"
       snapToInterval={265}
       decelerationRate="fast"
       contentContainerStyle={{
-        height: (Dimensions.get("window").height * 14) / 32,
+        height: (Dimensions.get("window").height * 11) / 32,
         paddingHorizontal: 20,
         paddingVertical: 10
       }}
     >
-      {mainScrollData.map((item, index) => {
+      {izinMainScrollData.map((item, index) => {
         return (
           <View key={item.id}>
-            <TouchableNativeFeedback
-              useForeground={true}
-              style={{
-                display: item.backendNames.some(item => {
-                  return menuItems.indexOf(item) >= 0 || item === "shown";
-                })
-                  ? "block"
-                  : "none"
-              }}
-              onPress={props.onPress.bind(this, item.link)}
+            <TouchableOpacity
+              onPress={() => console.log("berkelmas")}
+              style={styles.singleViewWrapper}
             >
               <View style={styles.singleView}>
                 <Image
                   source={item.image}
-                  style={{
-                    height: "70%",
-                    width: "100%"
-                  }}
+                  style={{ height: "70%", width: "100%" }}
                 />
                 <View style={styles.contentWrapper}>
                   <Text style={styles.contentHeader}>{item.title}</Text>
                   <Text style={styles.contentDescription}>{item.content}</Text>
                 </View>
               </View>
-            </TouchableNativeFeedback>
+            </TouchableOpacity>
           </View>
         );
       })}
@@ -68,26 +52,40 @@ const SezinMainScroll = props => {
   );
 };
 
+// define your styles
 const styles = StyleSheet.create({
   singleView: {
+    height: (Dimensions.get("window").height * 10) / 32,
     width: 250,
     backgroundColor: "white",
-    elevation: 4,
-    marginRight: 25
+    borderRadius: 10,
+    overflow: "hidden"
+  },
+  singleViewWrapper: {
+    marginRight: 25,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+
+    elevation: 7
   },
   contentWrapper: {
-    paddingHorizontal: 10,
-    paddingVertical: 10
+    padding: 5
   },
   contentHeader: {
     fontFamily: "Airbnb-Book",
-    fontSize: 20 / PixelRatio.getFontScale()
+    fontSize: 20
   },
   contentDescription: {
     fontFamily: "Airbnb-Light",
-    fontSize: 15 / PixelRatio.getFontScale(),
+    fontSize: 15,
     color: colors.gray
   }
 });
 
-export default SezinMainScroll;
+//make this component available to the app
+export default SezinMainIzinScroll;

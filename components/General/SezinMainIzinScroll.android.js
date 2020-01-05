@@ -1,24 +1,20 @@
+//import liraries
 import React from "react";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
-  Image,
+  TouchableNativeFeedback,
   Dimensions,
-  TouchableOpacity,
-  PixelRatio,
-  TouchableNativeFeedback
+  Image,
+  PixelRatio
 } from "react-native";
-import { useSelector } from "react-redux";
 import { colors } from "../../assets/styles/colors";
-import { mainScrollData } from "../../assets/data/main-scroll.data";
+import { izinMainScrollData } from "../../assets/data/izin-main-scroll.data";
 
-const SezinMainScroll = props => {
-  const menuItems = useSelector(state => state.AuthReducer.menuItems).map(
-    item => item.mobilePath
-  );
-
+// create a component
+const SezinIzinMainScroll = props => {
   return (
     <ScrollView
       disableIntervalMomentum={true}
@@ -33,19 +29,12 @@ const SezinMainScroll = props => {
         paddingVertical: 10
       }}
     >
-      {mainScrollData.map((item, index) => {
+      {izinMainScrollData.map((item, index) => {
         return (
           <View key={item.id}>
             <TouchableNativeFeedback
               useForeground={true}
-              style={{
-                display: item.backendNames.some(item => {
-                  return menuItems.indexOf(item) >= 0 || item === "shown";
-                })
-                  ? "block"
-                  : "none"
-              }}
-              onPress={props.onPress.bind(this, item.link)}
+              onPress={() => console.log("BERKELMAS")}
             >
               <View style={styles.singleView}>
                 <Image
@@ -68,6 +57,7 @@ const SezinMainScroll = props => {
   );
 };
 
+// define your styles
 const styles = StyleSheet.create({
   singleView: {
     width: 250,
@@ -90,4 +80,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SezinMainScroll;
+//make this component available to the app
+export default SezinIzinMainScroll;

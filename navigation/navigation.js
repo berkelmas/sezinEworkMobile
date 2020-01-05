@@ -21,6 +21,7 @@ import TechnicalRoomScreen from "../Screens/TechnicalRoomScreen";
 import BusinessReportScreen from "../Screens/BusinessReportScreen";
 import LoadingScreen from "../Screens/LoadingScreen";
 import DailyReportScreen from "../Screens/DailyReportScreen";
+import IzinMainScreen from "../Screens/IzinMainScreen";
 
 const customAppContainer = props => {
   const HomeStack = createStackNavigator(
@@ -46,6 +47,17 @@ const customAppContainer = props => {
     },
     {
       initialRouteName: "Home"
+    }
+  );
+
+  const IzinStack = createStackNavigator(
+    {
+      IzinMain: {
+        screen: IzinMainScreen
+      }
+    },
+    {
+      initialRouteName: "IzinMain"
     }
   );
 
@@ -75,6 +87,15 @@ const customAppContainer = props => {
             <IcomoonIcon name="briefcase" size={30} color={colors.dark} />
           )
         }
+      },
+      Izin: {
+        screen: IzinStack,
+        navigationOptions: {
+          title: "İnsan Kaynakları",
+          drawerIcon: (
+            <IcomoonIcon name="user-chart" size={30} color={colors.dark} />
+          )
+        }
       }
     },
     {
@@ -90,7 +111,7 @@ const customAppContainer = props => {
         },
         iconContainerStyle: {
           height: 35,
-          width: 34,
+          width: 40,
           opacity: 1
         }
       }

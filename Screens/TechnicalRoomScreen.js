@@ -2,7 +2,6 @@
 import React from "react";
 import {
   View,
-  Text,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard
@@ -41,7 +40,8 @@ const TechnicalRoomScreen = props => {
           onValueChange={value => setSelectedDevice(value)}
         />
 
-        {selectedDevice === "mr" ? <SezinMRForm /> : <SezinTomoForm />}
+        {selectedDevice === "mr" && <SezinMRForm />}
+        {selectedDevice === "tomo" && <SezinTomoForm />}
       </View>
     </TouchableWithoutFeedback>
   );

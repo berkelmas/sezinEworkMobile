@@ -32,12 +32,6 @@ const HomeScreen = props => {
       setFirstName(fullName.split(" ")[0]);
     }
   }, [fullName]);
-
-  // const allAuthState = useSelector(state => state.AuthReducer);
-  // React.useEffect(() => {
-  //   console.log(allAuthState);
-  // }, [allAuthState]);
-
   const toast = React.useRef(null);
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
   const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
@@ -75,10 +69,6 @@ const HomeScreen = props => {
       content: item.content
     }));
   };
-
-  React.useEffect(() => {
-    console.log("home rendered");
-  }, []);
 
   React.useEffect(() => {
     const didBlurSubscription = props.navigation.addListener(

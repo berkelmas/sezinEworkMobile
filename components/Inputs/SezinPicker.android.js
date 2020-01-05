@@ -20,14 +20,10 @@ import IcomoonIcon from "../Typography/IcomoonIcon";
 const SezinPicker = props => {
   const bottomSheet = React.useRef(null);
   const [items, setItems] = React.useState([]);
-  const [selectedItem, setSelectedItem] = React.useState(
-    props.initialSelection
-      ? props.initialSelection
-      : {
-          value: null,
-          label: props.placeholderText
-        }
-  );
+  const [selectedItem, setSelectedItem] = React.useState({
+    value: null,
+    label: props.placeholderText
+  });
 
   // set initial props for picker items and
   // render them again when items prop changes.
@@ -40,6 +36,18 @@ const SezinPicker = props => {
       ...props.items
     ]);
   }, [props.items]);
+
+  // set initial selected props for picker items
+  React.useEffect(() => {
+    setSelectedItem(
+      props.initialSelection
+        ? props.initialSelection
+        : {
+            value: null,
+            label: props.placeholderText
+          }
+    );
+  }, [props.initialSelection]);
 
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
