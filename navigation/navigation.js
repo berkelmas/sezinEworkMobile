@@ -22,6 +22,7 @@ import BusinessReportScreen from "../Screens/BusinessReportScreen";
 import LoadingScreen from "../Screens/LoadingScreen";
 import DailyReportScreen from "../Screens/DailyReportScreen";
 import IzinMainScreen from "../Screens/IzinMainScreen";
+import NewIzinScreen from "../Screens/NewIzinScreen";
 
 const customAppContainer = props => {
   const HomeStack = createStackNavigator(
@@ -54,6 +55,9 @@ const customAppContainer = props => {
     {
       IzinMain: {
         screen: IzinMainScreen
+      },
+      NewIzin: {
+        screen: NewIzinScreen
       }
     },
     {
@@ -91,7 +95,7 @@ const customAppContainer = props => {
       Izin: {
         screen: IzinStack,
         navigationOptions: {
-          title: "İnsan Kaynakları",
+          title: "İzin Yönetimi",
           drawerIcon: (
             <IcomoonIcon name="user-chart" size={30} color={colors.dark} />
           )

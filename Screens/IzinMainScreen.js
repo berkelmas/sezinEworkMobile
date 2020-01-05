@@ -49,7 +49,7 @@ const IzinMainScreen = props => {
 
       <SezinIzinler />
       <SezinButton
-        onPress={() => console.log("BERKELMAS")}
+        onPress={() => props.navigation.navigate("NewIzin")}
         containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}
         buttonTextStyle={{ fontSize: 22 }}
         color={colors.green}
