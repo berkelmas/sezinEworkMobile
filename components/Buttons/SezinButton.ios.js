@@ -22,7 +22,11 @@ const SezinButton = props => {
       <TouchableHighlight
         onPress={props.onPress}
         underlayColor={props.overlayColor}
-        style={{ ...styles.loginButton, backgroundColor: props.color }}
+        style={{
+          ...styles.loginButton,
+          ...props.buttonStyle,
+          backgroundColor: props.color
+        }}
       >
         <Text style={{ ...styles.buttonText, ...props.buttonTextStyle }}>
           {props.text}
@@ -36,21 +40,20 @@ const styles = StyleSheet.create({
   loginButton: {
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 8
   },
   buttonContainer: {
     shadowOffset: {
       width: 0,
-      height: 7
+      height: 3
     },
     shadowOpacity: 0.43,
     shadowRadius: 9.51,
 
     elevation: 15,
-    borderRadius: 8,
-    overflow: "hidden"
+    borderRadius: 8
   },
   buttonText: {
     color: "white",
@@ -65,7 +68,8 @@ SezinButton.propTypes = {
   text: PropTypes.string,
   overlayColor: PropTypes.string,
   containerStyle: ViewPropTypes.style,
-  buttonTextStyle: Text.propTypes.style
+  buttonTextStyle: Text.propTypes.style,
+  buttonStyle: PropTypes.object
 };
 
 export default SezinButton;

@@ -1,10 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, AsyncStorage } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import Modal from "react-native-modal";
 import Toast from "react-native-easy-toast";
 
 // REDUX
-import { connect, useSelector, useDispatch } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 // CUSTOM COMPONENTS
 import SezinHeader from "../components/General/SezinHeader";
@@ -17,10 +17,6 @@ import SezinOrders from "../components/General/SezinOrders";
 import { colors } from "../assets/styles/colors";
 import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
 import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
-import {
-  loginSuccessAction,
-  getMenuAction
-} from "../store/actions/AuthActions";
 
 const HomeScreen = props => {
   const fullName = useSelector(state => state.AuthReducer.fullName);
@@ -124,7 +120,11 @@ const HomeScreen = props => {
 
       <SezinButton
         onPress={() => props.navigation.navigate("AllAnnouncements")}
-        containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}
+        containerStyle={{
+          marginTop: 20,
+          paddingHorizontal: 20,
+          paddingBottom: 20
+        }}
         buttonTextStyle={{ fontSize: 22 }}
         color={colors.green}
         overlayColor={colors.darkGreen}
@@ -134,7 +134,7 @@ const HomeScreen = props => {
       {/* BUSINESS ORDERS PART */}
       <SezinTitle
         text="Üzerimdeki Görevler"
-        textStyle={{ paddingHorizontal: 20, paddingBottom: 2, marginTop: 20 }}
+        textStyle={{ paddingHorizontal: 20, paddingBottom: 2 }}
       />
       <SezinDescription
         containerStyle={{ paddingHorizontal: 20 }}
@@ -147,10 +147,15 @@ const HomeScreen = props => {
         color={colors.green}
         overlayColor={colors.darkGreen}
         text="Tümünü Gör"
-        containerStyle={{ paddingHorizontal: 20, marginTop: 20 }}
+        containerStyle={{
+          paddingHorizontal: 20,
+          marginTop: 20,
+          paddingBottom: 40
+        }}
       />
 
       <Modal
+        useNativeDriver={true}
         animationIn="fadeInUpBig"
         onSwipeComplete={() => setModalOrderOpen(false)}
         swipeDirection={["down", "left", "right", "up"]}
@@ -160,6 +165,7 @@ const HomeScreen = props => {
       </Modal>
 
       <Modal
+        useNativeDriver={true}
         animationIn="fadeInUpBig"
         onSwipeComplete={() => setModalAnnouncementOpen(false)}
         swipeDirection={["down", "left", "right", "up"]}
@@ -179,8 +185,6 @@ const HomeScreen = props => {
           backgroundColor: props.navigation.getParam("toastColor", null)
         }}
       />
-
-      <View style={{ height: 50 }} />
     </ScrollView>
   );
 };

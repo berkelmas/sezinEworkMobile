@@ -27,10 +27,19 @@ const SezinLoadingButton = props => {
         disabled={props.loading ? true : false}
         onPress={props.onPress}
         underlayColor={props.overlayColor}
-        style={{ ...styles.Button, backgroundColor: props.color }}
+        style={{
+          ...styles.Button,
+          ...props.buttonStyle,
+          backgroundColor: props.color
+        }}
       >
         {props.loading ? (
-          <View style={{ height: 32, width: 25 }}>
+          <View
+            style={{
+              height: props.buttonHeight ? props.buttonHeight : 32,
+              width: 25
+            }}
+          >
             <MaterialIndicator color="white" size={30} />
           </View>
         ) : (
@@ -48,7 +57,7 @@ const styles = StyleSheet.create({
   Button: {
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 8
   },
@@ -76,7 +85,9 @@ SezinLoadingButton.propTypes = {
   overlayColor: PropTypes.string,
   containerStyle: ViewPropTypes.style,
   buttonTextStyle: Text.propTypes.style,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  buttonStyle: PropTypes.object,
+  buttonHeight: PropTypes.number
 };
 
 //make this component available to the app

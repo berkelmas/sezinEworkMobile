@@ -20,9 +20,16 @@ const SezinButton = props => {
         shadowColor: props.color
       }}
     >
-      <View style={{ borderRadius: 8, overflow: "hidden" }}>
+      <View
+        style={{ borderRadius: 8, overflow: "hidden", ...props.buttonStyle }}
+      >
         <TouchableNativeFeedback onPress={props.onPress}>
-          <View style={{ ...styles.loginButton, backgroundColor: props.color }}>
+          <View
+            style={{
+              ...styles.loginButton,
+              backgroundColor: props.color
+            }}
+          >
             <Text style={{ ...styles.buttonText, ...props.buttonTextStyle }}>
               {props.text}
             </Text>
@@ -64,7 +71,8 @@ SezinButton.propTypes = {
   text: PropTypes.string,
   overlayColor: PropTypes.string,
   containerStyle: ViewPropTypes.style,
-  buttonTextStyle: Text.propTypes.style
+  buttonTextStyle: Text.propTypes.style,
+  buttonStyle: PropTypes.object
 };
 
 export default SezinButton;

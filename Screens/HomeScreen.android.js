@@ -162,6 +162,7 @@ const HomeScreen = props => {
       />
 
       <Modal
+        useNativeDriver={true}
         animationIn="fadeInUpBig"
         onSwipeComplete={() => setModalOrderOpen(false)}
         swipeDirection={["down", "left", "right", "up"]}
@@ -171,6 +172,7 @@ const HomeScreen = props => {
       </Modal>
 
       <Modal
+        useNativeDriver={true}
         animationIn="fadeInUpBig"
         onSwipeComplete={() => setModalAnnouncementOpen(false)}
         swipeDirection={["down", "left", "right", "up"]}

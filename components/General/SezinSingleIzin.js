@@ -12,12 +12,13 @@ import {
 import PropTypes from "prop-types";
 import IzinImage1 from "../../assets/images/izin/izin-image-1.png";
 import { colors } from "../../assets/styles/colors";
+import SezinButton from "../Buttons/SezinButton";
 
 // create a component
 const SezinSingleIzin = props => {
   const _renderStatus = () => {
     switch (props.status) {
-      case "Bekleniyor":
+      case "Bekliyor":
         return (
           <Text style={{ ...styles.bottomRightTexts, color: colors.blue }}>
             {props.status}
@@ -68,6 +69,18 @@ const SezinSingleIzin = props => {
           <Text style={styles.bottomTexts}>Durum:</Text>
           {_renderStatus()}
         </View>
+        <SezinButton
+          onPress={() => props.onCancelRequest()}
+          color={colors.red}
+          overlayColor={colors.darkRed}
+          text="Talebi İptal Et"
+          containerStyle={{
+            marginVertical: 10
+          }}
+          buttonTextStyle={{
+            fontSize: 19
+          }}
+        />
       </View>
     </View>
   );
@@ -125,7 +138,8 @@ SezinSingleIzin.propTypes = {
   date: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
-  status: PropTypes.string
+  status: PropTypes.string,
+  onCancelRequest: PropTypes.func
 };
 
 //make this component available to the app
