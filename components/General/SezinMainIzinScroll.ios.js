@@ -31,7 +31,7 @@ const SezinMainIzinScroll = props => {
         return (
           <View key={item.id}>
             <TouchableOpacity
-              onPress={() => console.log("berkelmas")}
+              onPress={props.onPress.bind(this, item.link)}
               style={styles.singleViewWrapper}
             >
               <View style={styles.singleView}>

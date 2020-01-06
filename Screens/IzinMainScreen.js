@@ -36,7 +36,7 @@ const IzinMainScreen = props => {
         <SezinDescription text=" yıllık izin hakkınız bulunmaktadır." />
       </View>
 
-      <SezinMainIzinScroll />
+      <SezinMainIzinScroll onPress={props.navigation.navigate.bind(this)} />
 
       <SezinTitle
         text="Son İzin Taleplerim"
@@ -49,7 +49,7 @@ const IzinMainScreen = props => {
 
       <SezinIzinler />
       <SezinButton
-        onPress={() => props.navigation.navigate("NewIzin")}
+        onPress={props.navigation.navigate.bind(this, "MyIzinRequests")}
         containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}
         buttonTextStyle={{ fontSize: 22 }}
         color={colors.green}

@@ -8,6 +8,7 @@ export const izinMainScrollData = [
     image: NewIzinImage,
     title: "Yeni İzin Talebi",
     backendNames: ["NewIzin"],
+    link: "NewIzin",
     content: "Buradan Yeni İzin Talebinde Bulunabilirsiniz."
   },
   {
@@ -15,6 +16,7 @@ export const izinMainScrollData = [
     image: IzinImage1,
     title: "İzin Taleplerim",
     backendNames: ["MR", "CT"],
+    link: "MyIzinRequests",
     content: "Buradan İzin Taleplerinizi Takip Edebilirsiniz."
   },
   {

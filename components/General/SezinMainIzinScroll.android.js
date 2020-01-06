@@ -34,7 +34,7 @@ const SezinIzinMainScroll = props => {
           <View key={item.id}>
             <TouchableNativeFeedback
               useForeground={true}
-              onPress={() => console.log("BERKELMAS")}
+              onPress={props.onPress.bind(this, item.link)}
             >
               <View style={styles.singleView}>
                 <Image
