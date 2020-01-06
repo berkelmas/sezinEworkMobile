@@ -63,3 +63,70 @@ export const izinlerData = [
     date: "23 - 26 Mart"
   }
 ];
+
+export const izinlerOnayData = [
+  {
+    id: "123",
+    image: IzinImage3,
+    status: "Onaylandı",
+    title: "Şua İzni",
+    date: "23 - 26 Mart",
+    askedBy: "Berk Elmas"
+  },
+  {
+    id: "332",
+    image: IzinImage5,
+    status: "Bekliyor",
+    title: "Ölüm İzni",
+    date: "3 - 6 Ocak",
+    askedBy: "Durmus Sipahi"
+  },
+  {
+    id: "4343",
+    image: IzinImage2,
+    status: "Onaylandı",
+    title: "Yarım Gün İzin",
+    date: "23 - 26 Mart",
+    askedBy: "Berk Elmas"
+  },
+  {
+    id: "565",
+    image: IzinImage6,
+    status: "Reddedildi",
+    title: "Diğer İzin",
+    date: "23 - 26 Mart",
+    askedBy: "Mehmet Yilmaz"
+  },
+  {
+    id: "5652",
+    image: IzinImage3,
+    status: "Bekliyor",
+    title: "Diğer İzin",
+    date: "23 - 26 Mart",
+    askedBy: "Osman Yildirim"
+  },
+  {
+    id: "5653",
+    image: IzinImage1,
+    status: "Reddedildi",
+    title: "MR Bildirim",
+    date: "23 - 26 Mart",
+    askedBy: "Ahmet Keser"
+  },
+  {
+    id: "5654",
+    image: IzinImage2,
+    status: "Bekliyor",
+    title: "Yarım Gün İzin",
+    date: "23 - 26 Mart",
+    askedBy: "Ali Yilmaz"
+  },
+  {
+    id: "5655",
+    image: IzinImage3,
+    status: "Onaylandı",
+    title: "Ölüm İzni",
+    date: "23 - 26 Mart",
+    askedBy: "Emre Kara"
+  }
+];

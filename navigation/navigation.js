@@ -24,6 +24,7 @@ import DailyReportScreen from "../Screens/DailyReportScreen";
 import IzinMainScreen from "../Screens/IzinMainScreen";
 import NewIzinScreen from "../Screens/NewIzinScreen";
 import MyIzinRequestsScreen from "../Screens/MyIzinRequestsScreen";
+import IzinOnayScreen from "../Screens/IzinOnayScreen";
 
 const customAppContainer = props => {
   const HomeStack = createStackNavigator(
@@ -62,6 +63,9 @@ const customAppContainer = props => {
       },
       MyIzinRequests: {
         screen: MyIzinRequestsScreen
+      },
+      IzinOnay: {
+        screen: IzinOnayScreen
       }
     },
     {

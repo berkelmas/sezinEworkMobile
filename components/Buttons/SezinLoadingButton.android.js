@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   Button: {
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 8
   },
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.43,
     shadowRadius: 9.51,
 
-    elevation: 15,
+    elevation: 10,
     borderRadius: 8,
     overflow: "hidden"
   },

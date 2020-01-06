@@ -24,7 +24,7 @@ export const izinMainScrollData = [
     id: "999",
     image: IzinImage2,
     title: "İzin Talebi Onayı",
-    link: "DailyReport",
+    link: "IzinOnay",
     backendNames: ["AnalysisKMD"],
     content: "Buradan Onayınızdaki İzin Taleplerini Yönetebilirsiniz."
   },
