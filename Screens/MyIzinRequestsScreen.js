@@ -1,21 +1,10 @@
 //import liraries
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-  Dimensions,
-  PixelRatio,
-  TouchableWithoutFeedback,
-  Keyboard
-} from "react-native";
+import { View, StyleSheet, FlatList, Dimensions } from "react-native";
 
 // MATERIAL LOADING INDICATOR
 import { MaterialIndicator } from "react-native-indicators";
 import Toast from "react-native-easy-toast";
-import Modal from "react-native-modal";
 
 import { colors } from "../assets/styles/colors";
 
@@ -24,11 +13,9 @@ import SezinTitle from "../components/Typography/SezinTitle";
 import SezinHeader from "../components/General/SezinHeader";
 import SezinSingleIzin from "../components/General/SezinSingleIzin";
 import SezinDescription from "../components/Typography/SezinDescription";
-import SezinInput from "../components/Inputs/SezinInput";
-import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
-import SezinButton from "../components/Buttons/SezinButton";
 
 import { izinlerData } from "../assets/data/izinler.data";
+import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
 
 // create a component
 const MyIzinRequestsScreen = props => {
@@ -117,91 +104,20 @@ const MyIzinRequestsScreen = props => {
           }
         }}
       />
-      <Modal
-        useNativeDriver={true}
+      <GetInfoBeforeActionModal
+        isModalOpen={isCancelModalOpen}
         onBackdropPress={() => setIsCancelModalOpen(false)}
-        isVisible={isCancelModalOpen}
-      >
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss.bind()}>
-            <View style={{ ...styles.modalView }}>
-              <View
-                style={{
-                  backgroundColor: "white",
-                  height: 45,
-                  paddingVertical: 5,
-                  paddingHorizontal: 10,
-                  justifyContent: "center"
-                }}
-              >
-                <Text style={{ fontFamily: "Airbnb-Light", fontSize: 20 }}>
-                  İzin Talebi İptali
-                </Text>
-              </View>
-              {/* TINY LINE */}
-              <View
-                style={{ height: 0.4, backgroundColor: "gray", width: "100%" }}
-              />
-              <View
-                keyboardDismissMode="on-drag"
-                style={{
-                  backgroundColor: "white",
-                  paddingVertical: 15,
-                  paddingHorizontal: 10
-                }}
-              >
-                <SezinDescription
-                  text="İzin talebinizi iptal etmek istediğinize emin misiniz?"
-                  textStyle={{
-                    fontSize: 17 / PixelRatio.getFontScale(),
-                    color: colors.dark,
-                    paddingBottom: 15
-                  }}
-                />
-                <SezinInput
-                  label="İptal Gerekçesi"
-                  multiline={true}
-                  onChangeText={() => console.log("berk")}
-                />
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                    marginTop: "8%"
-                  }}
-                >
-                  <SezinButton
-                    onPress={() => setIsCancelModalOpen(false)}
-                    color={colors.middleDarkGray}
-                    overlayColor="#908F8F"
-                    text="Kapat"
-                    buttonTextStyle={{ fontSize: 20 }}
-                    buttonStyle={{ width: 140 }}
-                  />
-                  <SezinLoadingButton
-                    loading={cancelRequestLoading}
-                    onPress={() => sendCancelRequest()}
-                    color={colors.red}
-                    overlayColor={colors.darkRed}
-                    text="İptal Et"
-                    buttonTextStyle={{
-                      fontSize: 20
-                    }}
-                    buttonStyle={{ width: 140 }}
-                    buttonHeight={26}
-                  />
-                </View>
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      </Modal>
-
+        onChangeModalText={text => console.log(text)}
+        onCloseButtonPressed={() => setIsCancelModalOpen(false)}
+        onApproveButtonPressed={() => sendCancelRequest()}
+        loadingApproveButton={cancelRequestLoading}
+        approveButtonColor={colors.red}
+        approveButtonHighlightColor={colors.darkRed}
+        descriptionText="İzin talebinizi iptal etmek istediğinize emin misiniz?"
+        inputLabel="İptal Gerekçesi"
+        headerText="İzin Talebi İptali"
+        approveButtonText="İptal Et"
+      />
       <Toast
         position="top"
         positionValue={50}

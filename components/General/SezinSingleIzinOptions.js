@@ -1,5 +1,5 @@
 //import liraries
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -31,35 +31,17 @@ const SezinSingleIzinOptions = props => {
           look like readable English.
         </Text>
 
-        <View
-          onPress={console.log.bind(this, "berkelmas")}
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingTop: 15,
-            paddingBottom: 5
-          }}
-        >
+        <View style={styles.askedByContainer}>
           <Text style={styles.bottomTexts}>İzin Talep Eden:</Text>
           <Text style={{ ...styles.bottomRightTexts, color: colors.blue }}>
             {props.askedBy}
           </Text>
         </View>
 
-        <View
-          style={{
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            marginTop: "4%",
-            paddingBottom: "4%"
-          }}
-        >
+        <View style={styles.bottomButtonsContainer}>
           <SezinLoadingButton
-            loading={false}
-            onPress={() => console.log("")}
+            loading={props.denyLoading}
+            onPress={() => props.onDenyRequest()}
             color={colors.red}
             overlayColor={colors.darkRed}
             text="Reddet"
@@ -70,8 +52,8 @@ const SezinSingleIzinOptions = props => {
             buttonHeight={26}
           />
           <SezinLoadingButton
-            loading={false}
-            onPress={() => console.log("")}
+            loading={props.approveLoading}
+            onPress={() => props.onApproveRequest()}
             color={colors.green}
             overlayColor={colors.darkGreen}
             text="Onayla"
@@ -131,6 +113,21 @@ const styles = StyleSheet.create({
   bottomRightTexts: {
     fontSize: 20 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Light"
+  },
+  bottomButtonsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: "4%",
+    paddingBottom: "4%"
+  },
+  askedByContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 15,
+    paddingBottom: 5
   }
 });
 
@@ -141,8 +138,10 @@ SezinSingleIzinOptions.propTypes = {
   description: PropTypes.string,
   status: PropTypes.string,
   askedBy: PropTypes.string,
-  onCancelRequest: PropTypes.func,
-  onApproveRequest: PropTypes.func
+  onDenyRequest: PropTypes.func,
+  onApproveRequest: PropTypes.func,
+  denyLoading: PropTypes.bool,
+  approveLoading: PropTypes.bool
 };
 
 //make this component available to the app

@@ -27,15 +27,19 @@ import SezinDescription from "../components/Typography/SezinDescription";
 import SezinInput from "../components/Inputs/SezinInput";
 import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
 import SezinButton from "../components/Buttons/SezinButton";
+import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
 
 import { izinlerOnayData } from "../assets/data/izinler.data";
+import AskAgainBeforeActionModal from "../components/Modal/AskAgainBeforeActionModal";
 
 // create a component
 const IzinOnayScreen = props => {
   const [izinRequests, setIzinRequests] = useState(null);
   const [loadingState, setLoadingState] = useState(false);
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [cancelRequestLoading, setCancelRequestLoading] = useState(false);
+  const [approveRequestLoading, setApproveRequestLoading] = useState(false);
+  const [denyRequestLoading, setDenyRequestLoading] = useState(false);
+  const [isDenyModalOpen, setIsDenyModalOpen] = useState(false);
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const toast = useRef(null);
 
   useEffect(() => {
@@ -54,12 +58,21 @@ const IzinOnayScreen = props => {
     }, 1500);
   };
 
-  const sendCancelRequest = () => {
-    setCancelRequestLoading(true);
+  const sendDenyRequest = () => {
+    setDenyRequestLoading(true);
     setTimeout(() => {
-      setCancelRequestLoading(false);
-      setIsCancelModalOpen(false);
-      toast.current.show("İzin talebi iptali başarılı", 1000);
+      setDenyRequestLoading(false);
+      setIsDenyModalOpen(false);
+      toast.current.show("İzin talebi reddi başarılı", 1000);
+    }, 1500);
+  };
+
+  const sendApproveRequest = () => {
+    setApproveRequestLoading(true);
+    setTimeout(() => {
+      setApproveRequestLoading(false);
+      setIsApproveModalOpen(false);
+      toast.current.show("İzin talebi onayı başarılı", 1000);
     }, 1500);
   };
 
@@ -74,7 +87,10 @@ const IzinOnayScreen = props => {
               marginBottom: 25,
               marginTop: index === 0 ? 20 : 0
             }}
-            onCancelRequest={setIsCancelModalOpen.bind(this, true)}
+            onDenyRequest={() => setIsDenyModalOpen(true)}
+            onApproveRequest={() => setIsApproveModalOpen(true)}
+            approveLoading={false}
+            denyLoading={false}
             {...item}
           />
         )}
@@ -117,91 +133,33 @@ const IzinOnayScreen = props => {
           }
         }}
       />
-      <Modal
-        useNativeDriver={true}
-        onBackdropPress={() => setIsCancelModalOpen(false)}
-        isVisible={isCancelModalOpen}
-      >
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss.bind()}>
-            <View style={{ ...styles.modalView }}>
-              <View
-                style={{
-                  backgroundColor: "white",
-                  height: 45,
-                  paddingVertical: 5,
-                  paddingHorizontal: 10,
-                  justifyContent: "center"
-                }}
-              >
-                <Text style={{ fontFamily: "Airbnb-Light", fontSize: 20 }}>
-                  İzin Talebi İptali
-                </Text>
-              </View>
-              {/* TINY LINE */}
-              <View
-                style={{ height: 0.4, backgroundColor: "gray", width: "100%" }}
-              />
-              <View
-                keyboardDismissMode="on-drag"
-                style={{
-                  backgroundColor: "white",
-                  paddingVertical: 15,
-                  paddingHorizontal: 10
-                }}
-              >
-                <SezinDescription
-                  text="İzin talebinizi iptal etmek istediğinize emin misiniz?"
-                  textStyle={{
-                    fontSize: 17 / PixelRatio.getFontScale(),
-                    color: colors.dark,
-                    paddingBottom: 15
-                  }}
-                />
-                <SezinInput
-                  label="İptal Gerekçesi"
-                  multiline={true}
-                  onChangeText={() => console.log("berk")}
-                />
 
-                <View
-                  style={{
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                    marginTop: "8%"
-                  }}
-                >
-                  <SezinButton
-                    onPress={() => setIsCancelModalOpen(false)}
-                    color={colors.middleDarkGray}
-                    overlayColor="#908F8F"
-                    text="Kapat"
-                    buttonTextStyle={{ fontSize: 20 }}
-                    buttonStyle={{ width: 140 }}
-                  />
-                  <SezinLoadingButton
-                    loading={cancelRequestLoading}
-                    onPress={() => sendCancelRequest()}
-                    color={colors.red}
-                    overlayColor={colors.darkRed}
-                    text="İptal Et"
-                    buttonTextStyle={{
-                      fontSize: 20
-                    }}
-                    buttonStyle={{ width: 140 }}
-                    buttonHeight={26}
-                  />
-                </View>
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      </Modal>
-
+      <GetInfoBeforeActionModal
+        isModalOpen={isDenyModalOpen}
+        onBackdropPress={() => setIsDenyModalOpen(false)}
+        onChangeModalText={text => console.log(text)}
+        onCloseButtonPressed={() => setIsDenyModalOpen(false)}
+        onApproveButtonPressed={() => sendDenyRequest()}
+        loadingApproveButton={denyRequestLoading}
+        approveButtonColor={colors.red}
+        approveButtonHighlightColor={colors.darkRed}
+        descriptionText="Personelin izin talebini reddetmek istediğinize emin misiniz?"
+        inputLabel="Ret Gerekçesi"
+        headerText="İzin Talebi Reddet"
+        approveButtonText="Reddet"
+      />
+      <AskAgainBeforeActionModal
+        isModalOpen={isApproveModalOpen}
+        onBackdropPress={() => setIsApproveModalOpen(false)}
+        onCloseButtonPressed={() => setIsApproveModalOpen(false)}
+        onApproveButtonPressed={() => sendApproveRequest()}
+        loadingApproveButton={approveRequestLoading}
+        approveButtonColor={colors.green}
+        approveButtonHighlightColor={colors.darkGreen}
+        descriptionText="Personelin izin talebini onaylamak istediğinize emin misiniz?"
+        headerText="İzin Talebi Onayla"
+        approveButtonText="Onayla"
+      />
       <Toast
         position="top"
         positionValue={50}
@@ -210,7 +168,6 @@ const IzinOnayScreen = props => {
         ref={toast}
         style={{
           ...styles.toastContainerStyle,
-          // backgroundColor: props.navigation.getParam("toastColor", null)
           backgroundColor: colors.green
         }}
       />
@@ -221,7 +178,7 @@ const IzinOnayScreen = props => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    paddingHorizontal: 20
   },
   modalView: {
     backgroundColor: "white",
