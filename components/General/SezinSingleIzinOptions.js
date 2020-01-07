@@ -38,13 +38,20 @@ const SezinSingleIzinOptions = props => {
           </Text>
         </View>
 
+        <View style={styles.askedByContainer}>
+          <Text style={styles.bottomTexts}>İzin Başlangıcı:</Text>
+          <Text style={{ ...styles.bottomRightTexts, color: colors.blue }}>
+            {props.startDate}
+          </Text>
+        </View>
+
         <View style={styles.bottomButtonsContainer}>
           <SezinLoadingButton
             loading={props.denyLoading}
             onPress={() => props.onDenyRequest()}
             color={colors.red}
             overlayColor={colors.darkRed}
-            text="Reddet"
+            text={props.denyButtonText}
             buttonTextStyle={{
               fontSize: 20
             }}
@@ -56,7 +63,7 @@ const SezinSingleIzinOptions = props => {
             onPress={() => props.onApproveRequest()}
             color={colors.green}
             overlayColor={colors.darkGreen}
-            text="Onayla"
+            text={props.approveButtonText}
             buttonTextStyle={{
               fontSize: 20
             }}
@@ -138,10 +145,13 @@ SezinSingleIzinOptions.propTypes = {
   description: PropTypes.string,
   status: PropTypes.string,
   askedBy: PropTypes.string,
+  startDate: PropTypes.string,
   onDenyRequest: PropTypes.func,
   onApproveRequest: PropTypes.func,
   denyLoading: PropTypes.bool,
-  approveLoading: PropTypes.bool
+  approveLoading: PropTypes.bool,
+  approveButtonText: PropTypes.string,
+  denyButtonText: PropTypes.string
 };
 
 //make this component available to the app

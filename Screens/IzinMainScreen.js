@@ -47,7 +47,7 @@ const IzinMainScreen = props => {
         textStyle={{ marginHorizontal: 20 }}
       />
 
-      <SezinIzinler />
+      <SezinIzinler onIzinPress={izin => console.log(izin)} />
       <SezinButton
         onPress={props.navigation.navigate.bind(this, "MyIzinRequests")}
         containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}

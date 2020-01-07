@@ -69,6 +69,21 @@ const SezinSingleIzin = props => {
           <Text style={styles.bottomTexts}>Durum:</Text>
           {_renderStatus()}
         </View>
+        <View
+          onPress={console.log.bind(this, "berkelmas")}
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingTop: 15,
+            paddingBottom: 5
+          }}
+        >
+          <Text style={styles.bottomTexts}>Başlangıç Tarihi:</Text>
+          <Text style={{ ...styles.bottomRightTexts, color: colors.blue }}>
+            {props.startDate}
+          </Text>
+        </View>
         <SezinButton
           onPress={() => props.onCancelRequest()}
           color={colors.red}

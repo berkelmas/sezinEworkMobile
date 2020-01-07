@@ -19,8 +19,8 @@ import { izinlerOnayData } from "../assets/data/izinler.data";
 import AskAgainBeforeActionModal from "../components/Modal/AskAgainBeforeActionModal";
 
 // create a component
-const IzinOnayScreen = props => {
-  const [izinRequests, setIzinRequests] = useState(null);
+const IzinCancelApproveScreen = props => {
+  const [izinCancelRequests, setIzinCancelRequests] = useState(null);
   const [loadingState, setLoadingState] = useState(false);
   const [approveRequestLoading, setApproveRequestLoading] = useState(false);
   const [denyRequestLoading, setDenyRequestLoading] = useState(false);
@@ -31,7 +31,7 @@ const IzinOnayScreen = props => {
   useEffect(() => {
     setLoadingState(true);
     setTimeout(() => {
-      setIzinRequests(izinlerOnayData.slice(0, 3));
+      setIzinCancelRequests(izinlerOnayData.slice(0, 3));
       setLoadingState(false);
     }, 1000);
   }, []);
@@ -39,7 +39,7 @@ const IzinOnayScreen = props => {
   const _loadData = () => {
     setLoadingState(true);
     setTimeout(() => {
-      setIzinRequests(prev => [...prev, ...izinlerOnayData.slice(3, 6)]);
+      setIzinCancelRequests(prev => [...prev, ...izinlerOnayData.slice(3, 6)]);
       setLoadingState(false);
     }, 1500);
   };
@@ -49,7 +49,7 @@ const IzinOnayScreen = props => {
     setTimeout(() => {
       setDenyRequestLoading(false);
       setIsDenyModalOpen(false);
-      toast.current.show("İzin talebi reddi başarılı", 1000);
+      toast.current.show("İzin talebi iptal reddi başarılı", 1000);
     }, 1500);
   };
 
@@ -58,14 +58,14 @@ const IzinOnayScreen = props => {
     setTimeout(() => {
       setApproveRequestLoading(false);
       setIsApproveModalOpen(false);
-      toast.current.show("İzin talebi onayı başarılı", 1000);
+      toast.current.show("İzin talebi iptal onayı başarılı", 1000);
     }, 1500);
   };
 
   return (
     <>
       <FlatList
-        data={izinRequests}
+        data={izinCancelRequests}
         keyExtractor={(item, index) => String(index)}
         renderItem={({ item, index }) => (
           <SezinSingleIzinOptions
@@ -77,8 +77,8 @@ const IzinOnayScreen = props => {
             onApproveRequest={() => setIsApproveModalOpen(true)}
             approveLoading={false}
             denyLoading={false}
-            approveButtonText="Onayla"
-            denyButtonText="Reddet"
+            approveButtonText="İptali Onayla"
+            denyButtonText="İptali Reddet"
             {...item}
           />
         )}
@@ -93,11 +93,8 @@ const IzinOnayScreen = props => {
               onPressLeft={() => props.navigation.goBack()}
               leftIconName="chevron-left"
             />
-            <SezinTitle text="İzin Talebi Onayı" />
-            <SezinDescription
-              text="Buradan onay veya ret işleminde bulunmanız gereken izin taleplerine 
-              ulaşabilirsiniz."
-            />
+            <SezinTitle text="İptal Talebi Onayı" />
+            <SezinDescription text="Buradan iptal talebinde bulunulmuş izin taleplerini yönetebilirsiniz." />
           </View>
         )}
         ListFooterComponent={() => {
@@ -131,10 +128,10 @@ const IzinOnayScreen = props => {
         loadingApproveButton={denyRequestLoading}
         approveButtonColor={colors.red}
         approveButtonHighlightColor={colors.darkRed}
-        descriptionText="Personelin izin talebini reddetmek istediğinize emin misiniz?"
+        descriptionText="Personelin izin talebi iptal isteğini reddetmek istediğinize emin misiniz?"
         inputLabel="Ret Gerekçesi"
-        headerText="İzin Talebi Reddet"
-        approveButtonText="Reddet"
+        headerText="İzin İptal Talebi Reddet"
+        approveButtonText="İptali Reddet"
       />
       <AskAgainBeforeActionModal
         isModalOpen={isApproveModalOpen}
@@ -144,9 +141,9 @@ const IzinOnayScreen = props => {
         loadingApproveButton={approveRequestLoading}
         approveButtonColor={colors.green}
         approveButtonHighlightColor={colors.darkGreen}
-        descriptionText="Personelin izin talebini onaylamak istediğinize emin misiniz?"
-        headerText="İzin Talebi Onayla"
-        approveButtonText="Onayla"
+        descriptionText="Personelin izin iptal talebini onaylamak istediğinize emin misiniz?"
+        headerText="İzin İptal Talebi Onayla"
+        approveButtonText="İptali Onayla"
       />
       <Toast
         position="top"
@@ -187,9 +184,9 @@ const styles = StyleSheet.create({
   }
 });
 
-IzinOnayScreen.navigationOptions = {
+IzinCancelApproveScreen.navigationOptions = {
   header: null
 };
 
 //make this component available to the app
-export default IzinOnayScreen;
+export default IzinCancelApproveScreen;

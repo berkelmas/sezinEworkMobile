@@ -11,56 +11,56 @@ export const izinlerData = [
     image: IzinImage3,
     status: "Onaylandı",
     title: "Şua İzni",
-    date: "23 - 26 Mart"
+    startDate: "23 - 26 Mart"
   },
   {
     id: "332",
     image: IzinImage5,
     status: "Bekliyor",
     title: "Ölüm İzni",
-    date: "3 - 6 Ocak"
+    startDate: "3 - 6 Ocak"
   },
   {
     id: "4343",
     image: IzinImage2,
     status: "Onaylandı",
     title: "Yarım Gün İzin",
-    date: "23 - 26 Mart"
+    startDate: "23 - 26 Mart"
   },
   {
     id: "565",
     image: IzinImage6,
     status: "Reddedildi",
     title: "Diğer İzin",
-    date: "23 - 26 Mart"
+    startDate: "23 - 26 Mart"
   },
   {
     id: "5652",
     image: IzinImage3,
     status: "Bekliyor",
     title: "Diğer İzin",
-    date: "23 - 26 Mart"
+    startDate: "23 - 26 Mart"
   },
   {
     id: "5653",
     image: IzinImage1,
     status: "Reddedildi",
     title: "MR Bildirim",
-    date: "23 - 26 Mart"
+    startDate: "23 - 26 Mart"
   },
   {
     id: "5654",
     image: IzinImage2,
     status: "Bekliyor",
     title: "Yarım Gün İzin",
-    date: "23 - 26 Mart"
+    startDate: "23 - 26 Mart"
   },
   {
     id: "5655",
     image: IzinImage3,
     status: "Onaylandı",
     title: "Ölüm İzni",
-    date: "23 - 26 Mart"
+    startDate: "23 - 26 Mart"
   }
 ];
 
@@ -70,7 +70,7 @@ export const izinlerOnayData = [
     image: IzinImage3,
     status: "Onaylandı",
     title: "Şua İzni",
-    date: "23 - 26 Mart",
+    startDate: "23 - 26 Mart",
     askedBy: "Berk Elmas"
   },
   {
@@ -78,7 +78,7 @@ export const izinlerOnayData = [
     image: IzinImage5,
     status: "Bekliyor",
     title: "Ölüm İzni",
-    date: "3 - 6 Ocak",
+    startDate: "3 - 6 Ocak",
     askedBy: "Durmus Sipahi"
   },
   {
@@ -86,7 +86,7 @@ export const izinlerOnayData = [
     image: IzinImage2,
     status: "Onaylandı",
     title: "Yarım Gün İzin",
-    date: "23 - 26 Mart",
+    startDate: "23 - 26 Mart",
     askedBy: "Berk Elmas"
   },
   {
@@ -94,7 +94,7 @@ export const izinlerOnayData = [
     image: IzinImage6,
     status: "Reddedildi",
     title: "Diğer İzin",
-    date: "23 - 26 Mart",
+    startDate: "23 - 26 Mart",
     askedBy: "Mehmet Yilmaz"
   },
   {
@@ -102,7 +102,7 @@ export const izinlerOnayData = [
     image: IzinImage3,
     status: "Bekliyor",
     title: "Diğer İzin",
-    date: "23 - 26 Mart",
+    startDate: "23 - 26 Mart",
     askedBy: "Osman Yildirim"
   },
   {
@@ -110,7 +110,7 @@ export const izinlerOnayData = [
     image: IzinImage1,
     status: "Reddedildi",
     title: "MR Bildirim",
-    date: "23 - 26 Mart",
+    startDate: "23 - 26 Mart",
     askedBy: "Ahmet Keser"
   },
   {
@@ -118,7 +118,7 @@ export const izinlerOnayData = [
     image: IzinImage2,
     status: "Bekliyor",
     title: "Yarım Gün İzin",
-    date: "23 - 26 Mart",
+    startDate: "23 - 26 Mart",
     askedBy: "Ali Yilmaz"
   },
   {
@@ -126,7 +126,7 @@ export const izinlerOnayData = [
     image: IzinImage3,
     status: "Onaylandı",
     title: "Ölüm İzni",
-    date: "23 - 26 Mart",
+    startDate: "23 - 26 Mart",
     askedBy: "Emre Kara"
   }
 ];

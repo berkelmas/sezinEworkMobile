@@ -3,10 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  ViewPropTypes,
   Dimensions,
   Image,
-  TouchableOpacity,
   PixelRatio,
   TouchableNativeFeedback
 } from "react-native";
@@ -31,7 +29,7 @@ const SezinIzinler = props => {
           <View key={index}>
             <TouchableNativeFeedback
               useForeground={true}
-              onPress={() => console.log("BERKELMAS")}
+              onPress={() => props.onIzinPress(izinlerData[index])}
             >
               <View
                 style={{
@@ -51,7 +49,7 @@ const SezinIzinler = props => {
                     {izinlerData[index].title}
                   </Text>
                   <Text style={styles.dateStyle}>
-                    {izinlerData[index].date}
+                    {izinlerData[index].startDate}
                   </Text>
                 </View>
               </View>
@@ -105,6 +103,10 @@ const styles = StyleSheet.create({
     fontFamily: "Airbnb-Light"
   }
 });
+
+SezinIzinler.propTypes = {
+  onIzinPress: PropTypes.func
+};
 
 //make this component available to the app
 export default SezinIzinler;

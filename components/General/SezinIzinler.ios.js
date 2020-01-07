@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  ViewPropTypes,
   Dimensions,
   Image,
   TouchableOpacity,
@@ -27,7 +26,7 @@ const SezinIzinler = props => {
         .fill(0)
         .map((item, index) => (
           <TouchableOpacity
-            onPress={() => console.log("BERKELMAS")}
+            onPress={() => props.onIzinPress(izinlerData[index])}
             key={index}
             style={{
               ...styles.singleItem,
@@ -41,7 +40,9 @@ const SezinIzinler = props => {
             <View style={{ height: "40%", padding: 5 }}>
               <Text style={styles.placeStyle}>{izinlerData[index].status}</Text>
               <Text style={styles.titleStyle}>{izinlerData[index].title}</Text>
-              <Text style={styles.dateStyle}>{izinlerData[index].date}</Text>
+              <Text style={styles.dateStyle}>
+                {izinlerData[index].startDate}
+              </Text>
             </View>
           </TouchableOpacity>
         ))}
@@ -92,6 +93,10 @@ const styles = StyleSheet.create({
     fontFamily: "Airbnb-Light"
   }
 });
+
+SezinIzinler.propTypes = {
+  onIzinPress: PropTypes.func
+};
 
 //make this component available to the app
 export default SezinIzinler;

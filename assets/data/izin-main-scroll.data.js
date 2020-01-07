@@ -32,7 +32,7 @@ export const izinMainScrollData = [
     id: "919",
     image: IzinImage5,
     title: "İzin İptal Onayı",
-    link: "DailyReport",
+    link: "IzinCancelApprove",
     backendNames: ["AnalysisKMD"],
     content: "Buradan Personellerin İzin İptallerini Yönetebilirsiniz."
   }
