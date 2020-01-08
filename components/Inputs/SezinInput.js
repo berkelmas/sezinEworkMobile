@@ -9,7 +9,7 @@ import { Item, Input, Label } from "native-base";
 const SezinInput = props => {
   return (
     <View style={{ ...props.containerStyle }}>
-      <Item floatingLabel>
+      <Item floatingLabel error={props.error}>
         <Label style={styles.labelStyle}>{props.label}</Label>
         <Input
           {...props.inputProps}
@@ -41,7 +41,8 @@ SezinInput.propTypes = {
   secureEntry: PropTypes.bool,
   multiline: PropTypes.bool,
   inputProps: PropTypes.any,
-  onChangeText: PropTypes.func
+  onChangeText: PropTypes.func,
+  error: PropTypes.bool
 };
 
 export default SezinInput;

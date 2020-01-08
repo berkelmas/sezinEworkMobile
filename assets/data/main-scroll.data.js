@@ -38,7 +38,8 @@ export const mainScrollData = [
       "AnalysisKMD",
       "AnalysisMAMO",
       "AnalysisUSG",
-      "AnalysisRAPOR"
+      "AnalysisRAPOR",
+      "AnalysisCR"
     ],
     content: "Buradan Günlük Raporlarınızı Oluşturabilirsiniz."
   },
