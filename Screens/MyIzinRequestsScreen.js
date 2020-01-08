@@ -62,6 +62,7 @@ const MyIzinRequestsScreen = props => {
               marginTop: index === 0 ? 20 : 0
             }}
             onCancelRequest={setIsCancelModalOpen.bind(this, true)}
+            buttonRendered={true}
             {...item}
           />
         )}

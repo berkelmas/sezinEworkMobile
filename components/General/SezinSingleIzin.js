@@ -84,18 +84,20 @@ const SezinSingleIzin = props => {
             {props.startDate}
           </Text>
         </View>
-        <SezinButton
-          onPress={() => props.onCancelRequest()}
-          color={colors.red}
-          overlayColor={colors.darkRed}
-          text="Talebi İptal Et"
-          containerStyle={{
-            marginVertical: 10
-          }}
-          buttonTextStyle={{
-            fontSize: 19
-          }}
-        />
+        {props.buttonRendered && (
+          <SezinButton
+            onPress={() => props.onCancelRequest()}
+            color={colors.red}
+            overlayColor={colors.darkRed}
+            text="Talebi İptal Et"
+            containerStyle={{
+              marginVertical: 10
+            }}
+            buttonTextStyle={{
+              fontSize: 19
+            }}
+          />
+        )}
       </View>
     </View>
   );
@@ -154,7 +156,8 @@ SezinSingleIzin.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   status: PropTypes.string,
-  onCancelRequest: PropTypes.func
+  onCancelRequest: PropTypes.func,
+  buttonRendered: PropTypes.bool
 };
 
 //make this component available to the app

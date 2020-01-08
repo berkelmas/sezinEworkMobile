@@ -1,6 +1,6 @@
 //import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet, AsyncStorage } from "react-native";
+import React from "react";
+import { View, StyleSheet, AsyncStorage } from "react-native";
 import {
   loginSuccessAction,
   getMenuAction
@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 // MATERIAL LOADING INDICATOR
 import { MaterialIndicator } from "react-native-indicators";
 import { colors } from "../assets/styles/colors";
+import { menuService } from "../services/auth-service";
 
 let loginData;
 let menuData;
@@ -19,18 +20,25 @@ const LoadingScreen = props => {
     const authValue = await AsyncStorage.getItem("auth-values");
     const menuItems = await AsyncStorage.getItem("menu-items");
 
-    if (authValue) {
+    if (!authValue) {
+      return props.navigation.navigate("BeforeLogin");
+    }
+
+    try {
+      const authResponse = await menuService(
+        JSON.parse(authValue)["access_token"]
+      );
       loginData = authValue;
       menuData = menuItems;
       props.navigation.navigate("Dashboard");
-    } else {
+    } catch {
+      AsyncStorage.clear();
       props.navigation.navigate("BeforeLogin");
     }
   };
 
   React.useEffect(() => {
     bootstrapAsync();
-    console.log("loading rendered");
 
     return () => {
       if (loginData) {

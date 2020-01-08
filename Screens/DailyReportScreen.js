@@ -6,13 +6,12 @@ import { View, Text, StyleSheet } from "react-native";
 import SezinPicker from "../components/Inputs/SezinPicker";
 import SezinTitle from "../components/Typography/SezinTitle";
 import SezinHeader from "../components/General/SezinHeader";
-import SezinDatePicker from "../components/Inputs/SezinDatePicker";
 import SezinInput from "../components/Inputs/SezinInput";
 import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
 
 //DATA
-import { izinTypes } from "../assets/data/izin-types.data";
 import { colors } from "../assets/styles/colors";
+import SezinTimePicker from "../components/Inputs/SezinTimePicker";
 
 // create a component
 const DailyReportScreen = props => {
@@ -52,12 +51,18 @@ const DailyReportScreen = props => {
       />
       <SezinInput
         label="Günlük Çekim Sayısı"
+        containerStyle={{ marginTop: 25 }}
         onChangeText={() => console.log("bekrelmas")}
       />
       <SezinInput
         label="Açıklama"
         multiline={true}
+        containerStyle={{ marginTop: 25 }}
         onChangeText={() => console.log("sadas")}
+      />
+      <SezinTimePicker
+        placeholderText="Bitiş Saati"
+        onValueChange={date => console.log(date)}
       />
       <SezinLoadingButton
         loading={false}

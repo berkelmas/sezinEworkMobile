@@ -10,7 +10,7 @@ import {
   PixelRatio
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import PropTypes, { instanceOf } from "prop-types";
+import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
 import IcomoonIcon from "../Typography/IcomoonIcon";
 

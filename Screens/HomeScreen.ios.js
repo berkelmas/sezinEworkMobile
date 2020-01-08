@@ -154,6 +154,7 @@ const HomeScreen = props => {
         }}
       />
 
+      {/* MODAL AND TOAST COMPONENTS HERE. */}
       <Modal
         useNativeDriver={true}
         animationIn="fadeInUpBig"
