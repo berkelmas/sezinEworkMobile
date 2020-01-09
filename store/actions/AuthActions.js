@@ -1,11 +1,16 @@
 import { AsyncStorage } from "react-native";
-import { loginService, menuService } from "../../services/auth-service";
+import {
+  loginService,
+  menuService,
+  logoutService
+} from "../../services/auth-service";
 import {
   START_LOGIN,
   FAILED_LOGIN,
   SUCCESS_LOGIN,
   FAILED_LOGIN_TIMEOUT,
-  GET_MENU
+  GET_MENU,
+  LOGOUT
 } from "../types/AuthTypes";
 import NavigationService from "../../navigation/NavigationService";
 
@@ -36,7 +41,6 @@ export const loginStartAction = (username, password) => {
 };
 
 export const loginSuccessAction = res => {
-  console.log(res.userName);
   return {
     type: SUCCESS_LOGIN,
     payload: { ...res }
@@ -56,6 +60,23 @@ export const getMenuAction = menuItems => ({
   payload: { menuItems }
 });
 
-// loginService(username, password).then(res => ({
-//   type: START_LOGIN
-// }));
+export const logoutAction = () => ({
+  type: LOGOUT
+});
+
+export const logoutStartAction = refreshToken => {
+  return dispatch => {
+    AsyncStorage.clear().then(() => {
+      NavigationService.navigate("BeforeLogin");
+      logoutService(refreshToken)
+        .then(() => {
+          console.log("basarili");
+          dispatch(logoutAction());
+        })
+        .catch(err => {
+          console.log(err);
+          NavigationService.navigate("BeforeLogin");
+        });
+    });
+  };
+};

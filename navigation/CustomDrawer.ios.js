@@ -7,15 +7,20 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from "react-native";
+import { logoutStartAction } from "../store/actions/AuthActions";
 import { DrawerItems } from "react-navigation-drawer";
 import { AntDesign } from "@expo/vector-icons";
 import SezinLogoText from "../assets/images/sezin-logo-text.png";
 import { colors } from "../assets/styles/colors";
 import NavigationService from "./NavigationService";
+import { useSelector, useDispatch } from "react-redux";
 
 const SezinDrawer = props => {
-  handleLogout = () => {
-    AsyncStorage.clear().then(() => NavigationService.navigate("Login"));
+  const dispatch = useDispatch();
+  const refreshToken = useSelector(state => state.AuthReducer.refreshToken);
+
+  const handleLogout = () => {
+    dispatch(logoutStartAction(refreshToken));
   };
 
   return (

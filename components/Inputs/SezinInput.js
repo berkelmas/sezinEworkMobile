@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, ViewPropTypes, PixelRatio } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
@@ -7,13 +7,21 @@ import { colors } from "../../assets/styles/colors";
 import { Item, Input, Label } from "native-base";
 
 const SezinInput = props => {
+  const [inputValue, setInputValue] = useState(
+    props.inputProps && props.inputProps.value
+  );
+
   return (
     <View style={{ ...props.containerStyle }}>
       <Item floatingLabel error={props.error}>
         <Label style={styles.labelStyle}>{props.label}</Label>
         <Input
           {...props.inputProps}
-          onChangeText={text => props.onChangeText(text)}
+          value={inputValue}
+          onChangeText={text => {
+            props.onChangeText(text);
+            setInputValue(text);
+          }}
           multiline={props.multiline ? props.multiline : false}
           secureTextEntry={props.secureEntry}
           style={styles.inputStyle}

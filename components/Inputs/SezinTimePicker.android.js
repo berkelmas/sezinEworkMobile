@@ -5,7 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  PixelRatio
+  PixelRatio,
+  ViewPropTypes
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import PropTypes from "prop-types";
@@ -52,7 +53,9 @@ class SezinTimePicker extends React.Component {
     const { show, date, mode, everSelected } = this.state;
 
     return (
-      <View style={styles.container}>
+      <View
+        style={{ ...styles.container, ...this.props.contentContainerStyle }}
+      >
         <TouchableOpacity
           onPress={this.timepicker}
           style={{
@@ -112,7 +115,8 @@ const styles = StyleSheet.create({
 
 SezinTimePicker.propTypes = {
   onValueChange: PropTypes.func,
-  placeholderText: PropTypes.string
+  placeholderText: PropTypes.string,
+  contentContainerStyle: ViewPropTypes.style
 };
 
 //make this component available to the app

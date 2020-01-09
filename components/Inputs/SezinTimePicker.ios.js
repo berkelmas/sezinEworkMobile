@@ -5,7 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  PixelRatio
+  PixelRatio,
+  ViewPropTypes
 } from "react-native";
 import IcomoonIcon from "../Typography/IcomoonIcon";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -19,7 +20,7 @@ const SezinTimePicker = props => {
   const bottomSheet = useRef(null);
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...props.contentContainerStyle }}>
       <TouchableOpacity
         onPress={() => bottomSheet.current.open()}
         style={{
@@ -83,7 +84,8 @@ const styles = StyleSheet.create({
 
 SezinTimePicker.propTypes = {
   onValueChange: PropTypes.func,
-  placeholderText: PropTypes.string
+  placeholderText: PropTypes.string,
+  contentContainerStyle: ViewPropTypes.style
 };
 
 //make this component available to the app

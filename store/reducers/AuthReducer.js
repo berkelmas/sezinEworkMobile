@@ -6,6 +6,7 @@ const initialState = {
   userName: null,
   loading: false,
   accessToken: null,
+  refreshToken: null,
   fullName: null,
   userImage: null,
   userGroup: null,
@@ -26,6 +27,7 @@ const AuthReducer = (state = initialState, action) => {
         userName: null,
         loading: false,
         accessToken: null,
+        refreshToken: null,
         fullName: null,
         userImage: null,
         userGroup: null,
@@ -39,6 +41,7 @@ const AuthReducer = (state = initialState, action) => {
         userName: action.payload.userName,
         loading: false,
         accessToken: action.payload.access_token,
+        refreshToken: action.payload.refresh_token,
         fullName: action.payload.userInformation,
         userImage: action.payload.userImage,
         userGroup: action.payload.userGroup,
@@ -53,6 +56,7 @@ const AuthReducer = (state = initialState, action) => {
         userName: null,
         loading: false,
         accessToken: null,
+        refreshToken: null,
         fullName: null,
         userImage: null,
         userGroup: null,
@@ -64,6 +68,22 @@ const AuthReducer = (state = initialState, action) => {
       return {
         ...state,
         failedLogin: false
+      };
+    case authTypes.LOGOUT:
+      return {
+        ...state,
+        loggedIn: false,
+        userName: null,
+        loading: false,
+        accessToken: null,
+        refreshToken: null,
+        fullName: null,
+        userImage: null,
+        userGroup: null,
+        userHospitalName: null,
+        userEmail: null,
+        failedLogin: false,
+        menuItems: []
       };
     case authTypes.GET_MENU:
       return {

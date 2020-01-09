@@ -19,3 +19,9 @@ export const menuService = token => {
     headers: { Authorization: `Bearer ${token}` }
   });
 };
+
+export const logoutService = refreshToken => {
+  return axios.post(`${config.apiEndpoint}user/Logout`, {
+    refreshToken
+  });
+};

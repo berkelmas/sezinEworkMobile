@@ -166,6 +166,7 @@ const DailyReportScreen = props => {
         />
 
         <SezinTimePicker
+          contentContainerStyle={{ marginTop: 35 }}
           placeholderText="Başlangıç Saati"
           onValueChange={date =>
             setFormValues(prev => ({ ...prev, startDate: date }))
@@ -173,6 +174,7 @@ const DailyReportScreen = props => {
         />
 
         <SezinTimePicker
+          contentContainerStyle={{ marginTop: 35 }}
           placeholderText="Bitiş Saati"
           onValueChange={date =>
             setFormValues(prev => ({ ...prev, endDate: date }))
@@ -182,7 +184,7 @@ const DailyReportScreen = props => {
         <SezinInput
           label="Açıklama"
           multiline={true}
-          containerStyle={{ marginTop: 25 }}
+          containerStyle={{ marginTop: 20 }}
           onChangeText={text =>
             setFormValues(prev => ({ ...prev, description: text }))
           }
