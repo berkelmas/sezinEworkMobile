@@ -15,6 +15,7 @@ import SezinInput from "../components/Inputs/SezinInput";
 import SezinPicker from "../components/Inputs/SezinPicker";
 import SezinDatePicker from "../components/Inputs/SezinDatePicker";
 import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
+import SezinMultipleSelect from "../components/Inputs/SezinMultipleSelect";
 
 // create a component
 const NewBusinessOrderScreen = props => {
@@ -67,12 +68,21 @@ const NewBusinessOrderScreen = props => {
           />
 
           <SezinDatePicker placeholderText="Bitiş Tarihi" />
+          <SezinMultipleSelect
+            items={[
+              { label: "Apples", value: 1 },
+              { label: "Oranges", value: 2 },
+              { label: "Pears", value: 4 }
+            ]}
+            placeholderText="Select Items"
+            onSelectionChange={val => console.log(val)}
+          />
 
           <SezinLoadingButton
             color={colors.blue}
             overlayColor={colors.darkBlue}
             text="Kaydet"
-            containerStyle={{ marginTop: 50 }}
+            containerStyle={{ marginTop: 35 }}
             onPress={() => {
               setLoadingState(true);
               setTimeout(() => {
@@ -85,6 +95,8 @@ const NewBusinessOrderScreen = props => {
             }}
             loading={loadingState}
           />
+          {/* BOTTOM MARGIN */}
+          <View style={{ height: 50, width: 50 }} />
         </View>
       </ScrollView>
     </TouchableWithoutFeedback>
@@ -95,7 +107,7 @@ const NewBusinessOrderScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
+    paddingHorizontal: 20
   }
 });
 
