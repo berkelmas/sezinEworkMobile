@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     paddingLeft: 2,
     color: colors.dark,
     paddingBottom: 6,
+    paddingTop: 6,
     fontFamily: "Airbnb-Book"
   },
   badgeContainer: {
