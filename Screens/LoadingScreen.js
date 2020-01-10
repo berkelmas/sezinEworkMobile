@@ -50,7 +50,7 @@ const LoadingScreen = props => {
 
   return (
     <View style={styles.container}>
-      <MaterialIndicator color={colors.blue} size={70}></MaterialIndicator>
+      <MaterialIndicator color={colors.blue} size={50}></MaterialIndicator>
     </View>
   );
 };
