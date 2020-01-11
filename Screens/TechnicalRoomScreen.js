@@ -1,5 +1,5 @@
 //import liraries
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -13,15 +13,32 @@ import SezinTitle from "../components/Typography/SezinTitle";
 import SezinPicker from "../components/Inputs/SezinPicker";
 import SezinMRForm from "../components/General/SezinMRForm";
 import SezinTomoForm from "../components/General/SezinTomoForm";
+import { useSelector } from "react-redux";
 
 // create a component
 const TechnicalRoomScreen = props => {
-  const [devices, setDevices] = React.useState([
-    { label: "MR", value: "mr" },
-    { label: "Tomo", value: "tomo" }
-  ]);
+  const [devices, setDevices] = useState([]);
+  const menuItems = useSelector(state => state.AuthReducer.menuItems);
+  //console.log(menuItems);
+  const [selectedDevice, setSelectedDevice] = useState(null);
 
-  const [selectedDevice, setSelectedDevice] = React.useState(devices[0].value);
+  useEffect(() => {
+    let devs = [];
+    menuItems.map(item => {
+      if (item.functionName === "createMR") {
+        devs.push({ label: "MR", value: "mr" });
+      } else if (item.functionName === "createCT") {
+        devs.push({ label: "Tomo", value: "tomo" });
+      }
+    });
+    setDevices(devs);
+  }, [menuItems]);
+
+  useEffect(() => {
+    if (devices.length > 0) {
+      setSelectedDevice(devices[0].value);
+    }
+  }, [devices]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

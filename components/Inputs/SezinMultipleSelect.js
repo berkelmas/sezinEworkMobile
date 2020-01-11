@@ -11,6 +11,7 @@ import {
 import PropTypes from "prop-types";
 import SelectMultiple from "react-native-select-multiple";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { MaterialIndicator } from "react-native-indicators";
 
 import IcomoonIcon from "../Typography/IcomoonIcon";
 import { colors } from "../../assets/styles/colors";
@@ -39,7 +40,7 @@ const SezinMultipleSelect = props => {
       <TouchableOpacity
         key={index}
         onPress={() => handleRemove(item)}
-        style={{ ...styles.badgeContainer, marginLeft: index < 1 ? 0 : 4 }}
+        style={{ ...styles.badgeContainer, marginLeft: 4 }}
       >
         <Text style={styles.badgeText}>{item.label}</Text>
         <IcomoonIcon
@@ -78,18 +79,24 @@ const SezinMultipleSelect = props => {
         />
       </TouchableOpacity>
       <RBSheet height={340} ref={bottomSheet}>
-        <SelectMultiple
-          checkboxSource={UnCheckedMulti}
-          selectedCheckboxSource={CheckedMulti}
-          labelStyle={{
-            fontFamily: "Airbnb-Light",
-            color: colors.dark,
-            fontSize: 17
-          }}
-          items={props.items}
-          selectedItems={selectedItems}
-          onSelectionsChange={onSelectionsChange}
-        />
+        {props.loadingData ? (
+          <View style={{ flex: 1 }}>
+            <MaterialIndicator color={colors.blue} size={50} />
+          </View>
+        ) : (
+          <SelectMultiple
+            checkboxSource={UnCheckedMulti}
+            selectedCheckboxSource={CheckedMulti}
+            labelStyle={{
+              fontFamily: "Airbnb-Light",
+              color: colors.dark,
+              fontSize: 17
+            }}
+            items={props.items}
+            selectedItems={selectedItems}
+            onSelectionsChange={onSelectionsChange}
+          />
+        )}
       </RBSheet>
     </View>
   );
@@ -143,7 +150,8 @@ SezinMultipleSelect.propTypes = {
     })
   ),
   contentContainerStyle: ViewPropTypes.style,
-  onSelectionChange: PropTypes.func
+  onSelectionChange: PropTypes.func,
+  loadingData: PropTypes.bool
 };
 
 //make this component available to the app
