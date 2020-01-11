@@ -1,7 +1,7 @@
 import NewIzinImage from "../images/izin/new-izin-photo.png";
-import IzinImage1 from "../images/izin/izin-image-1.png";
-import IzinImage2 from "../images/izin/izin-image-2.png";
-import IzinImage5 from "../images/izin/izin-image-4.png";
+import IzinTaleplerimImage from "../images/izin/izin-taleplerim-photo.png";
+import IzinApproveImage from "../images/izin/izin-onay-image.png";
+import IzinCancelApproveImage from "../images/izin/izin-iptal-onay-image.png";
 
 export const izinMainScrollData = [
   {
@@ -14,7 +14,7 @@ export const izinMainScrollData = [
   },
   {
     id: "233",
-    image: IzinImage1,
+    image: IzinTaleplerimImage,
     title: "İzin Taleplerim",
     backendNames: ["MR", "CT"],
     link: "MyIzinRequests",
@@ -22,7 +22,7 @@ export const izinMainScrollData = [
   },
   {
     id: "999",
-    image: IzinImage2,
+    image: IzinApproveImage,
     title: "İzin Talebi Onayı",
     link: "IzinOnay",
     backendNames: ["AnalysisKMD"],
@@ -30,7 +30,7 @@ export const izinMainScrollData = [
   },
   {
     id: "919",
-    image: IzinImage5,
+    image: IzinCancelApproveImage,
     title: "İzin İptal Onayı",
     link: "IzinCancelApprove",
     backendNames: ["AnalysisKMD"],
