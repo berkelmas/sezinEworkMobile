@@ -152,6 +152,9 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "white",
     justifyContent: "center"
+  },
+  formContainer: {
+    marginTop: 12
   }
 });
 

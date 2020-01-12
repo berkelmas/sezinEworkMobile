@@ -24,9 +24,16 @@ import { colors } from "../assets/styles/colors";
 import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
 import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
 
+import { getAnnouncements } from "../services/announcement-service";
+
 const HomeScreen = props => {
   const fullName = useSelector(state => state.AuthReducer.fullName);
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
   const [firstName, setFirstName] = React.useState(null);
+
+  // ANNOUNCEMENTS
+  const [announcements, setAnnouncements] = useState([]);
+  const [loadingAnnouncements, setLoadingAnnouncements] = useState(false);
 
   // WORKAROUND TO MODIFY FULL NAME
   React.useEffect(() => {
@@ -69,17 +76,31 @@ const HomeScreen = props => {
     setModalAnnouncementOpen(true);
     setSelectedAnnouncement(prev => ({
       ...prev,
-      date: item.date,
+      date: item.startDateValue,
       title: item.title,
-      content: item.content
+      content: item.description
     }));
+  };
+
+  const getLastFiveAnnouncements = () => {
+    if (accessToken) {
+      setLoadingAnnouncements(true);
+      getAnnouncements(1, 5, accessToken)
+        .then(res => {
+          setLoadingAnnouncements(false);
+          setAnnouncements(res.data.result);
+        })
+        .catch(console.log);
+    }
   };
 
   React.useEffect(() => {
     const didBlurSubscription = props.navigation.addListener(
       "didFocus",
       payload => {
-        console.log(props.navigation.getParam("toastText", null));
+        // get last five announcements.
+        getLastFiveAnnouncements();
+
         if (props.navigation.getParam("toastText", null)) {
           setToastColor(props.navigation.getParam("toastColor", null));
           toast.current.show(
@@ -93,6 +114,11 @@ const HomeScreen = props => {
     );
     return () => didBlurSubscription.remove();
   }, [props.navigation.getParam("toastText", null)]);
+
+  // GET ANNOUNCEMENTS ON COMPONENTDIDMOUNT
+  React.useEffect(() => {
+    getLastFiveAnnouncements();
+  }, []);
 
   return (
     <ScrollView
@@ -136,7 +162,11 @@ const HomeScreen = props => {
         text="Şirket içi son bildirimlere buradan ulaşabilirsiniz. Tüm bildirimler için aşağıdaki butona tıklayabilirsiniz."
       />
 
-      <SezinAnnouncements onPress={item => openAnnouncementModal(item)} />
+      <SezinAnnouncements
+        loading={loadingAnnouncements}
+        announcementsData={announcements}
+        onPress={item => openAnnouncementModal(item)}
+      />
 
       <SezinButton
         onPress={() => props.navigation.navigate("AllAnnouncements")}

@@ -8,11 +8,17 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
+import moment from "moment";
+import "moment/locale/tr";
 
 const SezinSingleAnnouncement = props => {
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
-      <Text style={styles.dateText}>{props.date}</Text>
+      <Text style={styles.dateText}>
+        {moment(props.date)
+          .locale("tr")
+          .format("ll")}
+      </Text>
       <Text style={styles.titleText}>{props.title}</Text>
       <Text style={styles.descriptionText}>{props.content}</Text>
     </View>

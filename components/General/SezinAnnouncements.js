@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,27 +10,42 @@ import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
 import IcomoonIcon from "../Typography/IcomoonIcon";
 
-// FAKE DATA
-import { announcements } from "../../assets/data/announcements.data";
+import { MaterialIndicator } from "react-native-indicators";
+import moment from "moment";
+import "moment/locale/tr"; // without this line it didn't work
 
 const SezinAnnouncements = props => {
+  const renderAnnouncements = () => {
+    return props.announcementsData.map(
+      (res, index) =>
+        index < 5 && (
+          <TouchableOpacity
+            onPress={props.onPress.bind(this, res)}
+            key={res.id}
+            style={styles.itemContainer}
+          >
+            <View>
+              <Text style={styles.dateText}>
+                {moment(res.startDateValue)
+                  .locale("tr")
+                  .format("ll")}
+              </Text>
+              <Text style={styles.titleText}>{res.title}</Text>
+            </View>
+            <IcomoonIcon name="chevron-right" size={25} color={colors.gray} />
+          </TouchableOpacity>
+        )
+    );
+  };
+
   return (
     <View style={{ paddingHorizontal: 20, marginTop: 15 }}>
-      {announcements.map(
-        (res, index) =>
-          index < 5 && (
-            <TouchableOpacity
-              onPress={props.onPress.bind(this, res)}
-              key={res.id}
-              style={styles.itemContainer}
-            >
-              <View>
-                <Text style={styles.dateText}>{res.date}</Text>
-                <Text style={styles.titleText}>{res.title}</Text>
-              </View>
-              <IcomoonIcon name="chevron-right" size={25} color={colors.gray} />
-            </TouchableOpacity>
-          )
+      {props.loading ? (
+        <View style={{ height: 229 }}>
+          <MaterialIndicator size={50} color={colors.blue} />
+        </View>
+      ) : (
+        renderAnnouncements()
       )}
     </View>
   );

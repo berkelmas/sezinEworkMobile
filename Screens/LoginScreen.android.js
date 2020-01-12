@@ -46,6 +46,8 @@ const LoginScreen = props => {
             props.navigation.getParam("toastText", null),
             1000
           );
+          props.navigation.setParams({ toastText: null });
+          props.navigation.setParams({ toastColor: null });
         }
       }
     );
