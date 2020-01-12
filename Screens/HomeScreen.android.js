@@ -113,12 +113,12 @@ const HomeScreen = props => {
       }
     );
     return () => didBlurSubscription.remove();
-  }, [props.navigation.getParam("toastText", null)]);
+  });
 
   // GET ANNOUNCEMENTS ON COMPONENTDIDMOUNT
   React.useEffect(() => {
     getLastFiveAnnouncements();
-  }, []);
+  }, [accessToken]);
 
   return (
     <ScrollView

@@ -23,6 +23,7 @@ import { getAnnouncements } from "../services/announcement-service";
 const HomeScreen = props => {
   const fullName = useSelector(state => state.AuthReducer.fullName);
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
+
   const [firstName, setFirstName] = React.useState(null);
 
   // ANNOUNCEMENTS
@@ -105,12 +106,13 @@ const HomeScreen = props => {
       }
     );
     return () => didBlurSubscription.remove();
-  }, [props.navigation.getParam("toastText", null)]);
+  });
 
-  // GET ANNOUNCEMENTS ON COMPONENTDIDMOUNT
+  // GET ANNOUNCEMENTS ON ACCES TOKEN CHANGE
+  // IT COMES AS NULL AT THE BEGINNING.
   React.useEffect(() => {
     getLastFiveAnnouncements();
-  }, []);
+  }, [accessToken]);
 
   return (
     <ScrollView
