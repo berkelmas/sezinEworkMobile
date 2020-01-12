@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   View,
   Text,
@@ -65,4 +65,4 @@ SezinSingleAnnouncement.propTypes = {
   contentContainerStyle: ViewPropTypes.style
 };
 
-export default SezinSingleAnnouncement;
+export default React.memo(SezinSingleAnnouncement);
