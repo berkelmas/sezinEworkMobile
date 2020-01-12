@@ -16,6 +16,7 @@ import SezinInput from "../components/Inputs/SezinInput";
 
 import { izinTypes } from "../assets/data/izin-types.data";
 import { colors } from "../assets/styles/colors";
+import SezinDescription from "../components/Typography/SezinDescription";
 
 // create a component
 const NewIzinScreen = props => {
@@ -27,12 +28,19 @@ const NewIzinScreen = props => {
           onPressLeft={() => props.navigation.goBack()}
         />
         <SezinTitle text="Yeni İzin Talebi" />
-        <SezinDatePicker placeholderText="İzin Başlangıcı" />
-        <SezinDatePicker placeholderText="İşe Başlama Tarihi" />
+        <SezinDescription text="Bu bölümden yeni izin taleplerinde bulunabilirsiniz." />
+        <SezinDatePicker
+          onDateChange={console.log}
+          placeholderText="İzin Başlangıcı"
+        />
+        <SezinDatePicker
+          onDateChange={console.log}
+          placeholderText="İşe Başlama Tarihi"
+        />
         <SezinPicker
           items={izinTypes}
           placeholderText="İzin Tipi"
-          contentContainerStyle={{ marginBottom: 15 }}
+          contentContainerStyle={{ marginTop: 30, marginBottom: 10 }}
         />
         <SezinInput
           onChangeText={console.log.bind(this, "BERKELMAS")}

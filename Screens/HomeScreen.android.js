@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -36,6 +36,8 @@ const HomeScreen = props => {
   }, [fullName]);
 
   const toast = React.useRef(null);
+  const [toastColor, setToastColor] = useState(colors.green);
+
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
   const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
     false
@@ -79,11 +81,13 @@ const HomeScreen = props => {
       payload => {
         console.log(props.navigation.getParam("toastText", null));
         if (props.navigation.getParam("toastText", null)) {
+          setToastColor(props.navigation.getParam("toastColor", null));
           toast.current.show(
             props.navigation.getParam("toastText", null),
             1000
           );
           props.navigation.setParams({ toastText: null });
+          props.navigation.setParams({ toastColor: null });
         }
       }
     );

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   PixelRatio,
+  Keyboard,
   ViewPropTypes
 } from "react-native";
 import PropTypes from "prop-types";
@@ -35,6 +36,11 @@ const SezinMultipleSelect = props => {
     props.onSelectionChange(selectedItems);
   }, [selectedItems]);
 
+  const handleBottomSheetOpen = () => {
+    bottomSheet.current.open();
+    Keyboard.dismiss();
+  };
+
   const renderItems = items => {
     return items.map((item, index) => (
       <TouchableOpacity
@@ -56,7 +62,7 @@ const SezinMultipleSelect = props => {
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
       <TouchableOpacity
-        onPress={() => bottomSheet.current.open()}
+        onPress={handleBottomSheetOpen.bind(this)}
         style={styles.inputTouchable}
       >
         <View

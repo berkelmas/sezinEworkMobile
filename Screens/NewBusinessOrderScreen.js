@@ -180,9 +180,9 @@ const NewBusinessOrderScreen = props => {
               placeholderText="Öncelik Durumu"
               contentContainerStyle={{ width: "45%", marginTop: 30 }}
               items={[
-                { label: "Önemli", value: 2 },
-                { label: "Normal", value: 1 },
-                { label: "Düşük", value: 0 }
+                { label: "Önemli", value: "2" },
+                { label: "Normal", value: "1" },
+                { label: "Düşük", value: "0" }
               ]}
               onValueChange={setSelectedPriority.bind(this)}
             />

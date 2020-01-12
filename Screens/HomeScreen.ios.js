@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import Modal from "react-native-modal";
 import Toast from "react-native-easy-toast";
@@ -29,6 +29,7 @@ const HomeScreen = props => {
     }
   }, [fullName]);
   const toast = React.useRef(null);
+  const [toastColor, setToastColor] = useState(colors.green);
   const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
   const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
     false
@@ -71,12 +72,15 @@ const HomeScreen = props => {
       "didFocus",
       payload => {
         console.log(props.navigation.getParam("toastText", null));
+        console.log(props.navigation.getParam("toastColor", null));
         if (props.navigation.getParam("toastText", null)) {
+          setToastColor(props.navigation.getParam("toastColor", null));
           toast.current.show(
             props.navigation.getParam("toastText", null),
             1000
           );
           props.navigation.setParams({ toastText: null });
+          props.navigation.setParams({ toastColor: null });
         }
       }
     );
@@ -183,7 +187,7 @@ const HomeScreen = props => {
         ref={toast}
         style={{
           ...styles.toastContainerStyle,
-          backgroundColor: props.navigation.getParam("toastColor", null)
+          backgroundColor: toastColor
         }}
       />
     </ScrollView>
