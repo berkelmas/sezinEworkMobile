@@ -23,3 +23,11 @@ export const createNewIzinRequest = (
     }
   );
 };
+
+export const getTotalIzin = token => {
+  return axios.get(`${config.apiEndpoint}Hr/getTotalLeaveCount`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+};

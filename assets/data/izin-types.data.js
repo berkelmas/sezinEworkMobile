@@ -1,30 +1,30 @@
 export const izinTypes = [
   {
     label: "Yıllık İzin",
-    value: "yillik"
+    value: "0"
   },
   {
     label: "Şua İzni",
-    value: "sua"
+    value: "1"
   },
   {
     label: "Yarım Gün İzin",
-    value: "yarimgun"
+    value: "2"
   },
   {
     label: "Ölüm İzni",
-    value: "olum"
+    value: "4"
   },
   {
     label: "Doğum İzni(Babalık)",
-    value: "dogumizni"
+    value: "5"
   },
   {
     label: "Ücretsiz İzin",
-    value: "ucretsiz"
+    value: "6"
   },
   {
     label: "Diğer İzin",
-    value: "diger"
+    value: "3"
   }
 ];

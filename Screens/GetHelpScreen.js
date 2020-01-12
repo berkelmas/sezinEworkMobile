@@ -26,14 +26,15 @@ import SezinDescription from "../components/Typography/SezinDescription";
 const GetHelpScreen = props => {
   const [loadingState, setLoadingState] = React.useState(false);
   const toast = useRef(null);
+  const [userFullName, setUserFullName] = useState(null);
   const [title, setTitle] = useState(null);
   const [description, setDescription] = useState(null);
   const fullName = useSelector(state => state.AuthReducer.fullName);
   const token = useSelector(state => state.AuthReducer.accessToken);
 
   const handleSubmit = () => {
-    if (fullName) {
-      if (title && description && title !== "" && description !== "") {
+    if (title && description && title !== "" && description !== "") {
+      if (fullName) {
         setLoadingState(true);
         createHelpRequestLoggedIn(fullName, title, description, token)
           .then(res => {
@@ -42,6 +43,28 @@ const GetHelpScreen = props => {
               toast.current.show(res.data.message, 1000);
             } else {
               props.navigation.navigate("Home", {
+                toastColor: colors.green,
+                toastText: "Destek Talebiniz ile Gönderilmiştir."
+              });
+            }
+          })
+          .catch(err => {
+            setLoadingState(false);
+            toast.current.show(
+              "Destek talebi iletiminde hata meydana geldi.",
+              1000
+            );
+          });
+      } else {
+        // IF NOT LOGGED IN
+        setLoadingState(true);
+        createHelpRequestNotLoggedIn(userFullName, title, description)
+          .then(res => {
+            setLoadingState(false);
+            if (res.data.hasError) {
+              toast.current.show(res.data.message, 1000);
+            } else {
+              props.navigation.navigate("Login", {
                 toastColor: colors.green,
                 toastText: "Destek Talebiniz ile Gönderilmiştir."
               });
@@ -81,7 +104,7 @@ const GetHelpScreen = props => {
           <SezinInput
             label="Ad-Soyad"
             inputProps={{ value: fullName, disabled: fullName && true }}
-            onChangeText={val => console.log(val)}
+            onChangeText={setUserFullName.bind(this)}
           />
           <SezinInput
             label="Başlık"
@@ -122,16 +145,13 @@ const GetHelpScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
+    paddingHorizontal: 20
   },
   header: {
     height: 100,
     width: "100%",
     backgroundColor: "white",
     justifyContent: "center"
-  },
-  formContainer: {
-    marginVertical: 40
   }
 });
 

@@ -23,7 +23,7 @@ export const createHelpRequestLoggedIn = (
 };
 
 export const createHelpRequestNotLoggedIn = (fullname, title, description) => {
-  return axios.post(`${config.apiEndpoint}sendHelpWithoutLogin`, {
+  return axios.post(`${config.apiEndpoint}System/sendHelpWithoutLogin`, {
     fullname,
     title,
     description

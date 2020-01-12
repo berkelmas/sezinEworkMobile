@@ -1,6 +1,6 @@
 //import liraries
-import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, ScrollView, PixelRatio } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
+import { View, StyleSheet, ScrollView, PixelRatio } from "react-native";
 import Modal from "react-native-modal";
 import Toast from "react-native-easy-toast";
 
@@ -14,17 +14,44 @@ import SezinButton from "../components/Buttons/SezinButton";
 import SezinSingleIzin from "../components/General/SezinSingleIzin";
 
 import { colors } from "../assets/styles/colors";
+import { getTotalIzin } from "../services/izin-service";
+import { useSelector } from "react-redux";
 
 // create a component
 const IzinMainScreen = props => {
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
   const [selectedIzin, setselectedIzin] = useState(null);
   const [modalIzinOpen, setModalIzinOpen] = useState(false);
+  const [totalIzinCount, setTotalIzinCount] = useState(null);
   const toast = useRef(null);
 
   const openModal = izin => {
     setselectedIzin(izin);
     setModalIzinOpen(true);
   };
+
+  useEffect(() => {
+    // GET TOTAL IZIN COUNT
+    getTotalIzin(accessToken).then(res => {
+      setTotalIzinCount(res.data.result);
+    });
+    const didBlurSubscription = props.navigation.addListener(
+      "didFocus",
+      payload => {
+        if (props.navigation.getParam("toastText", null)) {
+          // setToastColor(props.navigation.getParam("toastColor", null));
+          console.log(props.navigation.getParam("toastText", null));
+          toast.current.show(
+            props.navigation.getParam("toastText", null),
+            1000
+          );
+          props.navigation.setParams({ toastText: null });
+          props.navigation.setParams({ toastColor: null });
+        }
+      }
+    );
+    return () => didBlurSubscription.remove();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -40,7 +67,7 @@ const IzinMainScreen = props => {
       />
       <View style={{ flexDirection: "row", paddingHorizontal: 20 }}>
         <SezinDescription
-          text="10 günlük"
+          text={`${totalIzinCount} günlük`}
           textStyle={{ color: colors.green }}
         />
         <SezinDescription text=" yıllık izin hakkınız bulunmaktadır." />
@@ -61,7 +88,7 @@ const IzinMainScreen = props => {
       <SezinButton
         onPress={props.navigation.navigate.bind(this, "MyIzinRequests")}
         containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}
-        buttonTextStyle={{ fontSize: 22 }}
+        buttonTextStyle={{ fontSize: 22 / PixelRatio.getFontScale() }}
         color={colors.green}
         overlayColor={colors.darkGreen}
         text="Tümünü Gör"
@@ -87,7 +114,7 @@ const IzinMainScreen = props => {
         ref={toast}
         style={{
           ...styles.toastContainerStyle,
-          backgroundColor: props.navigation.getParam("toastColor", null)
+          backgroundColor: colors.green
         }}
       />
     </ScrollView>
@@ -99,7 +126,7 @@ const styles = StyleSheet.create({
   toastText: {
     fontFamily: "Airbnb-Book",
     color: "white",
-    fontSize: 16
+    fontSize: 16 / PixelRatio.getFontScale()
   },
   toastContainerStyle: {
     paddingHorizontal: 15,
