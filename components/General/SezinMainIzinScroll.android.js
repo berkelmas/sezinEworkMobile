@@ -7,9 +7,10 @@ import {
   ScrollView,
   TouchableNativeFeedback,
   Dimensions,
-  Image,
   PixelRatio
 } from "react-native";
+import { Image } from "react-native-elements";
+import { MaterialIndicator } from "react-native-indicators";
 import { colors } from "../../assets/styles/colors";
 import { izinMainScrollData } from "../../assets/data/izin-main-scroll.data";
 
@@ -38,8 +39,15 @@ const SezinIzinMainScroll = props => {
             >
               <View style={styles.singleView}>
                 <Image
+                  placeholderStyle={{
+                    backgroundColor: "white",
+                    height: "100%"
+                  }}
+                  PlaceholderContent={
+                    <MaterialIndicator color={colors.blue} size={60} />
+                  }
                   source={item.image}
-                  style={{
+                  containerStyle={{
                     height: "70%",
                     width: "100%"
                   }}

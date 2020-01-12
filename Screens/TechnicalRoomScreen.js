@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
+  Text,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard
@@ -10,10 +11,12 @@ import {
 // SEZIN CUSTOM COMPONENTS
 import SezinHeader from "../components/General/SezinHeader";
 import SezinTitle from "../components/Typography/SezinTitle";
+import SezinDescription from "../components/Typography/SezinDescription";
 import SezinPicker from "../components/Inputs/SezinPicker";
 import SezinMRForm from "../components/General/SezinMRForm";
 import SezinTomoForm from "../components/General/SezinTomoForm";
 import { useSelector } from "react-redux";
+import { colors } from "../assets/styles/colors";
 
 // create a component
 const TechnicalRoomScreen = props => {
@@ -49,8 +52,23 @@ const TechnicalRoomScreen = props => {
           containerStyle={{}}
         />
         <SezinTitle text="Teknik Oda Takibi" />
+        <SezinDescription
+          text={
+            <Text>
+              Buradan{" "}
+              <Text style={{ color: colors.green }}>
+                {" "}
+                {selectedDevice === "mr" && "MR "}
+                {selectedDevice === "tomo" && "Tomografi "}
+              </Text>
+              cihazlarımızın teknik oda değerlerinin bildirimlerini
+              yapabilirsiniz.
+            </Text>
+          }
+        />
 
         <SezinPicker
+          contentContainerStyle={{ marginTop: 15 }}
           initialSelection={devices[0]}
           placeholderText="Cihaz"
           items={devices}

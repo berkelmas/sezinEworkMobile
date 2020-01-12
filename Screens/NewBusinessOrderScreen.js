@@ -1,5 +1,5 @@
 //import liraries
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   Keyboard,
   ScrollView
 } from "react-native";
+import Toast from "react-native-easy-toast";
 import { colors } from "../assets/styles/colors";
 
 // CUSTOM SEZIN COMPONENTS
@@ -17,6 +18,7 @@ import SezinPicker from "../components/Inputs/SezinPicker";
 import SezinDatePicker from "../components/Inputs/SezinDatePicker";
 import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
 import SezinMultipleSelect from "../components/Inputs/SezinMultipleSelect";
+import SezinDescription from "../components/Typography/SezinDescription";
 
 // REDUX
 import { useSelector, useDispatch } from "react-redux";
@@ -24,16 +26,20 @@ import {
   getAllGroupsAction,
   getAllUsersAction
 } from "../store/actions/ResourcesActions";
+import {
+  getNewBusinessOrderDocumentNumber,
+  createNewBusinessOrder
+} from "../services/business-order-service";
 
 // create a component
 const NewBusinessOrderScreen = props => {
+  const toast = useRef(null);
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
   const [loadingState, setLoadingState] = useState(false);
+
   // DATA LOADING FOR INPUTS
   const [groupsLoadingState, setGroupsLoadingState] = useState(true);
   const [usersLoadingState, setUsersLoadingState] = useState(true);
-
-  const [documentNumber, setDocumentNumber] = useState(null);
   const dispatch = useDispatch();
 
   // resources for the form
@@ -42,6 +48,14 @@ const NewBusinessOrderScreen = props => {
 
   const [usersPairs, setUsersPairs] = useState(null);
   const [groupsPairs, setGroupsPairs] = useState(null);
+
+  // SELECTED VALUES
+  const [selectedTitle, setSelectedTitle] = useState(null);
+  const [selectedDescription, setSelectedDescription] = useState(null);
+  const [selectedGroups, setSelectedGroups] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedPriority, setSelectedPriority] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
 
   useEffect(() => {
     if (users.length < 1) {
@@ -73,6 +87,46 @@ const NewBusinessOrderScreen = props => {
     }
   }, [groups]);
 
+  const handleSubmit = () => {
+    if (
+      selectedDescription &&
+      selectedTitle &&
+      selectedPriority &&
+      selectedGroups.length &&
+      selectedUsers.length &&
+      selectedEndDate
+    ) {
+      setLoadingState(true);
+      getNewBusinessOrderDocumentNumber(accessToken).then(res => {
+        const docNumber = res.data.result;
+        createNewBusinessOrder(
+          accessToken,
+          selectedTitle,
+          selectedDescription,
+          selectedUsers,
+          selectedGroups,
+          selectedPriority,
+          selectedEndDate,
+          docNumber
+        )
+          .then(res => {
+            setLoadingState(false);
+            props.navigation.navigate("Home", {
+              toastColor: colors.green,
+              toastText: "İş Emri Başarı İle Kaydedildi."
+            });
+          })
+          .catch(err => {
+            setLoadingState(false);
+            toast.current.show(
+              "Yeni iş emri iletiminde sorun meydana geldi.",
+              1000
+            );
+          });
+      });
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <ScrollView>
@@ -82,9 +136,15 @@ const NewBusinessOrderScreen = props => {
             leftIconName="chevron-left"
           />
           <SezinTitle text="Yeni İş Emri" />
+          <SezinDescription text="Aşağıdaki formu doldurarak yeni iş emirlerinizi düzenleyebilirsiniz." />
 
-          <SezinInput label="Başlık" containerStyle={{ marginTop: 10 }} />
           <SezinInput
+            label="Başlık"
+            containerStyle={{ marginTop: 20 }}
+            onChangeText={setSelectedTitle.bind(this)}
+          />
+          <SezinInput
+            onChangeText={setSelectedDescription.bind(this)}
             label="Açıklama"
             containerStyle={{ marginTop: 10 }}
             multiline={true}
@@ -94,7 +154,9 @@ const NewBusinessOrderScreen = props => {
             placeholderText="Görev Verilen Kişi"
             contentContainerStyle={{ marginTop: 30 }}
             items={usersPairs}
-            onSelectionChange={val => console.log(val)}
+            onSelectionChange={val =>
+              setSelectedUsers(val.map(item => ({ id: item.value })))
+            }
           />
 
           <SezinMultipleSelect
@@ -102,40 +164,58 @@ const NewBusinessOrderScreen = props => {
             placeholderText="Personel Grubu"
             contentContainerStyle={{ marginTop: 30 }}
             items={groupsPairs}
-            onSelectionChange={val => console.log(val)}
+            onSelectionChange={val =>
+              setSelectedGroups(val.map(item => ({ id: item.value })))
+            }
           />
 
-          <SezinPicker
-            placeholderText="Öncelik Durumu"
-            contentContainerStyle={{ marginTop: 30 }}
-            items={[
-              { label: "Kritik", value: "football" },
-              { label: "Normal", value: "baseball" },
-              { label: "Acil Degil", value: "hockey" }
-            ]}
-          />
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between"
+            }}
+          >
+            <SezinPicker
+              placeholderText="Öncelik Durumu"
+              contentContainerStyle={{ width: "45%", marginTop: 30 }}
+              items={[
+                { label: "Önemli", value: 2 },
+                { label: "Normal", value: 1 },
+                { label: "Düşük", value: 0 }
+              ]}
+              onValueChange={setSelectedPriority.bind(this)}
+            />
 
-          <SezinDatePicker placeholderText="Bitiş Tarihi" />
+            <SezinDatePicker
+              contentContainerStyle={{ width: "45%", marginTop: 30 }}
+              placeholderText="Bitiş Tarihi"
+              onDateChange={setSelectedEndDate.bind(this)}
+            />
+          </View>
+
           <SezinLoadingButton
             color={colors.blue}
             overlayColor={colors.darkBlue}
             text="Kaydet"
             containerStyle={{ marginTop: 35 }}
-            onPress={() => {
-              setLoadingState(true);
-              setTimeout(() => {
-                setLoadingState(false);
-                props.navigation.navigate("Home", {
-                  toastColor: colors.green,
-                  toastText: "İş Emri Başarı İle Kaydedildi."
-                });
-              }, 1500);
-            }}
+            onPress={handleSubmit.bind(this)}
             loading={loadingState}
           />
           {/* BOTTOM MARGIN */}
           <View style={{ height: 50, width: 50 }} />
         </View>
+        <Toast
+          position="top"
+          positionValue={50}
+          opacity={0.8}
+          textStyle={styles.toastText}
+          ref={toast}
+          style={{
+            ...styles.toastContainerStyle,
+            backgroundColor: colors.red
+          }}
+        />
       </ScrollView>
     </TouchableWithoutFeedback>
   );
@@ -146,6 +226,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20
+  },
+  toastText: {
+    fontFamily: "Airbnb-Book",
+    color: "white",
+    fontSize: 16
+  },
+  toastContainerStyle: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

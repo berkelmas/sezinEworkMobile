@@ -21,6 +21,7 @@ import { colors } from "../assets/styles/colors";
 
 // REDUX
 import { useSelector } from "react-redux";
+import SezinDescription from "../components/Typography/SezinDescription";
 
 const GetHelpScreen = props => {
   const [loadingState, setLoadingState] = React.useState(false);
@@ -65,6 +66,15 @@ const GetHelpScreen = props => {
           leftIconName="chevron-left"
         />
         <SezinTitle text="Destek Al" />
+        <SezinDescription
+          containerStyle={{ marginTop: 7 }}
+          text={
+            <Text>
+              Buradan uygulama kullanımında yaşadığınız sorunlar hakkında{" "}
+              <Text style={{ color: colors.green }}>destek</Text> alabilirsiniz.
+            </Text>
+          }
+        />
 
         {/* FORM CONTAINER */}
         <View style={styles.formContainer}>
@@ -91,7 +101,7 @@ const GetHelpScreen = props => {
           color={colors.green}
           overlayColor={colors.darkGreen}
           text="Gönder"
-          containerStyle={{ marginTop: 40 }}
+          containerStyle={{ marginTop: 15 }}
         />
         <Toast
           position="top"
@@ -121,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   formContainer: {
-    marginVertical: 20
+    marginVertical: 40
   }
 });
 

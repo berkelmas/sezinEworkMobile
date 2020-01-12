@@ -24,11 +24,3 @@ export const getGroupsService = token => {
     }
   });
 };
-
-export const getNewBusinessOrderDocumentNumber = token => {
-  return axios.get(`${config.apiEndpoint}WorkOrder/getDocumentationNo`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-};

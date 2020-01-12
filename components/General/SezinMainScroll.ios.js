@@ -4,10 +4,12 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image,
   Dimensions,
   TouchableOpacity
 } from "react-native";
+import { Image } from "react-native-elements";
+import { MaterialIndicator } from "react-native-indicators";
+
 import { useSelector } from "react-redux";
 import { colors } from "../../assets/styles/colors";
 import { mainScrollData } from "../../assets/data/main-scroll.data";
@@ -48,8 +50,15 @@ const SezinMainScroll = props => {
             >
               <View style={styles.singleView}>
                 <Image
+                  placeholderStyle={{
+                    backgroundColor: "white",
+                    height: "100%"
+                  }}
+                  PlaceholderContent={
+                    <MaterialIndicator color={colors.blue} size={60} />
+                  }
                   source={item.image}
-                  style={{ height: "70%", width: "100%" }}
+                  containerStyle={{ height: "70%", width: "100%" }}
                 />
                 <View style={styles.contentWrapper}>
                   <Text style={styles.contentHeader}>{item.title}</Text>

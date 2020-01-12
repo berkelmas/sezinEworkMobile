@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   View,
+  Text,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard
@@ -22,6 +23,7 @@ import SezinTimePicker from "../components/Inputs/SezinTimePicker";
 
 // SERVICES
 import { addDailyReport } from "../services/daily-report-service";
+import SezinDescription from "../components/Typography/SezinDescription";
 
 // create a component
 const DailyReportScreen = props => {
@@ -150,6 +152,20 @@ const DailyReportScreen = props => {
           onPressLeft={() => props.navigation.goBack()}
         />
         <SezinTitle text="Günlük Raporlama" />
+        <SezinDescription
+          text={
+            <Text>
+              Buradan{" "}
+              <Text style={{ color: colors.green }}>
+                {devices.filter(item => item.value === selectedDevice)[0] &&
+                  devices.filter(item => item.value === selectedDevice)[0]
+                    .label}
+              </Text>{" "}
+              cihazlarımızın günlük çekim sayılarının bildirimlerini
+              yapabilirsiniz.{" "}
+            </Text>
+          }
+        />
         <SezinPicker
           onValueChange={device => setSelectedDevice(device)}
           placeholderText="Cihaz"
@@ -165,21 +181,23 @@ const DailyReportScreen = props => {
           }
         />
 
-        <SezinTimePicker
-          contentContainerStyle={{ marginTop: 35 }}
-          placeholderText="Başlangıç Saati"
-          onValueChange={date =>
-            setFormValues(prev => ({ ...prev, startDate: date }))
-          }
-        />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <SezinTimePicker
+            contentContainerStyle={{ marginTop: 35, width: "45%" }}
+            placeholderText="Başlangıç Saati"
+            onValueChange={date =>
+              setFormValues(prev => ({ ...prev, startDate: date }))
+            }
+          />
 
-        <SezinTimePicker
-          contentContainerStyle={{ marginTop: 35 }}
-          placeholderText="Bitiş Saati"
-          onValueChange={date =>
-            setFormValues(prev => ({ ...prev, endDate: date }))
-          }
-        />
+          <SezinTimePicker
+            contentContainerStyle={{ marginTop: 35, width: "45%" }}
+            placeholderText="Bitiş Saati"
+            onValueChange={date =>
+              setFormValues(prev => ({ ...prev, endDate: date }))
+            }
+          />
+        </View>
 
         <SezinInput
           label="Açıklama"

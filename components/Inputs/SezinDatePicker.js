@@ -5,7 +5,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  PixelRatio
+  PixelRatio,
+  ViewPropTypes
 } from "react-native";
 import PropTypes from "prop-types";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -36,10 +37,11 @@ const SezinDatePicker = props => {
         }
       });
     }
+    props.onDateChange(selectedDate);
   }, [selectedDate]);
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...props.contentContainerStyle }}>
       <TouchableOpacity
         onPress={() => bottomSheet.current.open()}
         style={{
@@ -102,7 +104,9 @@ const styles = StyleSheet.create({
 });
 
 SezinDatePicker.propTypes = {
-  placeholderText: PropTypes.string
+  placeholderText: PropTypes.string,
+  contentContainerStyle: ViewPropTypes.style,
+  onDateChange: PropTypes.func
 };
 
 //make this component available to the app
