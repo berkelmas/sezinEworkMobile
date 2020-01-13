@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { logoutStartAction } from "../store/actions/AuthActions";
 import { DrawerItems } from "react-navigation-drawer";
+import DrawerNavigatorItems from "./DrawerNavigatorItems";
 import { AntDesign } from "@expo/vector-icons";
 import SezinLogoText from "../assets/images/sezin-logo-text.png";
 import { colors } from "../assets/styles/colors";
@@ -34,7 +35,7 @@ const SezinDrawer = props => {
         />
       </View>
 
-      <DrawerItems {...props} />
+      <DrawerNavigatorItems {...props} />
       <TouchableNativeFeedback onPress={handleLogout.bind(this)}>
         <View
           style={{

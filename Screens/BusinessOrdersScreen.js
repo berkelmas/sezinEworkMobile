@@ -130,7 +130,7 @@ const BusinessOrdersScreen = props => {
                   justifyContent: "center"
                 }}
               >
-                <MaterialIndicator color={colors.blue} size={80} />
+                <MaterialIndicator color={colors.blue} size={60} />
               </View>
             )}
           </View>

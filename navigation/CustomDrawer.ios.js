@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   Image,
   Text,
   View,
-  TouchableOpacity,
-  AsyncStorage
+  TouchableOpacity
 } from "react-native";
 import { logoutStartAction } from "../store/actions/AuthActions";
 import { DrawerItems } from "react-navigation-drawer";
+import DrawerNavigatorItems from "./DrawerNavigatorItems";
 import { AntDesign } from "@expo/vector-icons";
 import SezinLogoText from "../assets/images/sezin-logo-text.png";
 import { colors } from "../assets/styles/colors";
@@ -22,6 +22,8 @@ const SezinDrawer = props => {
     dispatch(logoutStartAction(refreshToken));
   };
 
+  // console.log(props.items[0]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View
@@ -33,7 +35,7 @@ const SezinDrawer = props => {
         />
       </View>
 
-      <DrawerItems {...props} />
+      <DrawerNavigatorItems {...props} />
       <TouchableOpacity
         onPress={handleLogout.bind(this)}
         style={{
@@ -41,7 +43,8 @@ const SezinDrawer = props => {
           backgroundColor: "#F5F7F9",
           height: 50,
           flexDirection: "row",
-          alignItems: "center"
+          alignItems: "center",
+          paddingLeft: 8
         }}
       >
         <AntDesign

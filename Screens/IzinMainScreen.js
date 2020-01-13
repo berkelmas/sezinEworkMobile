@@ -16,6 +16,7 @@ import SezinSingleIzin from "../components/General/SezinSingleIzin";
 import { colors } from "../assets/styles/colors";
 import { getTotalIzin } from "../services/izin-service";
 import { useSelector } from "react-redux";
+import { DotIndicator } from "react-native-indicators";
 
 // create a component
 const IzinMainScreen = props => {
@@ -23,6 +24,7 @@ const IzinMainScreen = props => {
   const [selectedIzin, setselectedIzin] = useState(null);
   const [modalIzinOpen, setModalIzinOpen] = useState(false);
   const [totalIzinCount, setTotalIzinCount] = useState(null);
+  const [totalIzinCountLoading, setTotalIzinCountLoading] = useState(false);
   const toast = useRef(null);
 
   const openModal = izin => {
@@ -32,12 +34,29 @@ const IzinMainScreen = props => {
 
   useEffect(() => {
     // GET TOTAL IZIN COUNT
-    getTotalIzin(accessToken).then(res => {
-      setTotalIzinCount(res.data.result);
-    });
+    setTotalIzinCountLoading(true);
+    getTotalIzin(accessToken)
+      .then(res => {
+        setTotalIzinCount(res.data.result);
+        setTotalIzinCountLoading(false);
+      })
+      .catch(err => {
+        setTotalIzinCountLoading(false);
+      });
     const didBlurSubscription = props.navigation.addListener(
       "didFocus",
       payload => {
+        // GET TOTAL IZIN COUNT
+        setTotalIzinCountLoading(true);
+        getTotalIzin(accessToken)
+          .then(res => {
+            setTotalIzinCount(res.data.result);
+            setTotalIzinCountLoading(false);
+          })
+          .catch(err => {
+            setTotalIzinCountLoading(false);
+          });
+
         if (props.navigation.getParam("toastText", null)) {
           // setToastColor(props.navigation.getParam("toastColor", null));
           console.log(props.navigation.getParam("toastText", null));
@@ -66,11 +85,19 @@ const IzinMainScreen = props => {
         textStyle={{ paddingHorizontal: 20, paddingBottom: 5 }}
       />
       <View style={{ flexDirection: "row", paddingHorizontal: 20 }}>
-        <SezinDescription
-          text={`${totalIzinCount} günlük`}
-          textStyle={{ color: colors.green }}
-        />
-        <SezinDescription text=" yıllık izin hakkınız bulunmaktadır." />
+        {totalIzinCountLoading ? (
+          <View style={{ marginLeft: 10, paddingVertical: 3 }}>
+            <DotIndicator color={colors.green} size={7} />
+          </View>
+        ) : (
+          <>
+            <SezinDescription
+              text={`${totalIzinCount} günlük`}
+              textStyle={{ color: colors.green }}
+            />
+            <SezinDescription text=" yıllık izin hakkınız bulunmaktadır." />
+          </>
+        )}
       </View>
 
       <SezinMainIzinScroll onPress={props.navigation.navigate.bind(this)} />
