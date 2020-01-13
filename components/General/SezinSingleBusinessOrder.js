@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,15 +8,18 @@ import {
   TouchableOpacity,
   PixelRatio
 } from "react-native";
+import { MaterialIndicator } from "react-native-indicators";
+import { Tooltip } from "react-native-elements";
 import PropTypes from "prop-types";
 import IsTakibi from "../../assets/images/saha-takibi.jpg";
 import { colors } from "../../assets/styles/colors";
 
 const SezinSingleBusinessOrder = props => {
-  const [statusColor, setStatusColor] = React.useState("white");
-  const [businessStatus, setBusinessStatus] = React.useState(props.status);
+  const [statusColor, setStatusColor] = useState("white");
+  const [businessStatus, setBusinessStatus] = useState(props.status);
+  const [statusLoadingState, setStatusLoadingState] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     switch (businessStatus) {
       case "Tamamlandı":
         setStatusColor(colors.green);
@@ -33,19 +36,23 @@ const SezinSingleBusinessOrder = props => {
   }, [businessStatus]);
 
   const _changeStatus = () => {
-    switch (businessStatus) {
-      case "Tamamlandı":
-        setBusinessStatus("Başlanmadı");
-        break;
-      case "Başlanmadı":
-        setBusinessStatus("Yapılıyor");
-        break;
-      case "Yapılıyor":
-        setBusinessStatus("Tamamlandı");
-        break;
-      default:
-        break;
-    }
+    setStatusLoadingState(true);
+    setTimeout(() => {
+      switch (businessStatus) {
+        case "Tamamlandı":
+          setBusinessStatus("Başlanmadı");
+          break;
+        case "Başlanmadı":
+          setBusinessStatus("Yapılıyor");
+          break;
+        case "Yapılıyor":
+          setBusinessStatus("Tamamlandı");
+          break;
+        default:
+          break;
+      }
+      setStatusLoadingState(false);
+    }, 2000);
   };
 
   return (
@@ -64,24 +71,75 @@ const SezinSingleBusinessOrder = props => {
         </Text>
 
         {/* BOTTOM TEXT CONTAINER */}
+        {!props.assignedByMe && (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 10,
+              paddingBottom: 8
+            }}
+          >
+            <Text style={styles.bottomTexts}>Oluşturan:</Text>
+            <Text style={styles.bottomRightTexts}>{props.createdBy}</Text>
+          </View>
+        )}
+
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            marginTop: 10
+            paddingBottom: 8
           }}
         >
-          <Text style={styles.bottomTexts}>
-            {props.assignedByMe ? "Verilen:" : "Oluşturan:"}
-          </Text>
-          <Text style={styles.bottomRightTexts}>{props.createdBy}</Text>
+          <Text style={styles.bottomTexts}>Atananlar:</Text>
+          <Tooltip
+            containerStyle={{
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 0
+              },
+              shadowOpacity: 0.15,
+              shadowRadius: 7,
+
+              elevation: 9
+            }}
+            height={40 + 3 * 15}
+            backgroundColor={colors.lightGray}
+            popover={
+              <View>
+                {["Berk Elmas", "Ali Yilmaz", "Emre Kara"].map(
+                  (item, index) => (
+                    <Text
+                      key={index}
+                      style={{
+                        fontFamily: "Airbnb-Light",
+                        fontSize: 15,
+                        color: colors.dark
+                      }}
+                    >
+                      - {item}
+                    </Text>
+                  )
+                )}
+              </View>
+            }
+          >
+            <Text style={{ ...styles.bottomRightTexts }}>
+              {props.assignedPeople.length} Kişi
+            </Text>
+          </Tooltip>
         </View>
+
         <View
           style={{
             alignItems: "center",
             flexDirection: "row",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
+            paddingBottom: 6
           }}
         >
           <Text style={styles.bottomTexts}>Bitiş Tarihi:</Text>
@@ -96,9 +154,26 @@ const SezinSingleBusinessOrder = props => {
           }}
         >
           <Text style={styles.bottomTexts}>Durum:</Text>
-          <Text style={{ ...styles.bottomRightTexts, color: statusColor }}>
-            {businessStatus}
-          </Text>
+
+          {statusLoadingState ? (
+            <View>
+              <MaterialIndicator
+                size={36}
+                color={colors.blue}
+                style={{ paddingRight: "5%" }}
+              />
+            </View>
+          ) : (
+            <Text
+              style={{
+                ...styles.bottomRightTexts,
+                color: statusColor,
+                paddingBottom: 10
+              }}
+            >
+              {businessStatus}
+            </Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>
@@ -138,7 +213,8 @@ const styles = StyleSheet.create({
   descriptionText: {
     color: colors.gray,
     fontSize: 15 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Light"
+    fontFamily: "Airbnb-Light",
+    marginBottom: 10
   },
   bottomTexts: {
     color: colors.dark,

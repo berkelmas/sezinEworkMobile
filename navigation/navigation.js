@@ -7,7 +7,6 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
 import NavigationService from "./NavigationService";
 
-import { connect, useSelector } from "react-redux";
 import HomeScreen from "../Screens/HomeScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import GetHelpScreen from "../Screens/GetHelpScreen";
@@ -122,6 +121,7 @@ const customAppContainer = props => {
         activeBackgroundColor: "#F5F7F9",
         labelStyle: {
           fontFamily: "Airbnb-Medium",
+          fontWeight: "normal",
           fontSize: 18 / PixelRatio.getFontScale(),
           color: colors.dark
         },
@@ -176,8 +176,4 @@ const customAppContainer = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  username: state.AuthReducer.username
-});
-
-export default connect(mapStateToProps)(customAppContainer);
+export default customAppContainer;

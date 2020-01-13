@@ -80,8 +80,10 @@ const BusinessOrdersScreen = props => {
             }}
             {...item}
             deadline="23 Mart"
-            createdBy="Berk Elmas"
+            createdBy={item.createdBy}
             status="Tamamlandı"
+            assignedByMe={assignedByMe}
+            assignedPeople={item.assignedOn}
           />
         )}
         contentContainerStyle={{ paddingHorizontal: 20 }}

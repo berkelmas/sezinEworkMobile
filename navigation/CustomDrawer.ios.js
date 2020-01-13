@@ -12,7 +12,6 @@ import { DrawerItems } from "react-navigation-drawer";
 import { AntDesign } from "@expo/vector-icons";
 import SezinLogoText from "../assets/images/sezin-logo-text.png";
 import { colors } from "../assets/styles/colors";
-import NavigationService from "./NavigationService";
 import { useSelector, useDispatch } from "react-redux";
 
 const SezinDrawer = props => {
