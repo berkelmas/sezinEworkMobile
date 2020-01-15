@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import {
   notStarted,
   notStartedToWorkingOn,
-  workingToCompleted
+  workingToCompleted,
+  cancelled
 } from "../Micro/SezinBusinessOrderIcons";
 import { colors } from "../../assets/styles/colors";
 
@@ -18,6 +19,18 @@ const BusinessOrderActivities = props => {
           <Text style={styles.personText}>{item.person}</Text>
           {/* MAIN CONTAINER */}
           <View style={{ paddingHorizontal: 10 }}>
+            {/* CANCEL */}
+            {item.cancel && item.cancel.length > 0 && (
+              <View>
+                {cancelled()}
+                {item.cancel.map((text, index) => (
+                  <Text key={index} style={styles.singleActivityText}>
+                    - {text}
+                  </Text>
+                ))}
+              </View>
+            )}
+
             {/* NOT STARTED */}
             {item.notStarted && item.notStarted.length > 0 && (
               <View>

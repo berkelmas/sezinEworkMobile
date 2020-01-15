@@ -3,6 +3,15 @@ import { View } from "react-native";
 import IcomoonIcon from "../Typography/IcomoonIcon";
 import { colors } from "../../assets/styles/colors";
 
+export const cancelled = () => (
+  <IcomoonIcon
+    name="ban"
+    size={25}
+    color={colors.darkRed}
+    style={{ paddingRight: 10 }}
+  />
+);
+
 export const notStarted = () => (
   <IcomoonIcon
     name="times"
