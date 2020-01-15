@@ -37,3 +37,47 @@ export const createNewBusinessOrder = (
     }
   );
 };
+
+export const getBusinessOrdersOnMe = (pageNumber, pageSize, token) => {
+  return axios.post(
+    `${config.apiEndpoint}WorkOrder/getOwnWorkOrderWithPaging`,
+    {
+      pageNumber,
+      pageSize
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
+export const getBusinessOrderByMe = (pageNumber, pageSize, token) => {
+  return axios.post(
+    `${config.apiEndpoint}WorkOrder/myCreateWorkPaging`,
+    {
+      pageNumber,
+      pageSize
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
+export const getSingleBusinessOrderActivities = (documentationNo, token) => {
+  return axios.post(
+    `${config.apiEndpoint}WorkOrder/workOrderMobileResponse`,
+    {
+      documentationNo
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};

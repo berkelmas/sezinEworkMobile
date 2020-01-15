@@ -35,8 +35,10 @@ export const notStartedToWorkingOn = () => (
   </View>
 );
 
-export const startedToCompleted = () => (
-  <View style={{ flexDirection: "row", alignItems: "center" }}>
+export const workingToCompleted = () => (
+  <View
+    style={{ flexDirection: "row", alignItems: "center", paddingVertical: 5 }}
+  >
     <IcomoonIcon
       name="spinner"
       size={23}

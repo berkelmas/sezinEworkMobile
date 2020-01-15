@@ -22,14 +22,17 @@ const SezinSingleBusinessOrder = props => {
 
   useEffect(() => {
     switch (businessStatus) {
-      case "Tamamlandı":
+      case 3:
+        setBusinessStatus("Tamamlandı");
         setStatusColor(colors.green);
         break;
-      case "Başlanmadı":
-        setStatusColor(colors.red);
-        break;
-      case "Yapılıyor":
+      case 1:
+        setBusinessStatus("Yapılıyor");
         setStatusColor(colors.blue);
+        break;
+      case 2:
+        setBusinessStatus("Başlanmadı");
+        setStatusColor(colors.red);
         break;
       default:
         break;
@@ -64,11 +67,14 @@ const SezinSingleBusinessOrder = props => {
         <Text style={styles.placeText}>{props.place}</Text>
         <Text style={styles.titleText}>{props.title}</Text>
         <Text style={styles.descriptionText}>
-          It is a long established fact that a reader will be distracted by the
+          {/*
+                    It is a long established fact that a reader will be distracted by the
           readable content of a page when looking at its layout. The point of
           using Lorem Ipsum is that it has a more-or-less normal distribution of
           letters, as opposed to using ‘Content here, content here’, making it
           look like readable English.
+          */}
+          {props.description}
         </Text>
 
         {/* BOTTOM TEXT CONTAINER */}
@@ -237,7 +243,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover"
   },
   placeText: {
-    color: colors.green,
+    color: colors.blue,
     fontSize: 15 / PixelRatio.getFontScale(),
     fontFamily: "Airbnb-Book"
   },
@@ -270,7 +276,7 @@ SezinSingleBusinessOrder.propTypes = {
   description: PropTypes.string,
   createdBy: PropTypes.string,
   deadline: PropTypes.string,
-  status: PropTypes.string,
+  status: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   assignedByMe: PropTypes.bool,
   onMoreDetailsButtonPressed: PropTypes.func
 };

@@ -16,12 +16,15 @@ import IcomoonIcon from "../Typography/IcomoonIcon";
 
 // CUSTOM SEZIN COMPONENTS
 import SezinButton from "../Buttons/SezinButton";
+import SezinDescription from "../Typography/SezinDescription";
 import {
   notStartedToWorkingOn,
   notStarted,
   startedToCompleted
-} from "../General/SezinBusinessOrderIcons";
+} from "../Micro/SezinBusinessOrderIcons";
 import { colors } from "../../assets/styles/colors";
+import { MaterialIndicator } from "react-native-indicators";
+import BusinessOrderActivities from "../Micro/BusinessOrderActivities";
 
 // create a component
 const SezinInformationModal = props => {
@@ -31,7 +34,7 @@ const SezinInformationModal = props => {
       onBackdropPress={() => props.onBackdropPress()}
       isVisible={props.isModalOpen}
     >
-      <View style={{ height: 400, backgroundColor: "white" }}>
+      <View style={{ height: 500, backgroundColor: "white" }}>
         <View style={styles.modalContainerTop}>
           <Text style={styles.textTop}>{props.headerText}</Text>
         </View>
@@ -46,6 +49,21 @@ const SezinInformationModal = props => {
           }}
         >
           {/* CONTENT COME HERE... */}
+          <SezinDescription text="Buradan iş emrine dahil olan personellerin iş hareketlerini görüntüleyebilirsiniz." />
+          {props.loadingState ? (
+            <View
+              style={{
+                height: 300,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <MaterialIndicator size={50} color={colors.blue} />
+            </View>
+          ) : (
+            <BusinessOrderActivities activity={props.activitiesArray} />
+          )}
         </ScrollView>
 
         <View
@@ -117,7 +135,8 @@ SezinInformationModal.propTypes = {
   onBackdropPress: PropTypes.func,
   onCloseButtonPressed: PropTypes.func,
   descriptionComponent: PropTypes.element,
-  headerText: PropTypes.string
+  headerText: PropTypes.string,
+  loadingState: PropTypes.bool
 };
 
 //make this component available to the app

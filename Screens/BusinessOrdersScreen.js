@@ -6,66 +6,135 @@ import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
 import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
 import SezinHeader from "../components/General/SezinHeader";
 import SezinTitle from "../components/Typography/SezinTitle";
+import SezinBadge from "../components/Buttons/SezinBadge";
+import SezinInformationModal from "../components/Modal/SezinInformationModal";
 import { colors } from "../assets/styles/colors";
 
 // MATERIAL INDICATOR
 import { MaterialIndicator } from "react-native-indicators";
-
-// FAKE DATA
+// REDUX
+import { useSelector } from "react-redux";
+// WEB SERVICES
 import {
-  businessOrdersData as fakeBusinessOrdersDataOnMe,
-  businessOrdersDataByMe as fakeBusinessOrdersDataByMe
-} from "../assets/data/business-orders.data";
-import SezinBadge from "../components/Buttons/SezinBadge";
-import SezinInformationModal from "../components/Modal/SezinInformationModal";
+  getBusinessOrderByMe,
+  getBusinessOrdersOnMe,
+  getSingleBusinessOrderActivities
+} from "../services/business-order-service";
 
 // create a component
 const BusinessOrdersScreen = props => {
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
+
+  // MAIN DATA
   const [businessOrders, setBusinessOrders] = useState(null);
+  // CURRENT PAGE
+  const [currentPage, setCurrentPage] = useState(1);
+  // HANDLES IF DATA END OR NOT.
+  const [dataEnd, setDataEnd] = useState(false);
+  // BOTTOM LOADING STATE
   const [loadingState, setLoadingState] = useState(false);
+  // LOADING STATE AT FIRST WITH NO DATA AT ALL
   const [topLoadingState, setTopLoadingState] = useState(false);
+  // BUSINESS STATUS FOR DIFFERENT API CALLS AT START
   const [assignedByMe, setAssignedByMe] = useState(false);
+  // INFORMATION MODAL FOR ASSIGNED PEOPLE ACTIVITIES
   const [isInformationModalOpen, setIsInformationModalOpen] = useState(false);
+  // ACTIVITY INFORMATION FOR SELECTED BUSINESS ORDER.
+  const [
+    selectedBusinessOrderActivityInformation,
+    setSelectedBusinessOrderActivityForInformation
+  ] = useState(null);
+  // LOADING STATE FOR SELECTED BUSINESS ORDER TO SHOW LOADING SPINNER ON MODAL
+  const [
+    businessOrderActivityLoading,
+    setBusinessOrderActivityLoading
+  ] = useState(false);
 
   // REACT TO CHANGES ON BUSINESS ORDER TYPE
-  React.useEffect(() => {
+  useEffect(() => {
+    // HANDLE CURRENT PAGE ON BUSINESS ORDER TYPE CHANGE.
+    setCurrentPage(1);
+    setDataEnd(false);
+
     if (assignedByMe) {
       setTopLoadingState(true);
       // EMPTY LIST
       setBusinessOrders([]);
-      setTimeout(() => {
-        setBusinessOrders(fakeBusinessOrdersDataByMe.slice(0, 4));
-        setTopLoadingState(false);
-      }, 1000);
+      getBusinessOrderByMe(currentPage, 5, accessToken)
+        .then(res => {
+          if (res.data.result.length > 0) {
+            setCurrentPage(prev => prev + 1);
+            setBusinessOrders(prev => [...prev, ...res.data.result]);
+          }
+          setDataEnd(true);
+          setTopLoadingState(false);
+        })
+        .catch(err => {
+          setLoadingState(false);
+        });
     } else {
       setTopLoadingState(true);
       // EMPTY LIST
       setBusinessOrders([]);
-      setTimeout(() => {
-        setBusinessOrders(fakeBusinessOrdersDataOnMe.slice(0, 4));
-        setTopLoadingState(false);
-      }, 1000);
+      getBusinessOrdersOnMe(1, 5, accessToken)
+        .then(res => {
+          if (res.data.result.length > 0) {
+            setCurrentPage(prev => prev + 1);
+            setBusinessOrders(prev => [...prev, ...res.data.result]);
+          }
+          setTopLoadingState(false);
+        })
+        .catch(err => {
+          setLoadingState(false);
+        });
     }
   }, [assignedByMe]);
 
   const _loadData = () => {
     setLoadingState(true);
-    if (assignedByMe) {
-      setTimeout(() => {
-        setBusinessOrders(prev => [
-          ...prev,
-          ...fakeBusinessOrdersDataByMe.slice(4, 8)
-        ]);
-        setLoadingState(false);
-      }, 1500);
+    if (!dataEnd) {
+      if (assignedByMe) {
+        getBusinessOrderByMe(currentPage, 5, accessToken)
+          .then(res => {
+            if (res.data.result.length > 0) {
+              setCurrentPage(prev => prev + 1);
+              setBusinessOrders(prev => [...prev, ...res.data.result]);
+            }
+            setDataEnd(true);
+            setLoadingState(false);
+          })
+          .catch(err => {
+            setLoadingState(false);
+          });
+      } else {
+        getBusinessOrdersOnMe(currentPage, 5, accessToken)
+          .then(res => {
+            if (res.data.result.length > 0) {
+              setCurrentPage(prev => prev + 1);
+              setBusinessOrders(prev => [...prev, ...res.data.result]);
+            }
+            setDataEnd(true);
+            setLoadingState(false);
+          })
+          .catch(err => {
+            setLoadingState(false);
+          });
+      }
     } else {
-      setTimeout(() => {
-        setBusinessOrders(prev => [
-          ...prev,
-          ...fakeBusinessOrdersDataOnMe.slice(4, 8)
-        ]);
-        setLoadingState(false);
-      }, 1500);
+      setLoadingState(false);
+    }
+  };
+
+  const _renderPriority = param => {
+    switch (param) {
+      case 0:
+        return "Düşük Öncelikli İş Emri";
+      case 1:
+        return "Normal Öncelikli İş Emri";
+      case 2:
+        return "Yüksek Öncelikli İş Emri";
+      default:
+        break;
     }
   };
 
@@ -80,19 +149,31 @@ const BusinessOrdersScreen = props => {
               marginBottom: 25,
               marginTop: index === 0 ? 20 : 0
             }}
+            place={_renderPriority(item.priorityEnum)}
             {...item}
+            status={item.statusEnum}
             deadline="23 Mart"
-            createdBy={item.createdBy}
-            status="Tamamlandı"
+            createdBy={item.createdUser}
             assignedByMe={assignedByMe}
-            assignedPeople={item.assignedOn}
-            onMoreDetailsButtonPressed={() => setIsInformationModalOpen(true)}
+            assignedPeople={[]}
+            onMoreDetailsButtonPressed={() => {
+              setBusinessOrderActivityLoading(true);
+              setIsInformationModalOpen(true);
+
+              getSingleBusinessOrderActivities(
+                item.documentationNo,
+                accessToken
+              ).then(res => {
+                setSelectedBusinessOrderActivityForInformation(res.data.result);
+                setBusinessOrderActivityLoading(false);
+              });
+            }}
           />
         )}
         contentContainerStyle={{ paddingHorizontal: 20 }}
         showsVerticalScrollIndicator={false}
         onEndReachedThreshold={0.2}
-        onEndReached={() => _loadData()}
+        onEndReached={() => !loadingState && !topLoadingState && _loadData()}
         ListHeaderComponent={() => (
           <View>
             {/* HEADER PART */}
@@ -106,7 +187,9 @@ const BusinessOrdersScreen = props => {
             <SezinTitle text="İş Emirleri" textStyle={{}} />
             <View style={styles.badgeContainer}>
               <SezinBadge
-                onPress={() => setAssignedByMe(false)}
+                onPress={() =>
+                  !topLoadingState && !loadingState && setAssignedByMe(false)
+                }
                 text="Üzerimdeki İşler"
                 color={!assignedByMe ? colors.blue : "white"}
                 width={(Dimensions.get("window").width - 60) / 2}
@@ -114,7 +197,9 @@ const BusinessOrdersScreen = props => {
                 borderColor={colors.blue}
               />
               <SezinBadge
-                onPress={() => setAssignedByMe(true)}
+                onPress={() =>
+                  !topLoadingState && !loadingState && setAssignedByMe(true)
+                }
                 text="Verdiğim İşler"
                 color={assignedByMe ? colors.blue : "white"}
                 width={(Dimensions.get("window").width - 60) / 2}
@@ -141,17 +226,16 @@ const BusinessOrdersScreen = props => {
         ListFooterComponent={() => {
           if (loadingState) {
             return (
-              <View
-                style={{
-                  height: 100,
-                  width: 100,
-                  backgroundColor: "white",
-                  alignSelf: "center",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
+              <View style={styles.footerSpinnerContainer}>
                 <MaterialIndicator color={colors.blue} size={50} />
+              </View>
+            );
+          } else if (dataEnd) {
+            return (
+              <View style={styles.footerTextContainer}>
+                <Text style={styles.footerText}>
+                  Gösterilecek Duyuru Kalmadı.
+                </Text>
               </View>
             );
           } else {
@@ -162,10 +246,11 @@ const BusinessOrdersScreen = props => {
 
       <SezinInformationModal
         isModalOpen={isInformationModalOpen}
-        descriptionComponent={<Text>Berk Elmas</Text>}
+        activitiesArray={selectedBusinessOrderActivityInformation}
         headerText="İş Emri Detayları"
         onBackdropPress={() => setIsInformationModalOpen(false)}
         onCloseButtonPressed={() => setIsInformationModalOpen(false)}
+        loadingState={businessOrderActivityLoading}
       />
     </View>
   );
@@ -180,6 +265,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 15
+  },
+  footerSpinnerContainer: {
+    height: 100,
+    width: 100,
+    backgroundColor: "white",
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  footerTextContainer: {
+    height: 60,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  footerText: {
+    fontFamily: "Airbnb-Book",
+    fontSize: 15,
+    color: colors.gray
   }
 });
 
