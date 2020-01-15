@@ -1,5 +1,5 @@
 //import liraries
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -51,7 +51,13 @@ const GetInfoBeforeActionModal = props => {
                 onChangeText={text => props.onChangeModalText(text)}
               />
 
-              {props.checkboxNeeded && <CheckboxGroup />}
+              {props.checkboxNeeded && (
+                <CheckboxGroup
+                  onChangeCheckbox={color =>
+                    props.onChangeCheckbox && props.onChangeCheckbox(color)
+                  }
+                />
+              )}
 
               <View style={styles.bottomButtonsContainer}>
                 <SezinButton
@@ -139,7 +145,8 @@ GetInfoBeforeActionModal.propTypes = {
   inputLabel: PropTypes.string,
   headerText: PropTypes.string,
   approveButtonText: PropTypes.string,
-  checkboxNeeded: PropTypes.bool
+  checkboxNeeded: PropTypes.bool,
+  onChangeCheckbox: PropTypes.func
 };
 
 //make this component available to the app

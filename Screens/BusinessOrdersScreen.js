@@ -20,6 +20,7 @@ import {
   getBusinessOrdersOnMe,
   getSingleBusinessOrderActivities
 } from "../services/business-order-service";
+import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
 
 // create a component
 const BusinessOrdersScreen = props => {
@@ -50,45 +51,57 @@ const BusinessOrdersScreen = props => {
     setBusinessOrderActivityLoading
   ] = useState(false);
 
+  // OPERATION MODAL
+  const [isOperateModalOpen, setIsOperateModalOpen] = useState(false);
+  const [
+    operateBusinessOrderDescription,
+    setOperateBusinessOrderDescription
+  ] = useState(null);
+
   // REACT TO CHANGES ON BUSINESS ORDER TYPE
   useEffect(() => {
     // HANDLE CURRENT PAGE ON BUSINESS ORDER TYPE CHANGE.
     setCurrentPage(1);
     setDataEnd(false);
-
-    if (assignedByMe) {
-      setTopLoadingState(true);
-      // EMPTY LIST
-      setBusinessOrders([]);
-      getBusinessOrderByMe(currentPage, 5, accessToken)
-        .then(res => {
-          if (res.data.result.length > 0) {
-            setCurrentPage(prev => prev + 1);
-            setBusinessOrders(prev => [...prev, ...res.data.result]);
-          }
-          setDataEnd(true);
-          setTopLoadingState(false);
-        })
-        .catch(err => {
-          setLoadingState(false);
-        });
-    } else {
-      setTopLoadingState(true);
-      // EMPTY LIST
-      setBusinessOrders([]);
-      getBusinessOrdersOnMe(1, 5, accessToken)
-        .then(res => {
-          if (res.data.result.length > 0) {
-            setCurrentPage(prev => prev + 1);
-            setBusinessOrders(prev => [...prev, ...res.data.result]);
-          }
-          setTopLoadingState(false);
-        })
-        .catch(err => {
-          setLoadingState(false);
-        });
-    }
   }, [assignedByMe]);
+
+  // MAKE API CALL AFTER PAGE IS EQUAL TO 1 AGAIN
+  useEffect(() => {
+    if (currentPage === 1) {
+      if (assignedByMe) {
+        setTopLoadingState(true);
+        // EMPTY LIST
+        setBusinessOrders([]);
+        getBusinessOrderByMe(currentPage, 5, accessToken)
+          .then(res => {
+            if (res.data.result.length > 0) {
+              setCurrentPage(prev => prev + 1);
+              setBusinessOrders(prev => [...prev, ...res.data.result]);
+            }
+            setDataEnd(true);
+            setTopLoadingState(false);
+          })
+          .catch(err => {
+            setLoadingState(false);
+          });
+      } else {
+        setTopLoadingState(true);
+        // EMPTY LIST
+        setBusinessOrders([]);
+        getBusinessOrdersOnMe(currentPage, 5, accessToken)
+          .then(res => {
+            if (res.data.result.length > 0) {
+              setCurrentPage(prev => prev + 1);
+              setBusinessOrders(prev => [...prev, ...res.data.result]);
+            }
+            setTopLoadingState(false);
+          })
+          .catch(err => {
+            setLoadingState(false);
+          });
+      }
+    }
+  }, [currentPage]);
 
   const _loadData = () => {
     setLoadingState(true);
@@ -151,11 +164,11 @@ const BusinessOrdersScreen = props => {
             }}
             place={_renderPriority(item.priorityEnum)}
             {...item}
+            assignedUsers={item.sendUserList}
             status={item.statusEnum}
             deadline="23 Mart"
             createdBy={item.createdUser}
             assignedByMe={assignedByMe}
-            assignedPeople={[]}
             onMoreDetailsButtonPressed={() => {
               setBusinessOrderActivityLoading(true);
               setIsInformationModalOpen(true);
@@ -164,10 +177,14 @@ const BusinessOrdersScreen = props => {
                 item.documentationNo,
                 accessToken
               ).then(res => {
+                console.log(res.data.result);
                 setSelectedBusinessOrderActivityForInformation(res.data.result);
                 setBusinessOrderActivityLoading(false);
               });
             }}
+            onChangeBusinessOrderStatusPressed={() =>
+              setIsOperateModalOpen(true)
+            }
           />
         )}
         contentContainerStyle={{ paddingHorizontal: 20 }}
@@ -251,6 +268,22 @@ const BusinessOrdersScreen = props => {
         onBackdropPress={() => setIsInformationModalOpen(false)}
         onCloseButtonPressed={() => setIsInformationModalOpen(false)}
         loadingState={businessOrderActivityLoading}
+      />
+      <GetInfoBeforeActionModal
+        isModalOpen={isOperateModalOpen}
+        onBackdropPress={() => setIsOperateModalOpen(false)}
+        onChangeModalText={text => setOperateBusinessOrderDescription(text)}
+        onCloseButtonPressed={() => setIsOperateModalOpen(false)}
+        onApproveButtonPressed={() => console.log("berkelmas")}
+        loadingApproveButton={false}
+        approveButtonColor={colors.green}
+        approveButtonHighlightColor={colors.darkGreen}
+        descriptionText="İş emri durumunu buradan değiştirebilirsiniz."
+        inputLabel="Açıklama"
+        headerText="Durum Yönetimi"
+        approveButtonText="Kaydet"
+        checkboxNeeded={true}
+        onChangeCheckbox={color => console.log(color)}
       />
     </View>
   );

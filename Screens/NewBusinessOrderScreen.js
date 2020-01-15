@@ -98,6 +98,14 @@ const NewBusinessOrderScreen = props => {
     ) {
       setLoadingState(true);
       getNewBusinessOrderDocumentNumber(accessToken).then(res => {
+        console.log("accessToken", accessToken);
+        console.log("selectedTitle", selectedTitle);
+        console.log("selectedDescription", selectedDescription);
+        console.log("selectedUsers", selectedUsers);
+        console.log("selectedGroups", selectedGroups);
+        console.log("selectedPriority", selectedPriority);
+        console.log("selectedEndDate", selectedEndDate);
+
         const docNumber = res.data.result;
         createNewBusinessOrder(
           accessToken,
@@ -110,11 +118,16 @@ const NewBusinessOrderScreen = props => {
           docNumber
         )
           .then(res => {
-            setLoadingState(false);
-            props.navigation.navigate("Home", {
-              toastColor: colors.green,
-              toastText: "İş Emri Başarı İle Kaydedildi."
-            });
+            if (!res.data.hasError) {
+              props.navigation.navigate("Home", {
+                toastColor: colors.green,
+                toastText: "İş Emri Başarı İle Kaydedildi."
+              });
+              setLoadingState(false);
+            } else {
+              setLoadingState(false);
+              toast.current.show(res.data.message, 1000);
+            }
           })
           .catch(err => {
             setLoadingState(false);
@@ -155,7 +168,7 @@ const NewBusinessOrderScreen = props => {
             contentContainerStyle={{ marginTop: 30 }}
             items={usersPairs}
             onSelectionChange={val =>
-              setSelectedUsers(val.map(item => ({ id: item.value })))
+              setSelectedUsers(val.map(item => item.value))
             }
           />
 
@@ -165,7 +178,7 @@ const NewBusinessOrderScreen = props => {
             contentContainerStyle={{ marginTop: 30 }}
             items={groupsPairs}
             onSelectionChange={val =>
-              setSelectedGroups(val.map(item => ({ id: item.value })))
+              setSelectedGroups(val.map(item => item.value))
             }
           />
 

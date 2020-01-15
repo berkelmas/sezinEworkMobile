@@ -114,29 +114,28 @@ const SezinSingleBusinessOrder = props => {
 
               elevation: 9
             }}
-            height={40 + 3 * 15}
+            height={40 + props.assignedUsers.length * 20}
+            width={200}
             backgroundColor={colors.lightGray}
             popover={
               <View>
-                {["Berk Elmas", "Ali Yilmaz", "Emre Kara"].map(
-                  (item, index) => (
-                    <Text
-                      key={index}
-                      style={{
-                        fontFamily: "Airbnb-Light",
-                        fontSize: 15,
-                        color: colors.dark
-                      }}
-                    >
-                      - {item}
-                    </Text>
-                  )
-                )}
+                {props.assignedUsers.map((item, index) => (
+                  <Text
+                    key={index}
+                    style={{
+                      fontFamily: "Airbnb-Light",
+                      fontSize: 15,
+                      color: colors.dark
+                    }}
+                  >
+                    - {item}
+                  </Text>
+                ))}
               </View>
             }
           >
             <Text style={{ ...styles.bottomRightTexts }}>
-              {props.assignedPeople.length} Kişi
+              {props.assignedUsers.length} Kişi
             </Text>
           </Tooltip>
         </View>
@@ -196,24 +195,29 @@ const SezinSingleBusinessOrder = props => {
           <View style={{ flexDirection: "row" }}>
             <SezinButton
               onPress={props.onMoreDetailsButtonPressed.bind(this)}
-              color={colors.red}
-              text="İptal Et"
-              overlayColor={colors.darkRed}
-              buttonTextStyle={{ fontSize: 21 }}
-              containerStyle={{
-                marginTop: 10,
-                paddingVertical: 10,
-                marginRight: 15,
-                flex: 1
-              }}
-            />
-            <SezinButton
-              onPress={props.onMoreDetailsButtonPressed.bind(this)}
               color={colors.blue}
               text="Detaylar"
               overlayColor={colors.darkBlue}
               buttonTextStyle={{ fontSize: 21 }}
-              containerStyle={{ marginTop: 10, paddingVertical: 10, flex: 1 }}
+              containerStyle={{
+                marginTop: 10,
+                paddingVertical: 10,
+                flex: 1,
+                marginRight: 15
+              }}
+            />
+            <SezinButton
+              onPress={props.onChangeBusinessOrderStatusPressed.bind(this)}
+              color={colors.green}
+              text="Yönet"
+              overlayColor={colors.darkGreen}
+              buttonTextStyle={{ fontSize: 21 }}
+              containerStyle={{
+                marginTop: 10,
+                paddingVertical: 10,
+
+                flex: 1
+              }}
             />
           </View>
         )}
@@ -278,7 +282,9 @@ SezinSingleBusinessOrder.propTypes = {
   deadline: PropTypes.string,
   status: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   assignedByMe: PropTypes.bool,
-  onMoreDetailsButtonPressed: PropTypes.func
+  onMoreDetailsButtonPressed: PropTypes.func,
+  onChangeBusinessOrderStatusPressed: PropTypes.func,
+  assignedUsers: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default SezinSingleBusinessOrder;
