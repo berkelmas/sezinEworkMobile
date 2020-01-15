@@ -98,14 +98,6 @@ const NewBusinessOrderScreen = props => {
     ) {
       setLoadingState(true);
       getNewBusinessOrderDocumentNumber(accessToken).then(res => {
-        console.log("accessToken", accessToken);
-        console.log("selectedTitle", selectedTitle);
-        console.log("selectedDescription", selectedDescription);
-        console.log("selectedUsers", selectedUsers);
-        console.log("selectedGroups", selectedGroups);
-        console.log("selectedPriority", selectedPriority);
-        console.log("selectedEndDate", selectedEndDate);
-
         const docNumber = res.data.result;
         createNewBusinessOrder(
           accessToken,
@@ -137,6 +129,8 @@ const NewBusinessOrderScreen = props => {
             );
           });
       });
+    } else {
+      toast.current.show("Tüm alanları doldurmanız gerekmektedir.", 500);
     }
   };
 

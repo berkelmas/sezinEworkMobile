@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import Modal from "react-native-modal";
 import Toast from "react-native-easy-toast";
@@ -19,6 +19,7 @@ import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessO
 import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
 
 import { getAnnouncements } from "../services/announcement-service";
+import { getBusinessOrdersOnMe } from "../services/business-order-service";
 
 const HomeScreen = props => {
   const fullName = useSelector(state => state.AuthReducer.fullName);
@@ -30,40 +31,27 @@ const HomeScreen = props => {
   const [announcements, setAnnouncements] = useState([]);
   const [loadingAnnouncements, setLoadingAnnouncements] = useState(false);
 
+  // BUSINESS ORDERS ON ME
+  const [businessOrdersOnMe, setBusinessOrdersOnMe] = useState([]);
+  const [loadingBusinessOrdersOnMe, setLoadingBusinessOrdersOnMe] = useState(
+    false
+  );
+
   // WORKAROUND TO MODIFY FULL NAME
-  React.useEffect(() => {
+  useEffect(() => {
     if (fullName) {
       setFirstName(fullName.split(" ")[0]);
     }
   }, [fullName]);
-  const toast = React.useRef(null);
+  const toast = useRef(null);
   const [toastColor, setToastColor] = useState(colors.green);
-  const [modalOrderOpen, setModalOrderOpen] = React.useState(false);
-  const [modalAnnouncementOpen, setModalAnnouncementOpen] = React.useState(
-    false
-  );
-  const [selectedOrder, setSelectedOrder] = React.useState({
-    place: null,
-    title: null,
-    deadline: null,
-    createdBy: "Berk Elmas",
-    status: "Tamamlandı"
-  });
-  const [selectedAnnouncement, setSelectedAnnouncement] = React.useState({
+  const [modalAnnouncementOpen, setModalAnnouncementOpen] = useState(false);
+
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState({
     date: null,
     title: null,
     description: null
   });
-
-  const openOrderModal = item => {
-    setModalOrderOpen(true);
-    setSelectedOrder(prev => ({
-      ...prev,
-      deadline: item.date,
-      place: item.place,
-      title: item.title
-    }));
-  };
 
   const openAnnouncementModal = item => {
     setModalAnnouncementOpen(true);
@@ -87,12 +75,29 @@ const HomeScreen = props => {
     }
   };
 
-  React.useEffect(() => {
+  const getLastFourBusinessOrdersOnMe = () => {
+    if (accessToken) {
+      console.log(accessToken);
+      setLoadingBusinessOrdersOnMe(true);
+      getBusinessOrdersOnMe(1, 4, accessToken)
+        .then(res => {
+          if (!res.data.hasError) {
+            setBusinessOrdersOnMe(res.data.result);
+          }
+          setLoadingBusinessOrdersOnMe(false);
+        })
+        .catch(console.log);
+    }
+  };
+
+  useEffect(() => {
     const didBlurSubscription = props.navigation.addListener(
       "didFocus",
       payload => {
         // get last five announcements.
         getLastFiveAnnouncements();
+        // get last four business orders on me.
+        getLastFourBusinessOrdersOnMe();
 
         if (props.navigation.getParam("toastText", null)) {
           setToastColor(props.navigation.getParam("toastColor", null));
@@ -112,6 +117,7 @@ const HomeScreen = props => {
   // IT COMES AS NULL AT THE BEGINNING.
   React.useEffect(() => {
     getLastFiveAnnouncements();
+    getLastFourBusinessOrdersOnMe();
   }, [accessToken]);
 
   return (
@@ -176,7 +182,10 @@ const HomeScreen = props => {
         text="Buradan üzerinize atanmış son görevlerinize erişebilirsiniz."
       />
 
-      <SezinOrders onPress={item => openOrderModal(item)} />
+      <SezinOrders
+        loading={loadingBusinessOrdersOnMe}
+        businessOrders={businessOrdersOnMe}
+      />
       <SezinButton
         onPress={() => props.navigation.navigate("BusinessOrders")}
         color={colors.green}
@@ -188,17 +197,6 @@ const HomeScreen = props => {
           paddingBottom: 40
         }}
       />
-
-      {/* MODAL AND TOAST COMPONENTS HERE. */}
-      <Modal
-        useNativeDriver={true}
-        animationIn="fadeInUpBig"
-        onSwipeComplete={() => setModalOrderOpen(false)}
-        swipeDirection={["down", "left", "right", "up"]}
-        isVisible={modalOrderOpen}
-      >
-        <SezinSingleBusinessOrder {...selectedOrder} />
-      </Modal>
 
       <Modal
         useNativeDriver={true}

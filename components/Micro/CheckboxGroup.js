@@ -60,10 +60,7 @@ const CheckboxGroup = props => {
           }}
           wrapperStyle={{ backgroundColor: "transparent" }}
           start
-          textStyle={{
-            fontSize: 14,
-            fontFamily: "Airbnb-Light"
-          }}
+          textStyle={styles.checkboxText}
           title="Başlanmadı"
           checkedColor={colors.red}
           checkedIcon="dot-circle-o"
@@ -90,10 +87,7 @@ const CheckboxGroup = props => {
           }}
           wrapperStyle={{ backgroundColor: "transparent" }}
           start
-          textStyle={{
-            fontSize: 15,
-            fontFamily: "Airbnb-Light"
-          }}
+          textStyle={styles.checkboxText}
           title="Çalışılıyor"
           checkedColor={colors.blue}
           checkedIcon="dot-circle-o"
@@ -123,10 +117,7 @@ const CheckboxGroup = props => {
           }}
           wrapperStyle={{ backgroundColor: "transparent" }}
           start
-          textStyle={{
-            fontSize: 15,
-            fontFamily: "Airbnb-Light"
-          }}
+          textStyle={styles.checkboxText}
           title="Tamamlandı"
           checkedColor={colors.green}
           checkedIcon="dot-circle-o"
@@ -153,10 +144,7 @@ const CheckboxGroup = props => {
           }}
           wrapperStyle={{ backgroundColor: "transparent" }}
           start
-          textStyle={{
-            fontSize: 15,
-            fontFamily: "Airbnb-Light"
-          }}
+          textStyle={styles.checkboxText}
           title="İptal"
           checkedColor={colors.darkRed}
           checkedIcon="dot-circle-o"
@@ -181,7 +169,13 @@ const CheckboxGroup = props => {
 };
 
 // define your styles
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  checkboxText: {
+    fontSize: 14,
+    fontFamily: "Airbnb-Light",
+    fontWeight: "normal"
+  }
+});
 
 //make this component available to the app
 export default CheckboxGroup;

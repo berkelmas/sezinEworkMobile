@@ -11,10 +11,14 @@ import {
   TouchableNativeFeedback
 } from "react-native";
 import PropTypes from "prop-types";
+import { Tooltip } from "react-native-elements";
+import { MaterialIndicator } from "react-native-indicators";
 import { colors } from "../../assets/styles/colors";
 
 // FAKE DATA
 import { businessOrdersData } from "../../assets/data/business-orders.data";
+import moment from "moment";
+import "moment/locale/tr"; // without this line it didn't work
 
 const SezinOrders = props => {
   return (
@@ -24,14 +28,22 @@ const SezinOrders = props => {
         ...props.containerStyle
       }}
     >
-      {Array(4)
-        .fill(0)
-        .map((item, index) => (
+      {props.loading ? (
+        <View
+          style={{
+            height: 360,
+            width: "100%",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <MaterialIndicator size={50} color={colors.blue} />
+        </View>
+      ) : (
+        props.businessOrders.map((item, index) => (
           <View key={index}>
-            <TouchableNativeFeedback
-              useForeground={true}
-              onPress={props.onPress.bind(this, businessOrdersData[index])}
-            >
+            <View>
               <View
                 style={{
                   ...styles.singleItem,
@@ -46,17 +58,58 @@ const SezinOrders = props => {
                   <Text style={styles.placeStyle}>
                     {businessOrdersData[index].place}
                   </Text>
-                  <Text style={styles.titleStyle}>
-                    {businessOrdersData[index].title}
-                  </Text>
+                  {item.title.length > 16 ? (
+                    <Tooltip
+                      containerStyle={{
+                        shadowColor: "#000",
+                        shadowOffset: {
+                          width: 0,
+                          height: 0
+                        },
+                        shadowOpacity: 0.15,
+                        shadowRadius: 7,
+
+                        elevation: 9
+                      }}
+                      height={40 + 3 * 20}
+                      width={200}
+                      backgroundColor={colors.lightGray}
+                      popover={
+                        <View>
+                          <Text
+                            key={index}
+                            style={{
+                              fontFamily: "Airbnb-Light",
+                              fontSize: 15,
+                              color: colors.dark
+                            }}
+                          >
+                            {item.title}
+                          </Text>
+                        </View>
+                      }
+                    >
+                      <Text style={styles.titleStyle}>
+                        {item.title
+                          .split("")
+                          .slice(0, 10)
+                          .join("") + "..."}
+                      </Text>
+                    </Tooltip>
+                  ) : (
+                    <Text style={styles.titleStyle}>{item.title}</Text>
+                  )}
                   <Text style={styles.dateStyle}>
-                    {businessOrdersData[index].date}
+                    {moment(item.finishDateValue)
+                      .locale("tr")
+                      .format("ll")}
                   </Text>
                 </View>
               </View>
-            </TouchableNativeFeedback>
+            </View>
           </View>
-        ))}
+        ))
+      )}
     </View>
   );
 };

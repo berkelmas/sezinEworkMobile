@@ -1,6 +1,7 @@
 //import libraries
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
+import Toast from "react-native-easy-toast";
 
 // SEZIN COMPONENTS
 import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
@@ -24,6 +25,7 @@ import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionMod
 
 // create a component
 const BusinessOrdersScreen = props => {
+  const toast = useRef(null);
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
 
   // MAIN DATA
@@ -57,21 +59,23 @@ const BusinessOrdersScreen = props => {
     operateBusinessOrderDescription,
     setOperateBusinessOrderDescription
   ] = useState(null);
+  const [operateBusinessStatus, setOperateBusinessStatus] = useState(null);
+  const [operateBusinessLoading, setOperateBusinessLoading] = useState(false);
 
   // REACT TO CHANGES ON BUSINESS ORDER TYPE
   useEffect(() => {
     // HANDLE CURRENT PAGE ON BUSINESS ORDER TYPE CHANGE.
     setCurrentPage(1);
     setDataEnd(false);
+    setTopLoadingState(true);
+    // EMPTY LIST
+    setBusinessOrders([]);
   }, [assignedByMe]);
 
   // MAKE API CALL AFTER PAGE IS EQUAL TO 1 AGAIN
   useEffect(() => {
     if (currentPage === 1) {
       if (assignedByMe) {
-        setTopLoadingState(true);
-        // EMPTY LIST
-        setBusinessOrders([]);
         getBusinessOrderByMe(currentPage, 5, accessToken)
           .then(res => {
             if (res.data.result.length > 0) {
@@ -85,9 +89,6 @@ const BusinessOrdersScreen = props => {
             setLoadingState(false);
           });
       } else {
-        setTopLoadingState(true);
-        // EMPTY LIST
-        setBusinessOrders([]);
         getBusinessOrdersOnMe(currentPage, 5, accessToken)
           .then(res => {
             if (res.data.result.length > 0) {
@@ -136,6 +137,15 @@ const BusinessOrdersScreen = props => {
     } else {
       setLoadingState(false);
     }
+  };
+
+  const changeBusinessStatus = () => {
+    setOperateBusinessLoading(true);
+    setTimeout(() => {
+      setOperateBusinessLoading(false);
+      setIsOperateModalOpen(false);
+      toast.current.show("İş Emri Güncellemesi Başarılı", 2000);
+    }, 2000);
   };
 
   const _renderPriority = param => {
@@ -274,8 +284,8 @@ const BusinessOrdersScreen = props => {
         onBackdropPress={() => setIsOperateModalOpen(false)}
         onChangeModalText={text => setOperateBusinessOrderDescription(text)}
         onCloseButtonPressed={() => setIsOperateModalOpen(false)}
-        onApproveButtonPressed={() => console.log("berkelmas")}
-        loadingApproveButton={false}
+        onApproveButtonPressed={changeBusinessStatus}
+        loadingApproveButton={operateBusinessLoading}
         approveButtonColor={colors.green}
         approveButtonHighlightColor={colors.darkGreen}
         descriptionText="İş emri durumunu buradan değiştirebilirsiniz."
@@ -283,7 +293,19 @@ const BusinessOrdersScreen = props => {
         headerText="Durum Yönetimi"
         approveButtonText="Kaydet"
         checkboxNeeded={true}
-        onChangeCheckbox={color => console.log(color)}
+        onChangeCheckbox={color => setOperateBusinessStatus(color)}
+      />
+
+      <Toast
+        position="top"
+        positionValue={50}
+        opacity={0.8}
+        textStyle={styles.toastText}
+        ref={toast}
+        style={{
+          ...styles.toastContainerStyle,
+          backgroundColor: colors.green
+        }}
       />
     </View>
   );
@@ -317,6 +339,17 @@ const styles = StyleSheet.create({
     fontFamily: "Airbnb-Book",
     fontSize: 15,
     color: colors.gray
+  },
+  toastText: {
+    fontFamily: "Airbnb-Book",
+    color: "white",
+    fontSize: 16
+  },
+  toastContainerStyle: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
