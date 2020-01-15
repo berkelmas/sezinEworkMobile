@@ -1,5 +1,5 @@
 //import libraries
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
 
 // SEZIN COMPONENTS
@@ -17,13 +17,15 @@ import {
   businessOrdersDataByMe as fakeBusinessOrdersDataByMe
 } from "../assets/data/business-orders.data";
 import SezinBadge from "../components/Buttons/SezinBadge";
+import SezinInformationModal from "../components/Modal/SezinInformationModal";
 
 // create a component
 const BusinessOrdersScreen = props => {
-  const [businessOrders, setBusinessOrders] = React.useState(null);
-  const [loadingState, setLoadingState] = React.useState(false);
-  const [topLoadingState, setTopLoadingState] = React.useState(false);
-  const [assignedByMe, setAssignedByMe] = React.useState(false);
+  const [businessOrders, setBusinessOrders] = useState(null);
+  const [loadingState, setLoadingState] = useState(false);
+  const [topLoadingState, setTopLoadingState] = useState(false);
+  const [assignedByMe, setAssignedByMe] = useState(false);
+  const [isInformationModalOpen, setIsInformationModalOpen] = useState(false);
 
   // REACT TO CHANGES ON BUSINESS ORDER TYPE
   React.useEffect(() => {
@@ -84,6 +86,7 @@ const BusinessOrdersScreen = props => {
             status="Tamamlandı"
             assignedByMe={assignedByMe}
             assignedPeople={item.assignedOn}
+            onMoreDetailsButtonPressed={() => setIsInformationModalOpen(true)}
           />
         )}
         contentContainerStyle={{ paddingHorizontal: 20 }}
@@ -155,6 +158,14 @@ const BusinessOrdersScreen = props => {
             return null;
           }
         }}
+      />
+
+      <SezinInformationModal
+        isModalOpen={isInformationModalOpen}
+        descriptionComponent={<Text>Berk Elmas</Text>}
+        headerText="İş Emri Detayları"
+        onBackdropPress={() => setIsInformationModalOpen(false)}
+        onCloseButtonPressed={() => setIsInformationModalOpen(false)}
       />
     </View>
   );

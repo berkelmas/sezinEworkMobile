@@ -16,6 +16,35 @@ export const businessOrdersData = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -30,6 +59,35 @@ export const businessOrdersData = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -44,6 +102,35 @@ export const businessOrdersData = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -58,6 +145,35 @@ export const businessOrdersData = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -72,6 +188,35 @@ export const businessOrdersData = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -86,6 +231,35 @@ export const businessOrdersData = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -100,6 +274,35 @@ export const businessOrdersData = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -114,6 +317,35 @@ export const businessOrdersData = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   }
 ];
@@ -130,6 +362,35 @@ export const businessOrdersDataByMe = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -143,6 +404,35 @@ export const businessOrdersDataByMe = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -156,6 +446,35 @@ export const businessOrdersDataByMe = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -169,6 +488,35 @@ export const businessOrdersDataByMe = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -182,6 +530,35 @@ export const businessOrdersDataByMe = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -195,6 +572,35 @@ export const businessOrdersDataByMe = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -208,6 +614,35 @@ export const businessOrdersDataByMe = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   },
   {
@@ -221,6 +656,35 @@ export const businessOrdersDataByMe = [
       "Ali Yılmaz",
       "Osman Aksu",
       "Yıldırım Demirören"
+    ],
+    activities: [
+      {
+        person: "Barış Yener",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: [
+          "İş emri üzerinde çalışmaya başlandı.",
+          "İş emri üzerinde çalışmaya başlandı."
+        ],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Ali Yılmaz",
+        currentStatus: "Tamamlandı",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: ["İş emri en son rapor da verilerek tamamlandı."]
+      },
+      {
+        person: "Osman Aksu",
+        currentStatus: "Üzerinde Çalışıyor",
+        notStartedToWorking: ["İş emri üzerinde çalışmaya başlandı."],
+        workingToDone: []
+      },
+      {
+        person: "Yıldırım Demirören",
+        currentStatus: "Başlanmadı",
+        notStartedToWorking: [],
+        workingToDone: []
+      }
     ]
   }
 ];

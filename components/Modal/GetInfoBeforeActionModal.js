@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
+import CheckboxGroup from "../Micro/CheckboxGroup";
 
 // CUSTOM SEZIN COMPONENTS
 import SezinButton from "../Buttons/SezinButton";
@@ -49,6 +50,8 @@ const GetInfoBeforeActionModal = props => {
                 multiline={true}
                 onChangeText={text => props.onChangeModalText(text)}
               />
+
+              {props.checkboxNeeded && <CheckboxGroup />}
 
               <View style={styles.bottomButtonsContainer}>
                 <SezinButton
@@ -135,7 +138,8 @@ GetInfoBeforeActionModal.propTypes = {
   descriptionText: PropTypes.string,
   inputLabel: PropTypes.string,
   headerText: PropTypes.string,
-  approveButtonText: PropTypes.string
+  approveButtonText: PropTypes.string,
+  checkboxNeeded: PropTypes.bool
 };
 
 //make this component available to the app

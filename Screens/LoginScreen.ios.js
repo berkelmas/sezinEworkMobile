@@ -113,6 +113,7 @@ const LoginScreen = props => {
           <SezinLoadingButton
             loading={loadingRedux}
             onPress={() => {
+              Keyboard.dismiss();
               dispatch(
                 loginStartAction(userState.username, userState.password)
               );

@@ -109,10 +109,7 @@ const LoginScreen = props => {
               dispatch(
                 loginStartAction(userState.username, userState.password)
               );
-              // setTimeout(() => {
-              //   setLoadingState(false);
-              //   props.navigation.navigate("Home");
-              // }, 1000);
+              Keyboard.dismiss();
             }}
             color={colors.blue}
             overlayColor={colors.darkBlue}

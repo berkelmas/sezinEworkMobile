@@ -13,6 +13,7 @@ import { Tooltip } from "react-native-elements";
 import PropTypes from "prop-types";
 import IsTakibi from "../../assets/images/saha-takibi.jpg";
 import { colors } from "../../assets/styles/colors";
+import SezinButton from "../Buttons/SezinButton";
 
 const SezinSingleBusinessOrder = props => {
   const [statusColor, setStatusColor] = useState("white");
@@ -175,6 +176,41 @@ const SezinSingleBusinessOrder = props => {
             </Text>
           )}
         </TouchableOpacity>
+
+        {props.assignedByMe ? (
+          <SezinButton
+            onPress={props.onMoreDetailsButtonPressed.bind(this)}
+            color={colors.blue}
+            text="İş Emri Detayları"
+            overlayColor={colors.darkBlue}
+            buttonTextStyle={{ fontSize: 21 }}
+            containerStyle={{ marginTop: 10, paddingVertical: 10 }}
+          />
+        ) : (
+          <View style={{ flexDirection: "row" }}>
+            <SezinButton
+              onPress={props.onMoreDetailsButtonPressed.bind(this)}
+              color={colors.red}
+              text="İptal Et"
+              overlayColor={colors.darkRed}
+              buttonTextStyle={{ fontSize: 21 }}
+              containerStyle={{
+                marginTop: 10,
+                paddingVertical: 10,
+                marginRight: 15,
+                flex: 1
+              }}
+            />
+            <SezinButton
+              onPress={props.onMoreDetailsButtonPressed.bind(this)}
+              color={colors.blue}
+              text="Detaylar"
+              overlayColor={colors.darkBlue}
+              buttonTextStyle={{ fontSize: 21 }}
+              containerStyle={{ marginTop: 10, paddingVertical: 10, flex: 1 }}
+            />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -235,7 +271,8 @@ SezinSingleBusinessOrder.propTypes = {
   createdBy: PropTypes.string,
   deadline: PropTypes.string,
   status: PropTypes.string,
-  assignedByMe: PropTypes.bool
+  assignedByMe: PropTypes.bool,
+  onMoreDetailsButtonPressed: PropTypes.func
 };
 
 export default SezinSingleBusinessOrder;
