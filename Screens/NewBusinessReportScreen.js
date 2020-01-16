@@ -27,11 +27,10 @@ import {
 } from "../store/actions/ResourcesActions";
 
 // WEB SERVICES
-import { getNewBusinessOrderDocumentNumber } from "../services/business-order-service";
 import { createNewBusinessReport } from "../services/business-report-service";
 
 // create a component
-const BusinessReportScreen = props => {
+const NewBusinessReportScreen = props => {
   const dispatch = useDispatch();
   const toast = useRef(null);
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
@@ -209,9 +208,9 @@ const styles = StyleSheet.create({
   }
 });
 
-BusinessReportScreen.navigationOptions = ({ navigation }) => ({
+NewBusinessReportScreen.navigationOptions = ({ navigation }) => ({
   header: null
 });
 
 //make this component available to the app
-export default BusinessReportScreen;
+export default NewBusinessReportScreen;

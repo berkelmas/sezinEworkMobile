@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   ViewPropTypes,
-  TouchableOpacity,
   PixelRatio
 } from "react-native";
 import { MaterialIndicator } from "react-native-indicators";
@@ -38,26 +37,6 @@ const SezinSingleBusinessOrder = props => {
         break;
     }
   }, [businessStatus]);
-
-  const _changeStatus = () => {
-    setStatusLoadingState(true);
-    setTimeout(() => {
-      switch (businessStatus) {
-        case "Tamamlandı":
-          setBusinessStatus("Başlanmadı");
-          break;
-        case "Başlanmadı":
-          setBusinessStatus("Yapılıyor");
-          break;
-        case "Yapılıyor":
-          setBusinessStatus("Tamamlandı");
-          break;
-        default:
-          break;
-      }
-      setStatusLoadingState(false);
-    }, 2000);
-  };
 
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
@@ -151,8 +130,7 @@ const SezinSingleBusinessOrder = props => {
           <Text style={styles.bottomTexts}>Bitiş Tarihi:</Text>
           <Text style={styles.bottomRightTexts}>{props.deadline}</Text>
         </View>
-        <TouchableOpacity
-          onPress={_changeStatus.bind(this)}
+        <View
           style={{
             alignItems: "center",
             flexDirection: "row",
@@ -180,7 +158,7 @@ const SezinSingleBusinessOrder = props => {
               {businessStatus}
             </Text>
           )}
-        </TouchableOpacity>
+        </View>
 
         {props.assignedByMe ? (
           <SezinButton

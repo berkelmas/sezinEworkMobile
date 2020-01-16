@@ -25,3 +25,33 @@ export const createNewBusinessReport = (
     }
   );
 };
+
+export const getBusinessReportsByMe = (pageNumber, pageSize, token) => {
+  return axios.post(
+    `${config.apiEndpoint}WorkOrder/CreateAreaTrackByMePaging`,
+    {
+      pageNumber,
+      pageSize
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
+export const getBusinessReportsOnMe = (pageNumber, pageSize, token) => {
+  return axios.post(
+    `${config.apiEndpoint}WorkOrder/GetOwnAreaTrackPaging`,
+    {
+      pageNumber,
+      pageSize
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};

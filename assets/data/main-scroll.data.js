@@ -25,7 +25,7 @@ export const mainScrollData = [
     id: "1221",
     image: SahaTakibi,
     title: "Saha Takibi",
-    link: "BusinessReport",
+    link: "NewBusinessReport",
     backendNames: ["NewArea"],
     content: "Buradan Saha Takip Raporu Düzenleyebilirsiniz."
   },

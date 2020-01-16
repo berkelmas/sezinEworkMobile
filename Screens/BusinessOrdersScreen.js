@@ -81,12 +81,13 @@ const BusinessOrdersScreen = props => {
             if (res.data.result.length > 0) {
               setCurrentPage(prev => prev + 1);
               setBusinessOrders(prev => [...prev, ...res.data.result]);
+            } else {
+              setDataEnd(true);
             }
-            setDataEnd(true);
             setTopLoadingState(false);
           })
           .catch(err => {
-            setLoadingState(false);
+            setTopLoadingState(false);
           });
       } else {
         getBusinessOrdersOnMe(currentPage, 5, accessToken)
@@ -94,11 +95,13 @@ const BusinessOrdersScreen = props => {
             if (res.data.result.length > 0) {
               setCurrentPage(prev => prev + 1);
               setBusinessOrders(prev => [...prev, ...res.data.result]);
+            } else {
+              setDataEnd(true);
             }
             setTopLoadingState(false);
           })
           .catch(err => {
-            setLoadingState(false);
+            setTopLoadingState(false);
           });
       }
     }
@@ -165,7 +168,7 @@ const BusinessOrdersScreen = props => {
     <View style={styles.container}>
       <FlatList
         data={businessOrders}
-        keyExtractor={(item, index) => String(index)}
+        keyExtractor={(item, index) => `${item.documentationNo}`}
         renderItem={({ item, index }) => (
           <SezinSingleBusinessOrder
             contentContainerStyle={{

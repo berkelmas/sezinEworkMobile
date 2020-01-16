@@ -1,12 +1,108 @@
 //import liraries
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, PixelRatio } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  PixelRatio,
+  ViewPropTypes
+} from "react-native";
+import PropTypes from "prop-types";
+import { Tooltip } from "react-native-elements";
+
+import moment from "moment";
+import "moment/locale/tr"; // without this line it didn't work
+
+// ASSETS
+import IzinImage1 from "../../assets/images/izin/izin-image-1.png";
+import { colors } from "../../assets/styles/colors";
 
 // create a component
-const SezinSingleBusinessReport = () => {
+const SezinSingleBusinessReport = props => {
   return (
-    <View style={styles.container}>
-      <Text>SezinSingleBusinessReport</Text>
+    <View style={{ ...styles.container, ...props.contentContainerStyle }}>
+      <Image source={IzinImage1} style={styles.imageStyle} />
+      {/* CONTENT CONTAINER */}
+      <View style={{ padding: 10 }}>
+        <Text style={styles.placeText}>
+          {moment(props.date)
+            .locale("tr")
+            .format("ll")}
+        </Text>
+        <Text style={styles.titleText}>{props.title}</Text>
+        <Text style={styles.descriptionText}>{props.description}</Text>
+
+        <View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        ></View>
+        {props.createdByMe && props.userList ? (
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingBottom: 6,
+              paddingTop: 15
+            }}
+          >
+            <Text style={styles.bottomTexts}>Atananlar:</Text>
+            <Tooltip
+              containerStyle={{
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 0
+                },
+                shadowOpacity: 0.15,
+                shadowRadius: 7,
+
+                elevation: 9
+              }}
+              height={40 + props.userList.length * 16}
+              width={200}
+              backgroundColor={colors.lightGray}
+              popover={
+                <View>
+                  {props.userList.map((item, index) => (
+                    <Text
+                      key={index}
+                      style={{
+                        fontFamily: "Airbnb-Light",
+                        fontSize: 15,
+                        color: colors.dark
+                      }}
+                    >
+                      - {item}
+                    </Text>
+                  ))}
+                </View>
+              }
+            >
+              <Text style={{ ...styles.bottomRightTexts }}>
+                {props.userList && props.userList.length} Kişi
+              </Text>
+            </Tooltip>
+          </View>
+        ) : (
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingBottom: 6,
+              paddingTop: 15
+            }}
+          >
+            <Text style={styles.bottomTexts}>Oluşturan:</Text>
+            <Text style={styles.bottomRightTexts}>{props.creatorPerson}</Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };
@@ -24,7 +120,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
 
-    elevation: 4
+    elevation: 4,
+    marginVertical: 20
   },
   imageStyle: {
     borderRadius: 4,
@@ -63,7 +160,9 @@ SezinSingleBusinessReport.propTypes = {
   date: PropTypes.string,
   title: PropTypes.string,
   description: PropTypes.string,
-  status: PropTypes.string
+  createdByMe: PropTypes.bool,
+  userList: PropTypes.arrayOf(PropTypes.string),
+  creatorPerson: PropTypes.string
 };
 
 //make this component available to the app

@@ -17,7 +17,7 @@ import IcomoonIcon from "../components/Typography/IcomoonIcon";
 import { colors } from "../assets/styles/colors";
 import NewBusinessOrderScreen from "../Screens/NewBusinessOrderScreen";
 import TechnicalRoomScreen from "../Screens/TechnicalRoomScreen";
-import BusinessReportScreen from "../Screens/BusinessReportScreen";
+import NewBusinessReportScreen from "../Screens/NewBusinessReportScreen";
 import LoadingScreen from "../Screens/LoadingScreen";
 import DailyReportScreen from "../Screens/DailyReportScreen";
 import IzinMainScreen from "../Screens/IzinMainScreen";
@@ -25,6 +25,7 @@ import NewIzinScreen from "../Screens/NewIzinScreen";
 import MyIzinRequestsScreen from "../Screens/MyIzinRequestsScreen";
 import IzinOnayScreen from "../Screens/IzinOnayScreen";
 import IzinCancelApproveScreen from "../Screens/IzinCancelApproveScreen";
+import BusinessReportsScreen from "../Screens/BusinessReportsScreen";
 
 const customAppContainer = props => {
   const HomeStack = createStackNavigator(
@@ -38,8 +39,8 @@ const customAppContainer = props => {
       TechnicalRoom: {
         screen: TechnicalRoomScreen
       },
-      BusinessReport: {
-        screen: BusinessReportScreen
+      NewBusinessReport: {
+        screen: NewBusinessReportScreen
       },
       DailyReport: {
         screen: DailyReportScreen
@@ -100,6 +101,15 @@ const customAppContainer = props => {
           title: "İş Emirleri",
           drawerIcon: (
             <IcomoonIcon name="briefcase" size={30} color={colors.dark} />
+          )
+        }
+      },
+      BusinessReport: {
+        screen: BusinessReportsScreen,
+        navigationOptions: {
+          title: "Saha Takibi",
+          drawerIcon: (
+            <IcomoonIcon name="file-chart-line" size={30} color={colors.dark} />
           )
         }
       },
