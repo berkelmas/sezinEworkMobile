@@ -96,9 +96,18 @@ class DrawerNavigatorItems extends React.Component {
     const inactiveTintColor = this.getInactiveTintColor();
     const inactiveBackgroundColor = this.getInactiveBackgroundColor();
 
+    // NEW ITEMS ACCORDING TO USER ROLE.
+    const newItems = items.filter(item => {
+      if (item.key === "BusinessReport") {
+        return this.props.menuItems.some(
+          item => item.functionName === "areapages"
+        );
+      }
+      return true;
+    });
     return (
       <View style={[styles.container, itemsContainerStyle]}>
-        {items.map((route, index) => {
+        {newItems.map((route, index) => {
           const focused = activeItemKey === route.key;
           const color = focused ? activeTintColor : inactiveTintColor;
           const backgroundColor = focused

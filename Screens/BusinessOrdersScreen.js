@@ -2,6 +2,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
 import Toast from "react-native-easy-toast";
+// MATERIAL INDICATOR
+import { MaterialIndicator } from "react-native-indicators";
+// REDUX
+import { useSelector } from "react-redux";
 
 // SEZIN COMPONENTS
 import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
@@ -11,15 +15,13 @@ import SezinBadge from "../components/Buttons/SezinBadge";
 import SezinInformationModal from "../components/Modal/SezinInformationModal";
 import { colors } from "../assets/styles/colors";
 
-// MATERIAL INDICATOR
-import { MaterialIndicator } from "react-native-indicators";
-// REDUX
-import { useSelector } from "react-redux";
 // WEB SERVICES
 import {
   getBusinessOrderByMe,
   getBusinessOrdersOnMe,
-  getSingleBusinessOrderActivities
+  getSingleBusinessOrderActivities,
+  updateBusinessStatus,
+  getSingleBusinessOrder
 } from "../services/business-order-service";
 import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
 
@@ -54,6 +56,7 @@ const BusinessOrdersScreen = props => {
   ] = useState(false);
 
   // OPERATION MODAL
+  const [selectedBusinessOrder, setSelectedBusinessOrder] = useState(null);
   const [isOperateModalOpen, setIsOperateModalOpen] = useState(false);
   const [
     operateBusinessOrderDescription,
@@ -142,13 +145,92 @@ const BusinessOrdersScreen = props => {
     }
   };
 
-  const changeBusinessStatus = () => {
-    setOperateBusinessLoading(true);
-    setTimeout(() => {
-      setOperateBusinessLoading(false);
-      setIsOperateModalOpen(false);
-      toast.current.show("İş Emri Güncellemesi Başarılı", 2000);
-    }, 2000);
+  const changeBusinessStatus = item => {
+    if (
+      operateBusinessOrderDescription &&
+      operateBusinessOrderDescription !== ""
+    ) {
+      setOperateBusinessLoading(true);
+      updateBusinessStatus(
+        operateBusinessOrderDescription,
+        operateBusinessStatus,
+        item.documentationNo,
+        accessToken
+      )
+        .then(res => {
+          if (!res.data.hasError) {
+            getSingleBusinessOrder(item.documentationNo, accessToken)
+              .then(res => {
+                if (!res.data.hasError) {
+                  setBusinessOrders(prev => {
+                    // setOperateBusinessLoading(false);
+                    // setIsOperateModalOpen(false);
+                    const newList = prev.map(item => {
+                      if (
+                        item.documentationNo === res.data.result.documentationNo
+                      ) {
+                        return res.data.result;
+                      } else {
+                        return item;
+                      }
+                    });
+                    console.log(newList);
+                    toast.current.show("İş emri başarı ile güncellendi.", 1000);
+                    return newList;
+                  });
+                } else {
+                  // HANDLE ERROR
+                  setOperateBusinessLoading(false);
+                  setIsOperateModalOpen(false);
+                  setBusinessOrderActivityLoading(false);
+                  toast.current.show("Bir hata meydana geldi.", 1000);
+                  return null;
+                }
+              })
+              .catch(err => {
+                // HANDLE ERROR
+                setOperateBusinessLoading(false);
+                setIsOperateModalOpen(false);
+                setBusinessOrderActivityLoading(false);
+                toast.current.show("Bir hata meydana geldi.", 1000);
+              });
+          } else {
+            // HANDLE ERROR
+            setOperateBusinessLoading(false);
+            setIsOperateModalOpen(false);
+            setBusinessOrderActivityLoading(false);
+            toast.current.show("Bir hata meydana geldi.", 1000);
+            return null;
+          }
+        })
+        .catch(err => {
+          // HANDLE ERROR
+          setOperateBusinessLoading(false);
+          setIsOperateModalOpen(false);
+          setBusinessOrderActivityLoading(false);
+          toast.current.show("Bir hata meydana geldi", 1000);
+          return null;
+        });
+    }
+  };
+
+  useEffect(() => {
+    setBusinessOrderActivityLoading(false);
+    setIsOperateModalOpen(false);
+    setOperateBusinessLoading(false);
+  }, [businessOrders]);
+
+  const _renderBusinessStatus = color => {
+    switch (color) {
+      case "red":
+        return 1;
+      case "blue":
+        return 2;
+      case "green":
+        return 3;
+      default:
+        break;
+    }
   };
 
   const _renderPriority = param => {
@@ -195,9 +277,10 @@ const BusinessOrdersScreen = props => {
                 setBusinessOrderActivityLoading(false);
               });
             }}
-            onChangeBusinessOrderStatusPressed={() =>
-              setIsOperateModalOpen(true)
-            }
+            onChangeBusinessOrderStatusPressed={() => {
+              setIsOperateModalOpen(true);
+              setSelectedBusinessOrder(item);
+            }}
           />
         )}
         contentContainerStyle={{ paddingHorizontal: 20 }}
@@ -287,7 +370,10 @@ const BusinessOrdersScreen = props => {
         onBackdropPress={() => setIsOperateModalOpen(false)}
         onChangeModalText={text => setOperateBusinessOrderDescription(text)}
         onCloseButtonPressed={() => setIsOperateModalOpen(false)}
-        onApproveButtonPressed={changeBusinessStatus}
+        onApproveButtonPressed={changeBusinessStatus.bind(
+          this,
+          selectedBusinessOrder
+        )}
         loadingApproveButton={operateBusinessLoading}
         approveButtonColor={colors.green}
         approveButtonHighlightColor={colors.darkGreen}
@@ -296,7 +382,9 @@ const BusinessOrdersScreen = props => {
         headerText="Durum Yönetimi"
         approveButtonText="Kaydet"
         checkboxNeeded={true}
-        onChangeCheckbox={color => setOperateBusinessStatus(color)}
+        onChangeCheckbox={color =>
+          setOperateBusinessStatus(_renderBusinessStatus(color))
+        }
       />
 
       <Toast

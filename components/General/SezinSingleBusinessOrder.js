@@ -7,7 +7,6 @@ import {
   ViewPropTypes,
   PixelRatio
 } from "react-native";
-import { MaterialIndicator } from "react-native-indicators";
 import { Tooltip } from "react-native-elements";
 import PropTypes from "prop-types";
 import IsTakibi from "../../assets/images/saha-takibi.jpg";
@@ -25,11 +24,11 @@ const SezinSingleBusinessOrder = props => {
         setBusinessStatus("Tamamlandı");
         setStatusColor(colors.green);
         break;
-      case 1:
+      case 2:
         setBusinessStatus("Yapılıyor");
         setStatusColor(colors.blue);
         break;
-      case 2:
+      case 1:
         setBusinessStatus("Başlanmadı");
         setStatusColor(colors.red);
         break;
@@ -37,6 +36,32 @@ const SezinSingleBusinessOrder = props => {
         break;
     }
   }, [businessStatus]);
+
+  const _renderStatus = param => {
+    switch (param) {
+      case 3:
+        return "Tamamlandı";
+      case 2:
+        return "Yapılıyor";
+      case 1:
+        return "Başlanmadı";
+      default:
+        break;
+    }
+  };
+
+  const _renderStatusColor = param => {
+    switch (param) {
+      case 3:
+        return colors.green;
+      case 2:
+        return colors.blue;
+      case 1:
+        return colors.red;
+      default:
+        break;
+    }
+  };
 
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
@@ -139,25 +164,15 @@ const SezinSingleBusinessOrder = props => {
         >
           <Text style={styles.bottomTexts}>Durum:</Text>
 
-          {statusLoadingState ? (
-            <View>
-              <MaterialIndicator
-                size={36}
-                color={colors.blue}
-                style={{ paddingRight: "5%" }}
-              />
-            </View>
-          ) : (
-            <Text
-              style={{
-                ...styles.bottomRightTexts,
-                color: statusColor,
-                paddingBottom: 10
-              }}
-            >
-              {businessStatus}
-            </Text>
-          )}
+          <Text
+            style={{
+              ...styles.bottomRightTexts,
+              color: _renderStatusColor(props.status),
+              paddingBottom: 10
+            }}
+          >
+            {_renderStatus(props.status)}
+          </Text>
         </View>
 
         {props.assignedByMe ? (

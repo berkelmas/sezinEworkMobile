@@ -81,3 +81,38 @@ export const getSingleBusinessOrderActivities = (documentationNo, token) => {
     }
   );
 };
+
+export const updateBusinessStatus = (
+  description,
+  status,
+  documentationNo,
+  token
+) => {
+  return axios.post(
+    `${config.apiEndpoint}WorkOrder/updateWorkOrder`,
+    {
+      description,
+      status,
+      documentationNo
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
+export const getSingleBusinessOrder = (documentationNo, token) => {
+  return axios.post(
+    `${config.apiEndpoint}WorkOrder/GetWorkOrderByDocumentationMobile`,
+    {
+      documentationNo
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
