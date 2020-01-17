@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Sezin App",
+    "name": "Sezin E-Work",
     "slug": "sezinApp",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -25,6 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Sezin E-Work Mobile",
+    "githubUrl": "https://github.com/berkelmas/sezinEworkMobile"
   }
 }

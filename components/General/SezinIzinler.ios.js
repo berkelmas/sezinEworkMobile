@@ -95,7 +95,18 @@ const styles = StyleSheet.create({
 });
 
 SezinIzinler.propTypes = {
-  onIzinPress: PropTypes.func
+  onIzinPress: PropTypes.func,
+  izinler: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      startDateValue: PropTypes.instanceOf(Date),
+      finishDateValue: PropTypes.instanceOf(Date),
+      description: PropTypes.string,
+      count: PropTypes.number,
+      leaveRequestType: PropTypes.string,
+      leaveRequestTypeEnum: PropTypes.number
+    })
+  )
 };
 
 //make this component available to the app

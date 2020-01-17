@@ -34,7 +34,23 @@ const SezinInformationModal = props => {
       onBackdropPress={() => props.onBackdropPress()}
       isVisible={props.isModalOpen}
     >
-      <View style={{ height: 500, backgroundColor: "white" }}>
+      <View
+        style={{
+          height: 500,
+          backgroundColor: "white",
+          borderRadius: 4,
+          overflow: "hidden",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2
+          },
+          shadowOpacity: 0.4,
+          shadowRadius: 4,
+
+          elevation: 5
+        }}
+      >
         <View style={styles.modalContainerTop}>
           <Text style={styles.textTop}>{props.headerText}</Text>
         </View>

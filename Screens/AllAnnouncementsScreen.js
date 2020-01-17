@@ -1,5 +1,5 @@
 //import liraries
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import SezinHeader from "../components/General/SezinHeader";
 import SezinTitle from "../components/Typography/SezinTitle";
@@ -15,6 +15,7 @@ import { getAnnouncements } from "../services/announcement-service";
 // CUSTOM COMPONENT
 import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
 import { useSelector } from "react-redux";
+import ErrorStateComponent from "../components/Micro/ErrorStateComponent";
 
 // create a component
 const AllAnnouncementsScreen = props => {
@@ -23,6 +24,7 @@ const AllAnnouncementsScreen = props => {
   const [currentPage, setCurrentPage] = useState(1);
   const [endState, setEndState] = useState(false);
   const [loadingState, setLoadingState] = React.useState(false);
+  const [errorState, setErrorState] = useState(false);
 
   const pushNewAnnouncements = pageSize => {
     if (accessToken && !endState && !loadingState) {
@@ -36,33 +38,31 @@ const AllAnnouncementsScreen = props => {
           } else {
             setLoadingState(false);
             setEndState(true);
-            console.log("KALMADI...");
           }
         })
-        .catch(console.log);
+        .catch(err => {
+          setErrorState(true);
+          setLoadingState(false);
+        });
     }
   };
 
-  React.useEffect(() => {
-    // setLoadingState(true);
-    // setTimeout(() => {
-    //   setAnnouncements(announcementsFakeData.slice(0, 5));
-    //   setLoadingState(false);
-    // }, 1000);
-    pushNewAnnouncements(5);
-  }, [accessToken]);
-
   const _loadData = () => {
-    // setLoadingState(true);
-    // setTimeout(() => {
-    //   setAnnouncements(prev => [
-    //     ...prev,
-    //     ...announcementsFakeData.slice(5, 10)
-    //   ]);
-    //   setLoadingState(false);
-    // }, 1500);
     pushNewAnnouncements(5);
   };
+
+  const reloadAnnouncementsAgain = () => {
+    setAnnouncements([]);
+    setCurrentPage(1);
+    setEndState(false);
+    setErrorState(false);
+  };
+
+  useEffect(() => {
+    if (!errorState) {
+      pushNewAnnouncements(5);
+    }
+  }, [errorState]);
 
   return (
     <View style={styles.container}>
@@ -94,6 +94,11 @@ const AllAnnouncementsScreen = props => {
               }}
             />
             <SezinTitle text="Duyurular" textStyle={{}} />
+            {errorState && (
+              <ErrorStateComponent
+                onPress={reloadAnnouncementsAgain.bind(this)}
+              />
+            )}
           </View>
         )}
         ListFooterComponent={() => {

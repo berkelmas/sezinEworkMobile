@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet, ScrollView, PixelRatio } from "react-native";
 import Modal from "react-native-modal";
 import Toast from "react-native-easy-toast";
+import { DotIndicator } from "react-native-indicators";
 
 // CUSTOM SEZIN COMPONENTS
 import SezinHeader from "../components/General/SezinHeader";
@@ -14,18 +15,28 @@ import SezinButton from "../components/Buttons/SezinButton";
 import SezinSingleIzin from "../components/General/SezinSingleIzin";
 
 import { colors } from "../assets/styles/colors";
-import { getTotalIzin } from "../services/izin-service";
+import { getTotalIzin, getOwnIzinRequests } from "../services/izin-service";
 import { useSelector } from "react-redux";
-import { DotIndicator } from "react-native-indicators";
 
 // create a component
 const IzinMainScreen = props => {
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
+  const toast = useRef(null);
+
+  // SELECTED IZIN FOR MODAL DISPLAY
   const [selectedIzin, setselectedIzin] = useState(null);
   const [modalIzinOpen, setModalIzinOpen] = useState(false);
+
+  // TOTAL IZIN COUNT
   const [totalIzinCount, setTotalIzinCount] = useState(null);
   const [totalIzinCountLoading, setTotalIzinCountLoading] = useState(false);
-  const toast = useRef(null);
+
+  // LAST 4 IZIN REQUESTS
+  const [lastFourIzinRequests, setLastFourIzinRequests] = useState([]);
+  const [
+    lastFourIzinRequestsLoading,
+    setLastFourIzinRequestsLoading
+  ] = useState(false);
 
   const openModal = izin => {
     setselectedIzin(izin);
@@ -43,6 +54,16 @@ const IzinMainScreen = props => {
       .catch(err => {
         setTotalIzinCountLoading(false);
       });
+
+    setLastFourIzinRequestsLoading(true);
+    getOwnIzinRequests(1, 4, accessToken)
+      .then(res => {
+        setLastFourIzinRequestsLoading(false);
+        setLastFourIzinRequests(res.data.result);
+      })
+      .catch(err => setLastFourIzinRequests(false));
+
+    // REACT NAVIGATION PAGE SUBSCRIPTION
     const didBlurSubscription = props.navigation.addListener(
       "didFocus",
       payload => {

@@ -31,3 +31,18 @@ export const getTotalIzin = token => {
     }
   });
 };
+
+export const getOwnIzinRequests = (pageNumber, pageSize, token) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/getOwnLeaveFormPaging`,
+    {
+      pageNumber,
+      pageSize
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
