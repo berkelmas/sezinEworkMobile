@@ -1,44 +1,74 @@
 //import liraries
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, FlatList, Dimensions } from "react-native";
-
+import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
 // MATERIAL LOADING INDICATOR
 import { MaterialIndicator } from "react-native-indicators";
 import Toast from "react-native-easy-toast";
-
-import { colors } from "../assets/styles/colors";
-
+// REDUX
+import { useSelector } from "react-redux";
 // CUSTOM SEZIN COMPONENTS
 import SezinTitle from "../components/Typography/SezinTitle";
 import SezinHeader from "../components/General/SezinHeader";
 import SezinSingleIzin from "../components/General/SezinSingleIzin";
 import SezinDescription from "../components/Typography/SezinDescription";
+import { colors } from "../assets/styles/colors";
 
 import { izinlerData } from "../assets/data/izinler.data";
 import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
 
+// SERVICES
+import { getOwnIzinRequests } from "../services/izin-service";
+
 // create a component
 const MyIzinRequestsScreen = props => {
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
+  const toast = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [endData, setEndData] = useState(false);
   const [izinRequests, setIzinRequests] = useState(null);
   const [loadingState, setLoadingState] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [cancelRequestLoading, setCancelRequestLoading] = useState(false);
-  const toast = useRef(null);
 
   useEffect(() => {
+    // setLoadingState(true);
+    // setTimeout(() => {
+    //   setIzinRequests(izinlerData.slice(0, 3));
+    //   setLoadingState(false);
+    // }, 1000);
     setLoadingState(true);
-    setTimeout(() => {
-      setIzinRequests(izinlerData.slice(0, 3));
+    getOwnIzinRequests(currentPage, 5, accessToken).then(res => {
+      if (res.data.result.length > 0) {
+        setIzinRequests(res.data.result);
+        setCurrentPage(prev => prev + 1);
+      } else {
+        setEndData(true);
+      }
       setLoadingState(false);
-    }, 1000);
+    });
   }, []);
 
   const _loadData = () => {
-    setLoadingState(true);
-    setTimeout(() => {
-      setIzinRequests(prev => [...prev, ...izinlerData.slice(3, 6)]);
-      setLoadingState(false);
-    }, 1500);
+    // setLoadingState(true);
+    // setTimeout(() => {
+    //   setIzinRequests(prev => [...prev, ...izinlerData.slice(3, 6)]);
+    //   setLoadingState(false);
+    // }, 1500);
+    // IF NOT STILL LOADING, LOAD NEW DATA
+    if (!loadingState && !endData) {
+      setLoadingState(true);
+      getOwnIzinRequests(currentPage, 5, accessToken)
+        .then(res => {
+          if (res.data.result.length > 0) {
+            setIzinRequests(prev => [...prev, ...res.data.result]);
+            setCurrentPage(prev => prev + 1);
+          } else {
+            setEndData(true);
+          }
+          setLoadingState(false);
+        })
+        .catch(err => setLoadingState(false));
+    }
   };
 
   const sendCancelRequest = () => {
@@ -62,7 +92,6 @@ const MyIzinRequestsScreen = props => {
               marginTop: index === 0 ? 20 : 0
             }}
             onCancelRequest={setIsCancelModalOpen.bind(this, true)}
-            buttonRendered={true}
             {...item}
           />
         )}
@@ -87,17 +116,16 @@ const MyIzinRequestsScreen = props => {
         ListFooterComponent={() => {
           if (loadingState) {
             return (
-              <View
-                style={{
-                  height: 100,
-                  width: 100,
-                  backgroundColor: "white",
-                  alignSelf: "center",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
+              <View style={styles.footerSpinnerContainer}>
                 <MaterialIndicator color={colors.blue} size={50} />
+              </View>
+            );
+          } else if (endData) {
+            return (
+              <View style={styles.footerTextContainer}>
+                <Text style={styles.footerText}>
+                  Gösterilecek İş Emri Kalmadı.
+                </Text>
               </View>
             );
           } else {
@@ -156,6 +184,25 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     justifyContent: "center",
     alignItems: "center"
+  },
+  footerTextContainer: {
+    height: 60,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  footerText: {
+    fontFamily: "Airbnb-Book",
+    fontSize: 15,
+    color: colors.gray
+  },
+  footerSpinnerContainer: {
+    height: 100,
+    width: 100,
+    backgroundColor: "white",
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 

@@ -12,6 +12,7 @@ const initialState = {
   userGroup: null,
   userHospitalName: null,
   userEmail: null,
+  userId: null,
   failedLogin: false,
   menuItems: []
 };
@@ -47,6 +48,7 @@ const AuthReducer = (state = initialState, action) => {
         userGroup: action.payload.userGroup,
         userHospitalName: action.payload.userHospitalName,
         userEmail: action.payload.userEmail,
+        userId: action.payload.userId,
         failedLogin: false
       };
     case authTypes.FAILED_LOGIN:
@@ -62,6 +64,7 @@ const AuthReducer = (state = initialState, action) => {
         userGroup: null,
         userHospitalName: null,
         userEmail: null,
+        userId: null,
         failedLogin: true
       };
     case authTypes.FAILED_LOGIN_TIMEOUT:
@@ -82,6 +85,7 @@ const AuthReducer = (state = initialState, action) => {
         userGroup: null,
         userHospitalName: null,
         userEmail: null,
+        userId: null,
         failedLogin: false,
         menuItems: []
       };

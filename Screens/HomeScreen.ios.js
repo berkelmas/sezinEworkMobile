@@ -15,15 +15,16 @@ import SezinAnnouncements from "../components/General/SezinAnnouncements";
 import SezinButton from "../components/Buttons/SezinButton";
 import SezinOrders from "../components/General/SezinOrders";
 import { colors } from "../assets/styles/colors";
-import SezinSingleBusinessOrder from "../components/General/SezinSingleBusinessOrder";
 import SezinSingleAnnouncement from "../components/General/SezinSingleAnnouncement";
 
 import { getAnnouncements } from "../services/announcement-service";
 import { getBusinessOrdersOnMe } from "../services/business-order-service";
+import { registerForPushNotificationsAsync } from "../services/push-notification-service";
 
 const HomeScreen = props => {
   const fullName = useSelector(state => state.AuthReducer.fullName);
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
+  const userId = useSelector(state => state.AuthReducer.userId);
 
   const [firstName, setFirstName] = React.useState(null);
 
@@ -119,6 +120,16 @@ const HomeScreen = props => {
     getLastFiveAnnouncements();
     getLastFourBusinessOrdersOnMe();
   }, [accessToken]);
+
+  useEffect(() => {
+    if (userId) {
+      registerForPushNotificationsAsync(userId)
+        .then(res => {
+          console.log("TOKEN KAYDI BASARILI...");
+        })
+        .catch(console.log);
+    }
+  }, [userId]);
 
   return (
     <ScrollView

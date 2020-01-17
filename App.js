@@ -1,17 +1,15 @@
 import React from "react";
 import { StatusBar, Platform } from "react-native";
 import * as Font from "expo-font";
+import { LocaleConfig } from "react-native-calendars";
 
 // REDUX
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-
 // REDUX DEV-TOOLS EXTENSION PLUGIN
 import { composeWithDevTools } from "redux-devtools-extension";
-
 // REDUX THUNK FOR ASYNC ACTIONS
 import thunk from "redux-thunk";
-
 // REDUCER
 import RootReducer from "./store/reducers/index";
 const store = createStore(
@@ -20,8 +18,6 @@ const store = createStore(
 );
 
 import MyApp from "./navigation/navigation";
-
-import { LocaleConfig } from "react-native-calendars";
 
 const App = () => {
   const [loaded, setLoaded] = React.useState(false);

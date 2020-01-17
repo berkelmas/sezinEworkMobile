@@ -347,7 +347,7 @@ const BusinessOrdersScreen = props => {
             return (
               <View style={styles.footerTextContainer}>
                 <Text style={styles.footerText}>
-                  Gösterilecek Duyuru Kalmadı.
+                  Gösterilecek İş Emri Kalmadı.
                 </Text>
               </View>
             );
