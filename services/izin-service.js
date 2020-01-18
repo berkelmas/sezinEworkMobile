@@ -75,3 +75,22 @@ export const getSingleIzinById = (id, token) => {
     }
   );
 };
+
+export const getWaitingApproveOrDenyIzinPaging = (
+  pageNumber,
+  pageSize,
+  token
+) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/getWaitingLeavePaging`,
+    {
+      pageSize,
+      pageNumber
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};

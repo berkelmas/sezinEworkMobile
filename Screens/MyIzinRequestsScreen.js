@@ -44,6 +44,7 @@ const MyIzinRequestsScreen = props => {
   const [selectedInformationIzin, setSelectedInformationIzin] = useState(null);
 
   useEffect(() => {
+    console.log("berkelmas");
     setLoadingState(true);
     getOwnIzinRequests(currentPage, 5, accessToken).then(res => {
       if (res.data.result.length > 0) {

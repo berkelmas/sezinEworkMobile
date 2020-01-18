@@ -21,20 +21,14 @@ const SezinSingleIzinOptions = props => {
       <Image source={IzinImage1} style={styles.imageStyle} />
       {/* CONTENT CONTAINER */}
       <View style={{ padding: 10 }}>
-        <Text style={styles.placeText}>{props.date}</Text>
-        <Text style={styles.titleText}>{props.title}</Text>
-        <Text style={styles.descriptionText}>
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using ‘Content here, content here’, making it
-          look like readable English.
-        </Text>
+        <Text style={styles.placeText}>{`${props.count} Gün`}</Text>
+        <Text style={styles.titleText}>{props.leaveRequestType}</Text>
+        <Text style={styles.descriptionText}>{props.description}</Text>
 
         <View style={styles.askedByContainer}>
           <Text style={styles.bottomTexts}>İzin Talep Eden:</Text>
           <Text style={{ ...styles.bottomRightTexts, color: colors.blue }}>
-            {props.askedBy}
+            {props.userName}
           </Text>
         </View>
 

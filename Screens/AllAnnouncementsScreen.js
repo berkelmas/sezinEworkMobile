@@ -68,7 +68,7 @@ const AllAnnouncementsScreen = props => {
     <View style={styles.container}>
       <FlatList
         data={announcements}
-        keyExtractor={(item, index) => String(index)}
+        keyExtractor={(item, index) => `${item.id}`}
         renderItem={({ item, index }) => (
           <SezinSingleAnnouncement
             contentContainerStyle={{

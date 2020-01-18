@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar, Platform } from "react-native";
+import { StatusBar, AsyncStorage } from "react-native";
 import * as Font from "expo-font";
 import { LocaleConfig } from "react-native-calendars";
 

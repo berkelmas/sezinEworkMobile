@@ -14,34 +14,59 @@ import SezinHeader from "../components/General/SezinHeader";
 import SezinSingleIzinOptions from "../components/General/SezinSingleIzinOptions";
 import SezinDescription from "../components/Typography/SezinDescription";
 import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
-
-import { izinlerOnayData } from "../assets/data/izinler.data";
 import AskAgainBeforeActionModal from "../components/Modal/AskAgainBeforeActionModal";
+
+import { getWaitingApproveOrDenyIzinPaging } from "../services/izin-service";
+import { useSelector } from "react-redux";
 
 // create a component
 const IzinOnayScreen = props => {
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
+  const toast = useRef(null);
+
   const [izinRequests, setIzinRequests] = useState(null);
   const [loadingState, setLoadingState] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [endState, setEndState] = useState(false);
+
+  // APPROVE IZIN REQUEST
   const [approveRequestLoading, setApproveRequestLoading] = useState(false);
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
+
+  // DENY IZIN REQUEST
   const [denyRequestLoading, setDenyRequestLoading] = useState(false);
   const [isDenyModalOpen, setIsDenyModalOpen] = useState(false);
-  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
-  const toast = useRef(null);
 
   useEffect(() => {
     setLoadingState(true);
-    setTimeout(() => {
-      setIzinRequests(izinlerOnayData.slice(0, 3));
-      setLoadingState(false);
-    }, 1000);
+    getWaitingApproveOrDenyIzinPaging(currentPage, 5, accessToken)
+      .then(res => {
+        if (res.data.result.length > 0) {
+          setIzinRequests(res.data.result);
+          setCurrentPage(prev => prev + 1);
+        } else {
+          setEndState(true);
+        }
+        setLoadingState(false);
+      })
+      .catch(err => setLoadingState(false));
   }, []);
 
   const _loadData = () => {
-    setLoadingState(true);
-    setTimeout(() => {
-      setIzinRequests(prev => [...prev, ...izinlerOnayData.slice(3, 6)]);
-      setLoadingState(false);
-    }, 1500);
+    if (!endState && !loadingState) {
+      setLoadingState(true);
+      getWaitingApproveOrDenyIzinPaging(currentPage, 5, accessToken)
+        .then(res => {
+          if (res.data.result.length > 0) {
+            setIzinRequests(res.data.result);
+            setCurrentPage(prev => prev + 1);
+          } else {
+            setEndState(true);
+          }
+          setLoadingState(false);
+        })
+        .catch(err => setLoadingState(false));
+    }
   };
 
   const sendDenyRequest = () => {
@@ -66,7 +91,7 @@ const IzinOnayScreen = props => {
     <>
       <FlatList
         data={izinRequests}
-        keyExtractor={(item, index) => String(index)}
+        keyExtractor={item => item.id}
         renderItem={({ item, index }) => (
           <SezinSingleIzinOptions
             contentContainerStyle={{
