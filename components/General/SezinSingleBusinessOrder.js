@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -12,57 +12,12 @@ import PropTypes from "prop-types";
 import IsTakibi from "../../assets/images/saha-takibi.jpg";
 import { colors } from "../../assets/styles/colors";
 import SezinButton from "../Buttons/SezinButton";
+import {
+  _renderStatus,
+  _renderStatusColor
+} from "../../utilities/business-order-functions";
 
 const SezinSingleBusinessOrder = props => {
-  const [statusColor, setStatusColor] = useState("white");
-  const [businessStatus, setBusinessStatus] = useState(props.status);
-  const [statusLoadingState, setStatusLoadingState] = useState(false);
-
-  useEffect(() => {
-    switch (businessStatus) {
-      case 3:
-        setBusinessStatus("Tamamlandı");
-        setStatusColor(colors.green);
-        break;
-      case 2:
-        setBusinessStatus("Yapılıyor");
-        setStatusColor(colors.blue);
-        break;
-      case 1:
-        setBusinessStatus("Başlanmadı");
-        setStatusColor(colors.red);
-        break;
-      default:
-        break;
-    }
-  }, [businessStatus]);
-
-  const _renderStatus = param => {
-    switch (param) {
-      case 3:
-        return "Tamamlandı";
-      case 2:
-        return "Yapılıyor";
-      case 1:
-        return "Başlanmadı";
-      default:
-        break;
-    }
-  };
-
-  const _renderStatusColor = param => {
-    switch (param) {
-      case 3:
-        return colors.green;
-      case 2:
-        return colors.blue;
-      case 1:
-        return colors.red;
-      default:
-        break;
-    }
-  };
-
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
       <Image source={IsTakibi} style={styles.imageStyle} />
@@ -70,16 +25,7 @@ const SezinSingleBusinessOrder = props => {
       <View style={{ padding: 10 }}>
         <Text style={styles.placeText}>{props.place}</Text>
         <Text style={styles.titleText}>{props.title}</Text>
-        <Text style={styles.descriptionText}>
-          {/*
-                    It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using ‘Content here, content here’, making it
-          look like readable English.
-          */}
-          {props.description}
-        </Text>
+        <Text style={styles.descriptionText}>{props.description}</Text>
 
         {/* BOTTOM TEXT CONTAINER */}
         {!props.assignedByMe && (

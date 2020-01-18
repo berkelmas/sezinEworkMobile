@@ -4,24 +4,16 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
   Dimensions,
   PixelRatio,
   ScrollView
 } from "react-native";
 import PropTypes from "prop-types";
 import Modal from "react-native-modal";
-import IcomoonIcon from "../Typography/IcomoonIcon";
 
 // CUSTOM SEZIN COMPONENTS
 import SezinButton from "../Buttons/SezinButton";
 import SezinDescription from "../Typography/SezinDescription";
-import {
-  notStartedToWorkingOn,
-  notStarted,
-  startedToCompleted
-} from "../Micro/SezinBusinessOrderIcons";
 import { colors } from "../../assets/styles/colors";
 import { MaterialIndicator } from "react-native-indicators";
 import BusinessOrderActivities from "../Micro/BusinessOrderActivities";

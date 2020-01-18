@@ -1,6 +1,6 @@
 //import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React from "react";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import IcomoonIcon from "../Typography/IcomoonIcon";
 import { colors } from "../../assets/styles/colors";
@@ -10,26 +10,8 @@ const ErrorStateComponent = props => {
   return (
     <TouchableOpacity onPress={props.onPress} style={styles.container}>
       <IcomoonIcon name="redo" size={45} color={colors.red} />
-      <Text
-        style={{
-          fontFamily: "Airbnb-Light",
-          fontSize: 18,
-          color: colors.red,
-          textAlign: "center"
-        }}
-      >
-        Hata Meydana Geldi.
-      </Text>
-      <Text
-        style={{
-          fontFamily: "Airbnb-Light",
-          fontSize: 18,
-          color: colors.red,
-          textAlign: "center"
-        }}
-      >
-        Tekrar Yüklemek İçin Tıklayın.
-      </Text>
+      <Text style={styles.errorText}>Hata Meydana Geldi.</Text>
+      <Text style={styles.errorText}>Tekrar Yüklemek İçin Tıklayın.</Text>
     </TouchableOpacity>
   );
 };
@@ -40,6 +22,12 @@ const styles = StyleSheet.create({
     height: 400,
     justifyContent: "center",
     alignItems: "center"
+  },
+  errorText: {
+    fontFamily: "Airbnb-Light",
+    fontSize: 18,
+    color: colors.red,
+    textAlign: "center"
   }
 });
 

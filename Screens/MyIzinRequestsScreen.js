@@ -11,31 +11,39 @@ import SezinTitle from "../components/Typography/SezinTitle";
 import SezinHeader from "../components/General/SezinHeader";
 import SezinSingleIzin from "../components/General/SezinSingleIzin";
 import SezinDescription from "../components/Typography/SezinDescription";
+import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
+import SezinIzinInformationModal from "../components/Modal/SezinIzinInformationModal";
 import { colors } from "../assets/styles/colors";
 
-import { izinlerData } from "../assets/data/izinler.data";
-import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
-
 // SERVICES
-import { getOwnIzinRequests } from "../services/izin-service";
+import {
+  getOwnIzinRequests,
+  cancelOwnIzinRequest,
+  getSingleIzinById
+} from "../services/izin-service";
 
 // create a component
 const MyIzinRequestsScreen = props => {
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
   const toast = useRef(null);
+
+  // LIST DATA HANDLING
   const [currentPage, setCurrentPage] = useState(1);
   const [endData, setEndData] = useState(false);
   const [izinRequests, setIzinRequests] = useState(null);
   const [loadingState, setLoadingState] = useState(false);
+
+  // CANCEL OPERATION HANDLING
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [selectedCancelIzin, setSelectedCancelIzin] = useState(null);
+  const [cancelDescription, setCancelDescription] = useState(null);
   const [cancelRequestLoading, setCancelRequestLoading] = useState(false);
 
+  // GET INFORMATION HANDLING
+  const [isInformationModalOpen, setIsInformationModalOpen] = useState(false);
+  const [selectedInformationIzin, setSelectedInformationIzin] = useState(null);
+
   useEffect(() => {
-    // setLoadingState(true);
-    // setTimeout(() => {
-    //   setIzinRequests(izinlerData.slice(0, 3));
-    //   setLoadingState(false);
-    // }, 1000);
     setLoadingState(true);
     getOwnIzinRequests(currentPage, 5, accessToken).then(res => {
       if (res.data.result.length > 0) {
@@ -49,11 +57,6 @@ const MyIzinRequestsScreen = props => {
   }, []);
 
   const _loadData = () => {
-    // setLoadingState(true);
-    // setTimeout(() => {
-    //   setIzinRequests(prev => [...prev, ...izinlerData.slice(3, 6)]);
-    //   setLoadingState(false);
-    // }, 1500);
     // IF NOT STILL LOADING, LOAD NEW DATA
     if (!loadingState && !endData) {
       setLoadingState(true);
@@ -72,26 +75,91 @@ const MyIzinRequestsScreen = props => {
   };
 
   const sendCancelRequest = () => {
-    setCancelRequestLoading(true);
-    setTimeout(() => {
-      setCancelRequestLoading(false);
+    if (cancelDescription && cancelDescription !== "") {
+      setCancelRequestLoading(true);
+      cancelOwnIzinRequest(
+        selectedCancelIzin.id,
+        cancelDescription,
+        accessToken
+      )
+        .then(res => {
+          console.log("BASARILI");
+          getSingleIzinById(selectedCancelIzin.id, accessToken).then(res => {
+            console.log(res.data.result);
+            setIzinRequests(prev => {
+              const newIzins = prev.map(izin => {
+                if (izin.id === selectedCancelIzin.id) {
+                  return res.data.result;
+                } else {
+                  return izin;
+                }
+              });
+              return newIzins;
+            });
+            setIsCancelModalOpen(false);
+            setCancelRequestLoading(false);
+            setSelectedCancelIzin(null);
+          });
+        })
+        .catch(err => {
+          console.log("ERROR VAR");
+        });
+    } else {
+      toast.current.show("İptal açıklamasını doldurmanız gerekir.", 1000);
+    }
+  };
+
+  const handleCancelModal = (item, stateToChange) => {
+    if (stateToChange === "open") {
+      setSelectedCancelIzin(item);
+      setIsCancelModalOpen(true);
+    } else if (stateToChange === "close") {
+      setSelectedCancelIzin(null);
       setIsCancelModalOpen(false);
-      toast.current.show("İzin talebi iptali başarılı", 1000);
-    }, 1500);
+    }
+  };
+
+  const handleInformationModal = (item, stateToChange) => {
+    if (stateToChange === "open") {
+      setIsInformationModalOpen(true);
+      setSelectedInformationIzin(item);
+    } else if (stateToChange === "close") {
+      setIsInformationModalOpen(false);
+      setSelectedInformationIzin(null);
+    }
   };
 
   return (
     <>
       <FlatList
         data={izinRequests}
-        keyExtractor={(item, index) => String(index)}
+        keyExtractor={(item, index) => item.id}
         renderItem={({ item, index }) => (
           <SezinSingleIzin
             contentContainerStyle={{
               marginBottom: 25,
               marginTop: index === 0 ? 20 : 0
             }}
-            onCancelRequest={setIsCancelModalOpen.bind(this, true)}
+            onIzinCancelWaitingButtonPressed={handleInformationModal.bind(
+              this,
+              item,
+              "open"
+            )}
+            onIzinCancelDetailsButtonPressed={handleInformationModal.bind(
+              this,
+              item,
+              "open"
+            )}
+            onIzinDenyDetailsButtonPressed={handleInformationModal.bind(
+              this,
+              item,
+              "open"
+            )}
+            onCancelRequestButtonPressed={handleCancelModal.bind(
+              this,
+              item,
+              "open"
+            )}
             {...item}
           />
         )}
@@ -133,11 +201,13 @@ const MyIzinRequestsScreen = props => {
           }
         }}
       />
+
+      {/* CANCEL MODAL */}
       <GetInfoBeforeActionModal
         isModalOpen={isCancelModalOpen}
         onBackdropPress={() => setIsCancelModalOpen(false)}
-        onChangeModalText={text => console.log(text)}
-        onCloseButtonPressed={() => setIsCancelModalOpen(false)}
+        onChangeModalText={text => setCancelDescription(text)}
+        onCloseButtonPressed={handleCancelModal.bind(this, null, "close")}
         onApproveButtonPressed={() => sendCancelRequest()}
         loadingApproveButton={cancelRequestLoading}
         approveButtonColor={colors.red}
@@ -147,6 +217,13 @@ const MyIzinRequestsScreen = props => {
         headerText="İzin Talebi İptali"
         approveButtonText="İptal Et"
       />
+      {/* INFORMATION MODAL */}
+      <SezinIzinInformationModal
+        isModalOpen={isInformationModalOpen}
+        izin={selectedInformationIzin}
+        onCloseButtonPressed={() => setIsInformationModalOpen(false)}
+      />
+
       <Toast
         position="top"
         positionValue={50}

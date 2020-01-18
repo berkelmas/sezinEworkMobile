@@ -10,6 +10,11 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
+import { MaterialIndicator } from "react-native-indicators";
+import { _convertIzinStatus } from "../../utilities/izin-functions";
+
+import moment from "moment";
+import "moment/locale/tr"; // without this line it didn't work
 
 // FAKE DATA
 import { izinlerData } from "../../assets/data/izinler.data";
@@ -23,13 +28,23 @@ const SezinIzinler = props => {
         ...props.containerStyle
       }}
     >
-      {Array(4)
-        .fill(0)
-        .map((item, index) => (
+      {props.loading ? (
+        <View
+          style={{
+            height: 400,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <MaterialIndicator color={colors.blue} size={50} />
+        </View>
+      ) : (
+        props.izinler.map((item, index) => (
           <View key={index}>
             <TouchableNativeFeedback
               useForeground={true}
-              onPress={() => props.onIzinPress(izinlerData[index])}
+              onPress={() => props.onIzinPress(item)}
             >
               <View
                 style={{
@@ -43,19 +58,20 @@ const SezinIzinler = props => {
                 />
                 <View style={{ height: "40%", padding: 5 }}>
                   <Text style={styles.placeStyle}>
-                    {izinlerData[index].status}
+                    {_convertIzinStatus(item.leaveRequestStatuTypeValue, 15)}
                   </Text>
-                  <Text style={styles.titleStyle}>
-                    {izinlerData[index].title}
-                  </Text>
+                  <Text style={styles.titleStyle}>{item.leaveRequestType}</Text>
                   <Text style={styles.dateStyle}>
-                    {izinlerData[index].startDate}
+                    {moment(item.startDateValue)
+                      .locale("tr")
+                      .format("ll")}
                   </Text>
                 </View>
               </View>
             </TouchableNativeFeedback>
           </View>
-        ))}
+        ))
+      )}
     </View>
   );
 };

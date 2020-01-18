@@ -46,3 +46,32 @@ export const getOwnIzinRequests = (pageNumber, pageSize, token) => {
     }
   );
 };
+
+export const cancelOwnIzinRequest = (Id, cancelDescription, token) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/cancelOwnLeaveRequest`,
+    {
+      Id,
+      cancelDescription
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
+export const getSingleIzinById = (id, token) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/GetLeaveFormById`,
+    {
+      id
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};

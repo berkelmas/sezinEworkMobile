@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, PixelRatio } from "react-native";
 import { Tooltip } from "react-native-elements";
 import { colors } from "../assets/styles/colors";
 
-const _renderTooltip = (text, width) => {
+const _renderTooltip = (text, width, fontSize = 20) => {
   return (
     <Tooltip
       containerStyle={{
@@ -34,7 +34,9 @@ const _renderTooltip = (text, width) => {
         </View>
       }
     >
-      <Text style={{ ...styles.bottomRightTexts, color: colors.blue }}>
+      <Text
+        style={{ ...styles.bottomRightTexts, color: colors.blue, fontSize }}
+      >
         {text
           .split("")
           .slice(0, 20)
@@ -44,41 +46,59 @@ const _renderTooltip = (text, width) => {
   );
 };
 
-export const _convertIzinStatus = param => {
+export const _convertIzinStatus = (param, fontSize = 20) => {
   switch (param) {
     case 0:
-      return _renderTooltip("Bölge Sorumlusunda Onay Bekliyor", 270);
+      return _renderTooltip("Bölge Sorumlusunda Onay Bekliyor", 270, fontSize);
     case 1:
-      return _renderTooltip("Yönetim Onayı Bekliyor");
+      return _renderTooltip("Yönetim Onayı Bekliyor", fontSize);
     case 2:
       return (
-        <Text style={{ ...styles.bottomRightTexts, color: colors.green }}>
+        <Text
+          style={{ ...styles.bottomRightTexts, color: colors.green, fontSize }}
+        >
           Onaylandı
         </Text>
       );
     case 3:
       return (
-        <Text style={{ ...styles.bottomRightTexts, color: colors.darkRed }}>
+        <Text
+          style={{
+            ...styles.bottomRightTexts,
+            color: colors.darkRed,
+            fontSize
+          }}
+        >
           İptal Edildi
         </Text>
       );
     case 4:
-      return _renderTooltip("Türkiye Saha Sorumlusunda Onay Bekliyor", 300);
+      return _renderTooltip(
+        "Türkiye Saha Sorumlusunda Onay Bekliyor",
+        300,
+        fontSize
+      );
     case 5:
       return (
-        <Text style={{ ...styles.bottomRightTexts, color: colors.red }}>
+        <Text
+          style={{ ...styles.bottomRightTexts, color: colors.red, fontSize }}
+        >
           İptal Sürecinde
         </Text>
       );
     case 6:
       return (
-        <Text style={{ ...styles.bottomRightTexts, color: colors.red }}>
+        <Text
+          style={{ ...styles.bottomRightTexts, color: colors.red, fontSize }}
+        >
           Silindi
         </Text>
       );
     case 7:
       return (
-        <Text style={{ ...styles.bottomRightTexts, color: colors.red }}>
+        <Text
+          style={{ ...styles.bottomRightTexts, color: colors.red, fontSize }}
+        >
           Reddedildi
         </Text>
       );

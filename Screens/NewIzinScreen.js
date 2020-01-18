@@ -38,7 +38,6 @@ const NewIzinScreen = props => {
 
   const handleSubmit = () => {
     const { startDate, finishDate, leaveType, description } = formState;
-    console.log(formState);
     if (startDate && finishDate && leaveType && description) {
       setFormLoading(true);
       return createNewIzinRequest(

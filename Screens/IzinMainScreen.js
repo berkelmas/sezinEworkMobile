@@ -22,6 +22,7 @@ import { useSelector } from "react-redux";
 const IzinMainScreen = props => {
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
   const toast = useRef(null);
+  const [toastColor, setToastColor] = useState(colors.green);
 
   // SELECTED IZIN FOR MODAL DISPLAY
   const [selectedIzin, setselectedIzin] = useState(null);
@@ -44,25 +45,6 @@ const IzinMainScreen = props => {
   };
 
   useEffect(() => {
-    // GET TOTAL IZIN COUNT
-    setTotalIzinCountLoading(true);
-    getTotalIzin(accessToken)
-      .then(res => {
-        setTotalIzinCount(res.data.result);
-        setTotalIzinCountLoading(false);
-      })
-      .catch(err => {
-        setTotalIzinCountLoading(false);
-      });
-
-    setLastFourIzinRequestsLoading(true);
-    getOwnIzinRequests(1, 4, accessToken)
-      .then(res => {
-        setLastFourIzinRequestsLoading(false);
-        setLastFourIzinRequests(res.data.result);
-      })
-      .catch(err => setLastFourIzinRequests(false));
-
     // REACT NAVIGATION PAGE SUBSCRIPTION
     const didBlurSubscription = props.navigation.addListener(
       "didFocus",
@@ -78,6 +60,14 @@ const IzinMainScreen = props => {
             setTotalIzinCountLoading(false);
           });
 
+        setLastFourIzinRequestsLoading(true);
+        getOwnIzinRequests(1, 4, accessToken)
+          .then(res => {
+            setLastFourIzinRequestsLoading(false);
+            setLastFourIzinRequests(res.data.result);
+          })
+          .catch(err => setLastFourIzinRequests(false));
+
         if (props.navigation.getParam("toastText", null)) {
           // setToastColor(props.navigation.getParam("toastColor", null));
           console.log(props.navigation.getParam("toastText", null));
@@ -91,7 +81,34 @@ const IzinMainScreen = props => {
       }
     );
     return () => didBlurSubscription.remove();
+  });
+
+  // GET FIRST IZIN COUNT.
+  useEffect(() => {
+    // GET TOTAL IZIN COUNT
+    setTotalIzinCountLoading(true);
+    getTotalIzin(accessToken)
+      .then(res => {
+        setTotalIzinCount(res.data.result);
+        setTotalIzinCountLoading(false);
+      })
+      .catch(err => {
+        setTotalIzinCountLoading(false);
+      });
+
+    setLastFourIzinRequestsLoading(true);
+    getOwnIzinRequests(1, 4, accessToken)
+      .then(res => {
+        console.log(res.data.result[0]);
+        setLastFourIzinRequestsLoading(false);
+        setLastFourIzinRequests(res.data.result);
+      })
+      .catch(err => setLastFourIzinRequests(false));
   }, []);
+
+  useEffect(() => {
+    console.log("selectedizin", selectedIzin);
+  }, [selectedIzin]);
 
   return (
     <ScrollView style={styles.container}>
@@ -132,7 +149,11 @@ const IzinMainScreen = props => {
         textStyle={{ marginHorizontal: 20 }}
       />
 
-      <SezinIzinler onIzinPress={izin => openModal(izin)} />
+      <SezinIzinler
+        loading={lastFourIzinRequestsLoading}
+        izinler={lastFourIzinRequests}
+        onIzinPress={izin => openModal(izin)}
+      />
       <SezinButton
         onPress={props.navigation.navigate.bind(this, "MyIzinRequests")}
         containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}
@@ -151,7 +172,11 @@ const IzinMainScreen = props => {
         swipeDirection={["down", "left", "right", "up"]}
         isVisible={modalIzinOpen}
       >
-        <SezinSingleIzin buttonRendered={false} {...selectedIzin} />
+        <SezinSingleIzin
+          buttonsNotRendered={true}
+          buttonRendered={false}
+          {...selectedIzin}
+        />
       </Modal>
 
       <Toast
@@ -162,7 +187,7 @@ const IzinMainScreen = props => {
         ref={toast}
         style={{
           ...styles.toastContainerStyle,
-          backgroundColor: colors.green
+          backgroundColor: toastColor
         }}
       />
     </ScrollView>

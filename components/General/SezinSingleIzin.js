@@ -65,67 +65,71 @@ const SezinSingleIzin = props => {
           </Text>
         </View>
 
-        {/* IZIN CANCEL BUTTON */}
-        {_showIzinCancelButton(props.leaveRequestStatuTypeValue) && (
-          <SezinButton
-            onPress={() => props.onCancelRequestButtonPressed()}
-            color={colors.red}
-            overlayColor={colors.darkRed}
-            text="Talebi İptal Et"
-            containerStyle={{
-              marginVertical: 10
-            }}
-            buttonTextStyle={{
-              fontSize: 19
-            }}
-          />
-        )}
-        {/* IZIN CANCEL WAITING BUTTON */}
-        {_showIzinCancelWaitingButton(props.leaveRequestStatuTypeValue) && (
-          <SezinButton
-            onPress={() => props.onIzinCancelWaitingButtonPressed()}
-            color={colors.blue}
-            overlayColor={colors.darkBlue}
-            text="İptal Talebi Beklemede"
-            containerStyle={{
-              marginVertical: 10
-            }}
-            buttonTextStyle={{
-              fontSize: 19
-            }}
-          />
-        )}
+        {!props.buttonsNotRendered && (
+          <>
+            {/* IZIN CANCEL BUTTON */}
+            {_showIzinCancelButton(props.leaveRequestStatuTypeValue) && (
+              <SezinButton
+                onPress={() => props.onCancelRequestButtonPressed()}
+                color={colors.red}
+                overlayColor={colors.darkRed}
+                text="Talebi İptal Et"
+                containerStyle={{
+                  marginVertical: 10
+                }}
+                buttonTextStyle={{
+                  fontSize: 19
+                }}
+              />
+            )}
+            {/* IZIN CANCEL WAITING BUTTON */}
+            {_showIzinCancelWaitingButton(props.leaveRequestStatuTypeValue) && (
+              <SezinButton
+                onPress={() => props.onIzinCancelWaitingButtonPressed()}
+                color={colors.blue}
+                overlayColor={colors.darkBlue}
+                text="İptal Talebi Beklemede"
+                containerStyle={{
+                  marginVertical: 10
+                }}
+                buttonTextStyle={{
+                  fontSize: 19
+                }}
+              />
+            )}
 
-        {/* IZIN DENY DETAILS BUTTON */}
-        {_showIzinDenyDetailsButton(props.leaveRequestStatuTypeValue) && (
-          <SezinButton
-            onPress={() => props.onIzinDenyDetailsButtonPressed()}
-            color={colors.blue}
-            overlayColor={colors.darkBlue}
-            text="Ret Açıklaması"
-            containerStyle={{
-              marginVertical: 10
-            }}
-            buttonTextStyle={{
-              fontSize: 19
-            }}
-          />
-        )}
+            {/* IZIN DENY DETAILS BUTTON */}
+            {_showIzinDenyDetailsButton(props.leaveRequestStatuTypeValue) && (
+              <SezinButton
+                onPress={() => props.onIzinDenyDetailsButtonPressed()}
+                color={colors.blue}
+                overlayColor={colors.darkBlue}
+                text="Ret Açıklaması"
+                containerStyle={{
+                  marginVertical: 10
+                }}
+                buttonTextStyle={{
+                  fontSize: 19
+                }}
+              />
+            )}
 
-        {/* MY CANCEL DESCRIPTION BUTTON */}
-        {_showIzinCancelDetailsButton(props.leaveRequestStatuTypeValue) && (
-          <SezinButton
-            onPress={() => props.onIzinCancelDetailsButtonPressed()}
-            color={colors.blue}
-            overlayColor={colors.darkBlue}
-            text="İptal Açıklaması"
-            containerStyle={{
-              marginVertical: 10
-            }}
-            buttonTextStyle={{
-              fontSize: 19
-            }}
-          />
+            {/* MY CANCEL DESCRIPTION BUTTON */}
+            {_showIzinCancelDetailsButton(props.leaveRequestStatuTypeValue) && (
+              <SezinButton
+                onPress={() => props.onIzinCancelDetailsButtonPressed()}
+                color={colors.blue}
+                overlayColor={colors.darkBlue}
+                text="İptal Açıklaması"
+                containerStyle={{
+                  marginVertical: 10
+                }}
+                buttonTextStyle={{
+                  fontSize: 19
+                }}
+              />
+            )}
+          </>
         )}
       </View>
     </View>

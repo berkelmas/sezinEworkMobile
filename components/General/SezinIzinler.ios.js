@@ -10,8 +10,12 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
+import { _convertIzinStatus } from "../../utilities/izin-functions";
+import moment from "moment";
+import "moment/locale/tr"; // without this line it didn't work
 
 import { izinlerData } from "../../assets/data/izinler.data";
+import { MaterialIndicator } from "react-native-indicators";
 
 // create a component
 const SezinIzinler = props => {
@@ -22,11 +26,21 @@ const SezinIzinler = props => {
         ...props.containerStyle
       }}
     >
-      {Array(4)
-        .fill(0)
-        .map((item, index) => (
+      {props.loading ? (
+        <View
+          style={{
+            height: 400,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <MaterialIndicator color={colors.blue} size={50} />
+        </View>
+      ) : (
+        props.izinler.map((item, index) => (
           <TouchableOpacity
-            onPress={() => props.onIzinPress(izinlerData[index])}
+            onPress={() => props.onIzinPress(item)}
             key={index}
             style={{
               ...styles.singleItem,
@@ -38,14 +52,19 @@ const SezinIzinler = props => {
               style={styles.imageStyle}
             />
             <View style={{ height: "40%", padding: 5 }}>
-              <Text style={styles.placeStyle}>{izinlerData[index].status}</Text>
-              <Text style={styles.titleStyle}>{izinlerData[index].title}</Text>
+              <Text style={styles.placeStyle}>
+                {_convertIzinStatus(item.leaveRequestStatuTypeValue, 15)}
+              </Text>
+              <Text style={styles.titleStyle}>{item.leaveRequestType}</Text>
               <Text style={styles.dateStyle}>
-                {izinlerData[index].startDate}
+                {moment(item.startDateValue)
+                  .locale("tr")
+                  .format("ll")}
               </Text>
             </View>
           </TouchableOpacity>
-        ))}
+        ))
+      )}
     </View>
   );
 };
@@ -96,17 +115,7 @@ const styles = StyleSheet.create({
 
 SezinIzinler.propTypes = {
   onIzinPress: PropTypes.func,
-  izinler: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      startDateValue: PropTypes.instanceOf(Date),
-      finishDateValue: PropTypes.instanceOf(Date),
-      description: PropTypes.string,
-      count: PropTypes.number,
-      leaveRequestType: PropTypes.string,
-      leaveRequestTypeEnum: PropTypes.number
-    })
-  )
+  izinler: PropTypes.any
 };
 
 //make this component available to the app
