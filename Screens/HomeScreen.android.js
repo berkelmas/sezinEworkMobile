@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  PixelRatio,
-  AsyncStorage
-} from "react-native";
+import { View, StyleSheet, ScrollView, PixelRatio } from "react-native";
+import { Notifications } from "expo";
 import Modal from "react-native-modal";
 import Toast from "react-native-easy-toast";
 
@@ -139,6 +134,15 @@ const HomeScreen = props => {
         .catch(console.log);
     }
   }, [userId]);
+
+  useEffect(() => {
+    const _notificationSubscription = Notifications.addListener(() =>
+      alert("Notification geldi...")
+    );
+    return () => {
+      _notificationSubscription.remove();
+    };
+  }, []);
 
   return (
     <ScrollView
