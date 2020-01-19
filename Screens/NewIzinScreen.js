@@ -12,6 +12,7 @@ import Toast from "react-native-easy-toast";
 import SezinHeader from "../components/General/SezinHeader";
 import SezinTitle from "../components/Typography/SezinTitle";
 import SezinDatePicker from "../components/Inputs/SezinDatePicker";
+import SezinTimePicker from "../components/Inputs/SezinTimePicker";
 import SezinPicker from "../components/Inputs/SezinPicker";
 import SezinLoadingButton from "../components/Buttons/SezinLoadingButton";
 import SezinInput from "../components/Inputs/SezinInput";
@@ -22,7 +23,10 @@ import { colors } from "../assets/styles/colors";
 // REDUX
 import { useSelector } from "react-redux";
 
-import { createNewIzinRequest } from "../services/izin-service";
+import {
+  createNewIzinRequest,
+  createNewPartialDayIzinRequest
+} from "../services/izin-service";
 
 // create a component
 const NewIzinScreen = props => {
@@ -33,11 +37,56 @@ const NewIzinScreen = props => {
     startDate: null,
     finishDate: null,
     leaveType: null,
+    startHour: null,
+    finishHour: null,
     description: null
   });
 
   const handleSubmit = () => {
-    const { startDate, finishDate, leaveType, description } = formState;
+    const {
+      startDate,
+      finishDate,
+      leaveType,
+      description,
+      startHour,
+      finishHour
+    } = formState;
+    // IF PARTIAL DAY
+    if (
+      leaveType === "2" &&
+      startDate &&
+      leaveType &&
+      description &&
+      startHour &&
+      finishHour &&
+      description !== ""
+    ) {
+      setFormLoading(true);
+      return createNewPartialDayIzinRequest(
+        accessToken,
+        startDate,
+        startDate,
+        description,
+        startHour,
+        finishHour
+      )
+        .then(res => {
+          setFormLoading(false);
+          if (!res.data.hasError) {
+            props.navigation.navigate("IzinMain", {
+              toastColor: colors.green,
+              toastText: "İzin Talebiniz Başarı ile Gönderilmiştir."
+            });
+          } else {
+            toast.current.show(res.data.message, 1000);
+          }
+        })
+        .catch(err => {
+          setFormLoading(false);
+          toast.current.show("Beklenmedik hata meydana geldi.", 1000);
+        });
+    }
+
     if (startDate && finishDate && leaveType && description) {
       setFormLoading(true);
       return createNewIzinRequest(
@@ -83,12 +132,32 @@ const NewIzinScreen = props => {
           }
           placeholderText="İzin Başlangıcı"
         />
-        <SezinDatePicker
-          onDateChange={finishDate =>
-            setFormState(prev => ({ ...prev, finishDate }))
-          }
-          placeholderText="İzin Bitiş Tarihi"
-        />
+        {formState.leaveType !== "2" && (
+          <SezinDatePicker
+            onDateChange={finishDate =>
+              setFormState(prev => ({ ...prev, finishDate }))
+            }
+            placeholderText="İzin Bitiş Tarihi"
+          />
+        )}
+
+        {formState.leaveType === "2" && (
+          <>
+            <SezinTimePicker
+              onValueChange={startHour =>
+                setFormState(prev => ({ ...prev, startHour }))
+              }
+              placeholderText="İzin Başlangıç Saati"
+            />
+            <SezinTimePicker
+              onValueChange={finishHour =>
+                setFormState(prev => ({ ...prev, finishHour }))
+              }
+              placeholderText="İzin Bitiş Saati"
+            />
+          </>
+        )}
+
         <SezinPicker
           items={izinTypes}
           placeholderText="İzin Tipi"

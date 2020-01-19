@@ -14,7 +14,6 @@ import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionMod
 import AskAgainBeforeActionModal from "../components/Modal/AskAgainBeforeActionModal";
 import { colors } from "../assets/styles/colors";
 
-import { izinlerOnayData } from "../assets/data/izinler.data";
 import {
   getWaitingCancelApproveOrRejectIzin,
   rejectCancelIzin,
@@ -112,12 +111,6 @@ const IzinCancelApproveScreen = props => {
 
   // APPROVE HANDLING
   const sendApproveRequest = () => {
-    // setApproveRequestLoading(true);
-    // setTimeout(() => {
-    //   setApproveRequestLoading(false);
-    //   setIsApproveModalOpen(false);
-    //   toast.current.show("İzin talebi iptal onayı başarılı", 1000);
-    // }, 1500);
     setApproveRequestLoading(true);
     approveCancelIzin(selectedIzinForApprove.id, accessToken)
       .then(res => {
