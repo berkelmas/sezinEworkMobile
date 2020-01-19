@@ -149,4 +149,4 @@ SezinSingleIzinOptions.propTypes = {
 };
 
 //make this component available to the app
-export default SezinSingleIzinOptions;
+export default React.memo(SezinSingleIzinOptions);

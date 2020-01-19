@@ -140,4 +140,4 @@ SezinPicker.propTypes = {
 };
 
 //make this component available to the app
-export default SezinPicker;
+export default React.memo(SezinPicker);

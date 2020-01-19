@@ -166,4 +166,4 @@ SezinSingleBusinessReport.propTypes = {
 };
 
 //make this component available to the app
-export default SezinSingleBusinessReport;
+export default React.memo(SezinSingleBusinessReport);

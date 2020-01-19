@@ -72,4 +72,4 @@ SezinButton.propTypes = {
   buttonStyle: PropTypes.object
 };
 
-export default SezinButton;
+export default React.memo(SezinButton);

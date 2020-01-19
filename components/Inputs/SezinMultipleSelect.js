@@ -161,4 +161,4 @@ SezinMultipleSelect.propTypes = {
 };
 
 //make this component available to the app
-export default SezinMultipleSelect;
+export default React.memo(SezinMultipleSelect);

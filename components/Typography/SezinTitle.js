@@ -25,4 +25,4 @@ SezinTitle.propTypes = {
   textStyle: Text.propTypes.style
 };
 
-export default SezinTitle;
+export default React.memo(SezinTitle);

@@ -226,4 +226,4 @@ SezinSingleBusinessOrder.propTypes = {
   assignedUsers: PropTypes.arrayOf(PropTypes.string)
 };
 
-export default SezinSingleBusinessOrder;
+export default React.memo(SezinSingleBusinessOrder);

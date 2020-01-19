@@ -98,4 +98,4 @@ SezinLoadingButton.propTypes = {
 };
 
 //make this component available to the app
-export default SezinLoadingButton;
+export default React.memo(SezinLoadingButton);

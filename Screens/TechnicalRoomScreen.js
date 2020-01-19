@@ -1,5 +1,5 @@
 //import liraries
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from "react-native";
+import Toast from "react-native-easy-toast";
 
 // SEZIN CUSTOM COMPONENTS
 import SezinHeader from "../components/General/SezinHeader";
@@ -20,6 +21,8 @@ import { colors } from "../assets/styles/colors";
 
 // create a component
 const TechnicalRoomScreen = props => {
+  const toast = useRef(null);
+  const [toastColor, setToastColor] = useState(colors.green);
   const [devices, setDevices] = useState([]);
   const menuItems = useSelector(state => state.AuthReducer.menuItems);
   //console.log(menuItems);
@@ -42,6 +45,11 @@ const TechnicalRoomScreen = props => {
       setSelectedDevice(devices[0].value);
     }
   }, [devices]);
+
+  const handleToast = (text, toastColor) => {
+    setToastColor(toastColor);
+    toast.current.show(text, 1000);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -75,8 +83,24 @@ const TechnicalRoomScreen = props => {
           onValueChange={value => setSelectedDevice(value)}
         />
 
-        {selectedDevice === "mr" && <SezinMRForm />}
-        {selectedDevice === "tomo" && <SezinTomoForm />}
+        {selectedDevice === "mr" && (
+          <SezinMRForm handleToast={handleToast.bind(this)} />
+        )}
+        {selectedDevice === "tomo" && (
+          <SezinTomoForm handleToast={handleToast.bind(this)} />
+        )}
+
+        <Toast
+          position="top"
+          positionValue={50}
+          opacity={0.8}
+          textStyle={styles.toastText}
+          ref={toast}
+          style={{
+            ...styles.toastContainerStyle,
+            backgroundColor: toastColor
+          }}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -90,6 +114,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20
+  },
+  toastText: {
+    fontFamily: "Airbnb-Book",
+    color: "white",
+    fontSize: 16
+  },
+  toastContainerStyle: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

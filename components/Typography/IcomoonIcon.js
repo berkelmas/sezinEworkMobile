@@ -28,4 +28,4 @@ IcomoonIcon.propTypes = {
   style: ViewPropTypes.style
 };
 
-export default IcomoonIcon;
+export default React.memo(IcomoonIcon);

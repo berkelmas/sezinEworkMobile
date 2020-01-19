@@ -133,7 +133,6 @@ const NewBusinessOrderScreen = props => {
       toast.current.show("Tüm alanları doldurmanız gerekmektedir.", 500);
     }
   };
-
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <ScrollView>

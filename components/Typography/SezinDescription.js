@@ -31,4 +31,4 @@ SezinDescription.propTypes = {
   textStyle: Text.propTypes.style
 };
 
-export default SezinDescription;
+export default React.memo(SezinDescription);

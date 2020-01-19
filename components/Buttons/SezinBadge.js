@@ -58,4 +58,4 @@ SezinBadge.propTypes = {
 };
 
 //make this component available to the app
-export default SezinBadge;
+export default React.memo(SezinBadge);

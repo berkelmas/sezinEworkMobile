@@ -150,4 +150,4 @@ GetInfoBeforeActionModal.propTypes = {
 };
 
 //make this component available to the app
-export default GetInfoBeforeActionModal;
+export default React.memo(GetInfoBeforeActionModal);

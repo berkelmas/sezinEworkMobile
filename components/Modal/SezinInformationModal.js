@@ -148,4 +148,4 @@ SezinInformationModal.propTypes = {
 };
 
 //make this component available to the app
-export default SezinInformationModal;
+export default React.memo(SezinInformationModal);

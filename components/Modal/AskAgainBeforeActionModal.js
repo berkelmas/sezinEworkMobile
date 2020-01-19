@@ -132,4 +132,4 @@ AskAgainBeforeActionModal.propTypes = {
 };
 
 //make this component available to the app
-export default AskAgainBeforeActionModal;
+export default React.memo(AskAgainBeforeActionModal);

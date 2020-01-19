@@ -89,4 +89,4 @@ SezinTimePicker.propTypes = {
 };
 
 //make this component available to the app
-export default SezinTimePicker;
+export default React.memo(SezinTimePicker);

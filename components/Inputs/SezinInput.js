@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ViewPropTypes, PixelRatio } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
@@ -10,7 +10,6 @@ const SezinInput = props => {
   const [inputValue, setInputValue] = useState(
     props.inputProps && props.inputProps.value
   );
-
   return (
     <View style={{ ...props.containerStyle }}>
       <Item floatingLabel error={props.error}>
@@ -53,4 +52,4 @@ SezinInput.propTypes = {
   error: PropTypes.bool
 };
 
-export default SezinInput;
+export default React.memo(SezinInput);

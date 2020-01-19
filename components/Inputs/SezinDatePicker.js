@@ -110,4 +110,4 @@ SezinDatePicker.propTypes = {
 };
 
 //make this component available to the app
-export default SezinDatePicker;
+export default React.memo(SezinDatePicker);
