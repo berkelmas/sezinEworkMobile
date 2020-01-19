@@ -193,7 +193,7 @@ const MyIzinRequestsScreen = props => {
             return (
               <View style={styles.footerTextContainer}>
                 <Text style={styles.footerText}>
-                  Gösterilecek İş Emri Kalmadı.
+                  Gösterilecek İzin Talebi Kalmadı.
                 </Text>
               </View>
             );

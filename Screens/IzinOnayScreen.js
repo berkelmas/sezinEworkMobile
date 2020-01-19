@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, FlatList, Dimensions } from "react-native";
+import { View, Text, StyleSheet, FlatList, Dimensions } from "react-native";
 
 // MATERIAL LOADING INDICATOR
 import { MaterialIndicator } from "react-native-indicators";
@@ -16,13 +16,18 @@ import SezinDescription from "../components/Typography/SezinDescription";
 import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
 import AskAgainBeforeActionModal from "../components/Modal/AskAgainBeforeActionModal";
 
-import { getWaitingApproveOrDenyIzinPaging } from "../services/izin-service";
+import {
+  getWaitingApproveOrDenyIzinPaging,
+  approveIzin,
+  rejectIzin
+} from "../services/izin-service";
 import { useSelector } from "react-redux";
 
 // create a component
 const IzinOnayScreen = props => {
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
   const toast = useRef(null);
+  const [toastColor, setToastColor] = useState(colors.green);
 
   const [izinRequests, setIzinRequests] = useState(null);
   const [loadingState, setLoadingState] = useState(false);
@@ -32,10 +37,13 @@ const IzinOnayScreen = props => {
   // APPROVE IZIN REQUEST
   const [approveRequestLoading, setApproveRequestLoading] = useState(false);
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
+  const [selectedIzinForApprove, setSelectedIzinForApprove] = useState(null);
 
   // DENY IZIN REQUEST
   const [denyRequestLoading, setDenyRequestLoading] = useState(false);
   const [isDenyModalOpen, setIsDenyModalOpen] = useState(false);
+  const [selectedIzinForReject, setSelectedIzinForReject] = useState(null);
+  const [descriptionForReject, setDescriptionForReject] = useState(null);
 
   useEffect(() => {
     setLoadingState(true);
@@ -69,22 +77,79 @@ const IzinOnayScreen = props => {
     }
   };
 
+  // DENY HANDLING
   const sendDenyRequest = () => {
-    setDenyRequestLoading(true);
-    setTimeout(() => {
-      setDenyRequestLoading(false);
-      setIsDenyModalOpen(false);
-      toast.current.show("İzin talebi reddi başarılı", 1000);
-    }, 1500);
+    if (descriptionForReject && descriptionForReject !== "") {
+      setDenyRequestLoading(true);
+      rejectIzin(selectedIzinForReject.id, descriptionForReject, accessToken)
+        .then(res => {
+          setToastColor(colors.green);
+          toast.current.show("Ret işlemi başarılı.", 1000);
+          handleCloseModalForDeny();
+          setIzinRequests(prev =>
+            prev.filter(item => item.id !== selectedIzinForReject.id)
+          );
+        })
+        .catch(err => {
+          console.log(err);
+          setToastColor(colors.red);
+          setDenyRequestLoading(false);
+          toast.current.show(
+            "Ret işleminde beklenmedik hata meydana geldi.",
+            1000
+          );
+        });
+    } else {
+      setToastColor(colors.red);
+      toast.current.show("Ret açıklamasının doldurulması gerekmektedir.", 1000);
+    }
   };
 
+  const handleSelectForDeny = item => {
+    setIsDenyModalOpen(true);
+    setSelectedIzinForReject(item);
+  };
+
+  const handleCloseModalForDeny = () => {
+    setIsDenyModalOpen(false);
+    setSelectedIzinForReject(null);
+  };
+
+  // APPROVE HANDLING
   const sendApproveRequest = () => {
     setApproveRequestLoading(true);
-    setTimeout(() => {
-      setApproveRequestLoading(false);
-      setIsApproveModalOpen(false);
-      toast.current.show("İzin talebi onayı başarılı", 1000);
-    }, 1500);
+    approveIzin(selectedIzinForApprove.id, accessToken)
+      .then(res => {
+        setApproveRequestLoading(false);
+        if (!res.data.hasError) {
+          setToastColor(colors.green);
+          toast.current.show("İzin talebi onayı başarılı", 1000);
+          handleCloseModalForApprove();
+          setIzinRequests(prev =>
+            prev.filter(item => item.id !== selectedIzinForApprove.id)
+          );
+        } else {
+          handleCloseModalForApprove();
+          setToastColor(colors.red);
+          toast.current.show(res.data.message, 1000);
+        }
+      })
+      .catch(err => {
+        setApproveRequestLoading(false);
+        handleCloseModalForApprove();
+        setToastColor(colors.red);
+        toast.current.show("İzin talebi onayı başarısız.", 1000);
+      });
+  };
+
+  const handleSelectForApprove = item => {
+    setIsApproveModalOpen(true);
+    setSelectedIzinForApprove(item);
+  };
+
+  const handleCloseModalForApprove = () => {
+    setIsApproveModalOpen(false);
+    setSelectedIzinForApprove(null);
   };
 
   return (
@@ -98,8 +163,8 @@ const IzinOnayScreen = props => {
               marginBottom: 25,
               marginTop: index === 0 ? 20 : 0
             }}
-            onDenyRequest={() => setIsDenyModalOpen(true)}
-            onApproveRequest={() => setIsApproveModalOpen(true)}
+            onDenyRequest={handleSelectForDeny.bind(this, item)}
+            onApproveRequest={handleSelectForApprove.bind(this, item)}
             approveLoading={false}
             denyLoading={false}
             approveButtonText="Onayla"
@@ -128,17 +193,16 @@ const IzinOnayScreen = props => {
         ListFooterComponent={() => {
           if (loadingState) {
             return (
-              <View
-                style={{
-                  height: 100,
-                  width: 100,
-                  backgroundColor: "white",
-                  alignSelf: "center",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
+              <View style={styles.footerSpinnerContainer}>
                 <MaterialIndicator color={colors.blue} size={50} />
+              </View>
+            );
+          } else if (endState) {
+            return (
+              <View style={styles.footerTextContainer}>
+                <Text style={styles.footerText}>
+                  Gösterilecek İzin Talebi Kalmadı.
+                </Text>
               </View>
             );
           } else {
@@ -150,9 +214,9 @@ const IzinOnayScreen = props => {
       <GetInfoBeforeActionModal
         isModalOpen={isDenyModalOpen}
         onBackdropPress={() => setIsDenyModalOpen(false)}
-        onChangeModalText={text => console.log(text)}
-        onCloseButtonPressed={() => setIsDenyModalOpen(false)}
-        onApproveButtonPressed={() => sendDenyRequest()}
+        onChangeModalText={text => setDescriptionForReject(text)}
+        onCloseButtonPressed={handleCloseModalForDeny.bind(this)}
+        onApproveButtonPressed={sendDenyRequest.bind(this)}
         loadingApproveButton={denyRequestLoading}
         approveButtonColor={colors.red}
         approveButtonHighlightColor={colors.darkRed}
@@ -163,9 +227,9 @@ const IzinOnayScreen = props => {
       />
       <AskAgainBeforeActionModal
         isModalOpen={isApproveModalOpen}
-        onBackdropPress={() => setIsApproveModalOpen(false)}
-        onCloseButtonPressed={() => setIsApproveModalOpen(false)}
-        onApproveButtonPressed={() => sendApproveRequest()}
+        onBackdropPress={handleCloseModalForApprove.bind(this)}
+        onCloseButtonPressed={handleCloseModalForApprove.bind(this)}
+        onApproveButtonPressed={sendApproveRequest.bind(this)}
         loadingApproveButton={approveRequestLoading}
         approveButtonColor={colors.green}
         approveButtonHighlightColor={colors.darkGreen}
@@ -181,7 +245,7 @@ const IzinOnayScreen = props => {
         ref={toast}
         style={{
           ...styles.toastContainerStyle,
-          backgroundColor: colors.green
+          backgroundColor: toastColor
         }}
       />
     </>
@@ -209,6 +273,25 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     justifyContent: "center",
     alignItems: "center"
+  },
+  footerTextContainer: {
+    height: 60,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  footerText: {
+    fontFamily: "Airbnb-Book",
+    fontSize: 15,
+    color: colors.gray
+  },
+  footerSpinnerContainer: {
+    height: 100,
+    width: 100,
+    backgroundColor: "white",
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 

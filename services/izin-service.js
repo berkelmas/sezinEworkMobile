@@ -94,3 +94,32 @@ export const getWaitingApproveOrDenyIzinPaging = (
     }
   );
 };
+
+export const approveIzin = (id, token) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/approve`,
+    {
+      id
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
+export const rejectIzin = (id, rejectDescription, token) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/reject`,
+    {
+      id,
+      rejectDescription
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
