@@ -26,6 +26,7 @@ import {
 const MyIzinRequestsScreen = props => {
   const accessToken = useSelector(state => state.AuthReducer.accessToken);
   const toast = useRef(null);
+  const [toastColor, setToastColor] = useState(colors.green);
 
   // LIST DATA HANDLING
   const [currentPage, setCurrentPage] = useState(1);
@@ -84,28 +85,41 @@ const MyIzinRequestsScreen = props => {
         accessToken
       )
         .then(res => {
-          console.log("BASARILI");
-          getSingleIzinById(selectedCancelIzin.id, accessToken).then(res => {
-            console.log(res.data.result);
-            setIzinRequests(prev => {
-              const newIzins = prev.map(izin => {
-                if (izin.id === selectedCancelIzin.id) {
-                  return res.data.result;
-                } else {
-                  return izin;
-                }
+          if (!res.data.hasError) {
+            getSingleIzinById(selectedCancelIzin.id, accessToken).then(res => {
+              setIzinRequests(prev => {
+                const newIzins = prev.map(izin => {
+                  if (izin.id === selectedCancelIzin.id) {
+                    return res.data.result;
+                  } else {
+                    return izin;
+                  }
+                });
+                return newIzins;
               });
-              return newIzins;
+              setToastColor(colors.green);
+              toast.current.show("İzin iptal talebiniz başarılı.", 1000);
+              setIsCancelModalOpen(false);
+              setCancelRequestLoading(false);
+              setSelectedCancelIzin(null);
             });
+          } else {
             setIsCancelModalOpen(false);
             setCancelRequestLoading(false);
             setSelectedCancelIzin(null);
-          });
+            setToastColor(colors.red);
+            toast.current.show(res.data.message, 1000);
+          }
         })
         .catch(err => {
-          console.log("ERROR VAR");
+          setIsCancelModalOpen(false);
+          setCancelRequestLoading(false);
+          setSelectedCancelIzin(null);
+          setToastColor(colors.red);
+          toast.current.show("Beklenmedik bir hata meydana geldi.", 1000);
         });
     } else {
+      setToastColor(colors.red);
       toast.current.show("İptal açıklamasını doldurmanız gerekir.", 1000);
     }
   };
@@ -233,8 +247,7 @@ const MyIzinRequestsScreen = props => {
         ref={toast}
         style={{
           ...styles.toastContainerStyle,
-          // backgroundColor: props.navigation.getParam("toastColor", null)
-          backgroundColor: colors.green
+          backgroundColor: toastColor
         }}
       />
     </>
