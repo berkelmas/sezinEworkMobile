@@ -24,6 +24,32 @@ export const createNewIzinRequest = (
   );
 };
 
+export const createNewPartialDayIzinRequest = (
+  token,
+  startDate,
+  finishDate,
+  description,
+  startHour,
+  finishHour
+) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/createLeaveForm`,
+    {
+      startDate,
+      finishDate,
+      leaveType: 2,
+      description,
+      startHour,
+      finishHour
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
 export const getTotalIzin = token => {
   return axios.get(`${config.apiEndpoint}Hr/getTotalLeaveCount`, {
     headers: {
@@ -115,6 +141,53 @@ export const rejectIzin = (id, rejectDescription, token) => {
     {
       id,
       rejectDescription
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
+export const getWaitingCancelApproveOrRejectIzin = (
+  pageNumber,
+  pageSize,
+  token
+) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/GetWaitingCancelLeavePaging`,
+    {
+      pageNumber,
+      pageSize
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
+export const approveCancelIzin = (id, token) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/acceptCancel`,
+    {
+      id
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
+
+export const rejectCancelIzin = (id, token) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/rejectCancel`,
+    {
+      id
     },
     {
       headers: {
