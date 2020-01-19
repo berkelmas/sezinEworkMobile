@@ -33,3 +33,28 @@ export const sendMrForm = (
     }
   );
 };
+
+export const sendTomoForm = (
+  airConditionValue,
+  upsValue,
+  roomDempValue,
+  cleanType,
+  description,
+  token
+) => {
+  return axios.post(
+    `${config.apiEndpoint}TechnicalRoom/createTechnicalRoomFormCT`,
+    {
+      airConditionValue,
+      upsValue,
+      roomDempValue,
+      cleanType,
+      description
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import PropTypes from "prop-types";
 import { withNavigation } from "react-navigation";
+import { useSelector } from "react-redux";
 
 // SEZIN CUSTOM INPUTS
 import SezinInput from "../Inputs/SezinInput";
@@ -16,7 +17,6 @@ import {
   upsType
 } from "../../assets/data/technical-room-data";
 import { sendMrForm } from "../../services/technical-room-service";
-import { useSelector } from "react-redux";
 
 // create a component
 const SezinMRForm = props => {
@@ -44,34 +44,48 @@ const SezinMRForm = props => {
       chillerState,
       roomClean
     } = formValues;
-    setLoadingState(true);
-    sendMrForm(
-      heliumLevel,
-      pressureLevel,
-      waterDegree,
-      roomHumidity,
-      airConditionState,
-      upsState,
-      chillerState,
-      roomClean,
-      "",
-      accessToken
-    )
-      .then(res => {
-        if (!res.data.hasError) {
-          props.navigation.navigate("Home", {
-            toastColor: colors.green,
-            toastText: "MR Teknik Oda Başarı İle Kaydedildi."
-          });
-        } else {
-          props.handleToast(res.data.message, colors.red);
-        }
-        setLoadingState(false);
-      })
-      .catch(err => {
-        setLoadingState(false);
-        props.handleToast("Beklenmedik Hata Meydana Geldi.", colors.red);
-      });
+
+    if (
+      heliumLevel &&
+      pressureLevel &&
+      waterDegree &&
+      roomHumidity &&
+      airConditionData &&
+      upsState &&
+      chillerState &&
+      roomClean
+    ) {
+      setLoadingState(true);
+      sendMrForm(
+        heliumLevel,
+        pressureLevel,
+        waterDegree,
+        roomHumidity,
+        airConditionState,
+        upsState,
+        chillerState,
+        roomClean,
+        "",
+        accessToken
+      )
+        .then(res => {
+          if (!res.data.hasError) {
+            props.navigation.navigate("Home", {
+              toastColor: colors.green,
+              toastText: "MR Teknik Oda Başarı İle Kaydedildi."
+            });
+          } else {
+            props.handleToast(res.data.message, colors.red);
+          }
+          setLoadingState(false);
+        })
+        .catch(err => {
+          setLoadingState(false);
+          props.handleToast("Beklenmedik Hata Meydana Geldi.", colors.red);
+        });
+    } else {
+      props.handleToast("Tüm alanları doldurmanız gerekmektedir.", colors.red);
+    }
   };
 
   return (

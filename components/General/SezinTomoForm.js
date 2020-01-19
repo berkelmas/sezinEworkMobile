@@ -1,6 +1,7 @@
 //import liraries
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
 import { withNavigation } from "react-navigation";
 
@@ -8,40 +9,81 @@ import { withNavigation } from "react-navigation";
 import SezinInput from "../../components/Inputs/SezinInput";
 import SezinPicker from "../../components/Inputs/SezinPicker";
 import SezinLoadingButton from "../../components/Buttons/SezinLoadingButton";
+import {
+  airConditionData,
+  cleanData,
+  upsType
+} from "../../assets/data/technical-room-data";
+import { sendTomoForm } from "../../services/technical-room-service";
+import { useSelector } from "react-redux";
 
 // create a component
 const SezinTomoForm = props => {
+  const accessToken = useSelector(state => state.AuthReducer.accessToken);
   const [loadingState, setLoadingState] = React.useState(false);
+  const [formValues, setFormValues] = useState({
+    roomHumidity: null,
+    airConditionState: null,
+    upsState: null,
+    roomClean: null
+  });
 
   const submitForm = () => {
-    setLoadingState(true);
-
-    setTimeout(() => {
-      setLoadingState(false);
-      props.navigation.navigate("Home", {
-        toastColor: colors.green,
-        toastText: "Tomografi Teknik Oda Başarı İle Kaydedildi."
+    const { roomHumidity, airConditionState, upsState, roomClean } = formValues;
+    if (roomHumidity && airConditionData && upsState && roomClean) {
+      setLoadingState(true);
+      sendTomoForm(
+        airConditionState,
+        upsState,
+        roomHumidity,
+        roomClean,
+        "",
+        accessToken
+      ).then(res => {
+        if (!res.data.hasError) {
+          props.navigation.navigate("Home", {
+            toastColor: colors.green,
+            toastText: "Tomografi Teknik Oda Başarı İle Kaydedildi."
+          });
+        } else {
+          props.handleToast(res.data.message, colors.red);
+        }
+        setLoadingState(false);
       });
-    }, 1000);
+    } else {
+      props.handleToast("Tüm Alanları Doldurmanız Gerekmektedir.", colors.red);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <SezinInput label="Oda Nem Seviyesi" containerStyle={{ marginTop: 20 }} />
-      <SezinInput label="Klima Sıcaklığı" containerStyle={{ marginTop: 20 }} />
+      <SezinInput
+        label="Oda Nem Seviyesi"
+        containerStyle={{ marginTop: 20 }}
+        onChangeText={roomHumidity =>
+          setFormValues(prev => ({ ...prev, roomHumidity }))
+        }
+      />
+      <SezinPicker
+        placeholderText="Klima Durumu"
+        items={airConditionData}
+        onValueChange={airConditionState =>
+          setFormValues(prev => ({ ...prev, airConditionState }))
+        }
+      />
       <SezinPicker
         placeholderText="UPS Durumu"
-        items={[
-          { label: "Çalışıyor", value: "calisiyor" },
-          { label: "Çalışmıyor", value: "calismiyor" }
-        ]}
+        items={upsType}
+        onValueChange={upsState =>
+          setFormValues(prev => ({ ...prev, upsState }))
+        }
       />
       <SezinPicker
         placeholderText="Oda Temizliği"
-        items={[
-          { label: "Rutin", value: "rutin" },
-          { label: "Yapılmadı", value: "yapilmadi" }
-        ]}
+        items={cleanData}
+        onValueChange={roomClean =>
+          setFormValues(prev => ({ ...prev, roomClean }))
+        }
       />
       <SezinLoadingButton
         onPress={submitForm.bind(this)}
@@ -61,6 +103,10 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+SezinTomoForm.propTypes = {
+  handleToast: PropTypes.func
+};
 
 //make this component available to the app
 export default withNavigation(SezinTomoForm);
