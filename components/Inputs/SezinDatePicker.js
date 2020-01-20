@@ -83,6 +83,7 @@ const SezinDatePicker = props => {
             todayTextColor: colors.blue
           }}
           markedDates={selectedMarkerDate}
+          minDate={new Date()}
         />
       </RBSheet>
     </View>

@@ -27,6 +27,7 @@ const GetInfoBeforeActionModal = props => {
       useNativeDriver={true}
       onBackdropPress={() => props.onBackdropPress()}
       isVisible={props.isModalOpen}
+      hideModalContentWhileAnimating={true}
     >
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss.bind()}>

@@ -25,6 +25,7 @@ const SezinInformationModal = props => {
       useNativeDriver={true}
       onBackdropPress={() => props.onBackdropPress()}
       isVisible={props.isModalOpen}
+      hideModalContentWhileAnimating={true}
     >
       <View
         style={{

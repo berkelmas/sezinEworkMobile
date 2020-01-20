@@ -92,8 +92,7 @@ const NewBusinessOrderScreen = props => {
       selectedDescription &&
       selectedTitle &&
       selectedPriority &&
-      selectedGroups.length &&
-      selectedUsers.length &&
+      (selectedGroups.length || selectedUsers.length) &&
       selectedEndDate
     ) {
       setLoadingState(true);

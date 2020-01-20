@@ -16,6 +16,7 @@ const SezinIzinInformationModal = props => {
       useNativeDriver={true}
       onBackdropPress={() => props.onBackdropPress()}
       isVisible={props.isModalOpen}
+      hideModalContentWhileAnimating={true}
     >
       <View style={styles.modalShadowContainer}>
         {props.izin && (

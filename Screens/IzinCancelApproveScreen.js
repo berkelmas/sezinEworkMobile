@@ -10,7 +10,6 @@ import SezinTitle from "../components/Typography/SezinTitle";
 import SezinHeader from "../components/General/SezinHeader";
 import SezinSingleIzinOptions from "../components/General/SezinSingleIzinOptions";
 import SezinDescription from "../components/Typography/SezinDescription";
-import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
 import AskAgainBeforeActionModal from "../components/Modal/AskAgainBeforeActionModal";
 import { colors } from "../assets/styles/colors";
 
@@ -47,10 +46,10 @@ const IzinCancelApproveScreen = props => {
         if (res.data.result.length > 0) {
           setIzinCancelRequests(res.data.result);
           setCurrentPage(prev => prev + 1);
-          setLoadingState(false);
         } else {
           setEndState(true);
         }
+        setLoadingState(false);
       })
       .catch(err => setLoadingState(false));
   }, []);

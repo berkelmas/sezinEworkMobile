@@ -225,6 +225,7 @@ const HomeScreen = props => {
         onSwipeComplete={() => setModalAnnouncementOpen(false)}
         swipeDirection={["down", "left", "right", "up"]}
         isVisible={modalAnnouncementOpen}
+        hideModalContentWhileAnimating={true}
       >
         <SezinSingleAnnouncement {...selectedAnnouncement} />
       </Modal>
