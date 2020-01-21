@@ -60,7 +60,7 @@ const IzinMainScreen = props => {
             setTotalIzinCountLoading(false);
           });
 
-        setLastFourIzinRequestsLoading(true);
+        // setLastFourIzinRequestsLoading(true);
         getOwnIzinRequests(1, 4, accessToken)
           .then(res => {
             setLastFourIzinRequestsLoading(false);
@@ -171,6 +171,7 @@ const IzinMainScreen = props => {
         onSwipeComplete={() => setModalIzinOpen(false)}
         swipeDirection={["down", "left", "right", "up"]}
         isVisible={modalIzinOpen}
+        hideModalContentWhileAnimating={true}
       >
         <SezinSingleIzin
           buttonsNotRendered={true}

@@ -26,6 +26,8 @@ import MyIzinRequestsScreen from "../Screens/MyIzinRequestsScreen";
 import IzinOnayScreen from "../Screens/IzinOnayScreen";
 import IzinCancelApproveScreen from "../Screens/IzinCancelApproveScreen";
 import BusinessReportsScreen from "../Screens/BusinessReportsScreen";
+import ProfileScreen from "../Screens/ProfileScreen";
+import ChangePasswordScreen from "../Screens/ChangePasswordScreen";
 
 const customAppContainer = props => {
   const HomeStack = createStackNavigator(
@@ -77,6 +79,20 @@ const customAppContainer = props => {
     }
   );
 
+  const ProfileStack = createStackNavigator(
+    {
+      ProfilePage: {
+        screen: ProfileScreen
+      },
+      ChangePassword: {
+        screen: ChangePasswordScreen
+      }
+    },
+    {
+      initialRouteName: "ProfilePage"
+    }
+  );
+
   const DrawerNav = createDrawerNavigator(
     {
       Home: {
@@ -119,6 +135,15 @@ const customAppContainer = props => {
           title: "İzin Yönetimi",
           drawerIcon: (
             <IcomoonIcon name="user-chart" size={30} color={colors.dark} />
+          )
+        }
+      },
+      Profile: {
+        screen: ProfileStack,
+        navigationOptions: {
+          title: "Profil",
+          drawerIcon: (
+            <IcomoonIcon name="id-card-alt" size={30} color={colors.dark} />
           )
         }
       }

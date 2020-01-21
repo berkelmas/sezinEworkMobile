@@ -223,6 +223,7 @@ const HomeScreen = props => {
         useNativeDriver={true}
         animationIn="fadeInUpBig"
         onSwipeComplete={() => setModalAnnouncementOpen(false)}
+        onBackdropPress={() => setModalAnnouncementOpen(false)}
         swipeDirection={["down", "left", "right", "up"]}
         isVisible={modalAnnouncementOpen}
         hideModalContentWhileAnimating={true}
