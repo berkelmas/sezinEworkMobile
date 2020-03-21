@@ -1,15 +1,33 @@
 //import liraries
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, StyleSheet, Dimensions, PixelRatio } from "react-native";
 import SezinHeader from "../components/General/SezinHeader";
 import SezinButton from "../components/Buttons/SezinButton";
 import CustomTooltipOnWordCount from "../components/Typography/CustomTooltipOnWordCount";
 import { colors } from "../assets/styles/colors";
 import { useSelector } from "react-redux";
+import Toast from "react-native-easy-toast";
 
 // create a component
 const ProfileScreen = props => {
   const user = useSelector(state => state.AuthReducer);
+  const toast = React.useRef(null);
+
+  useEffect(() => {
+    const didBlurSubscription = props.navigation.addListener(
+      "didFocus",
+      payload => {
+        if (props.navigation.getParam("toastText", null)) {
+          toast.current.show(
+            props.navigation.getParam("toastText", null),
+            1000
+          );
+          props.navigation.setParams({ toastText: null });
+        }
+      }
+    );
+    return () => didBlurSubscription.remove();
+  });
 
   return (
     <View style={styles.container}>
@@ -63,10 +81,10 @@ const ProfileScreen = props => {
                 fontSize: 100
               }}
             >
-              {user.fullName.split(" ")[0][0] +
-                user.fullName.split(" ")[
-                  user.fullName.split(" ").length - 1
-                ][0]}
+              {user.fullName.split(" ")[0][0].toUpperCase() +
+                user.fullName
+                  .split(" ")
+                  [user.fullName.split(" ").length - 1][0].toUpperCase()}
             </Text>
           </View>
         </View>
@@ -220,6 +238,15 @@ const ProfileScreen = props => {
           />
         </View>
       </View>
+
+      <Toast
+        position="top"
+        positionValue={50}
+        opacity={0.8}
+        textStyle={styles.toastText}
+        ref={toast}
+        style={styles.toastContainerStyle}
+      />
     </View>
   );
 };
@@ -228,6 +255,18 @@ const ProfileScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  toastText: {
+    fontFamily: "Airbnb-Book",
+    color: "white",
+    fontSize: 16 / PixelRatio.getFontScale()
+  },
+  toastContainerStyle: {
+    backgroundColor: colors.green,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

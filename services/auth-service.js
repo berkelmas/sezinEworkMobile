@@ -25,3 +25,17 @@ export const logoutService = refreshToken => {
     refreshToken
   });
 };
+
+export const changePasswordService = (password, token) => {
+  return axios.post(
+    `${config.apiEndpoint}System/updatePassword`,
+    {
+      password
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
