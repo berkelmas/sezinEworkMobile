@@ -75,6 +75,21 @@ const BusinessOrdersScreen = props => {
     setBusinessOrders([]);
   }, [assignedByMe]);
 
+  useEffect(() => {
+    const didBlurSubscription = props.navigation.addListener(
+      "didFocus",
+      payload => {
+        // RELOAD ON ROUTE CHANGE
+        setCurrentPage(1);
+        setDataEnd(false);
+        setTopLoadingState(true);
+        // EMPTY LIST
+        setBusinessOrders([]);
+      }
+    );
+    return () => didBlurSubscription.remove();
+  }, []);
+
   // MAKE API CALL AFTER PAGE IS EQUAL TO 1 AGAIN
   useEffect(() => {
     if (currentPage === 1) {
