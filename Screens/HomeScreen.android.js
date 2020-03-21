@@ -158,7 +158,7 @@ const HomeScreen = props => {
 
       {/* FIRST TITLE PART */}
       <SezinTitle
-        text={"Merhaba Sana Nasıl Yardım Edebilirim, " + firstName + "?"}
+        text={"Merhaba a Sana Nasıl Yardım Edebilirim, " + firstName + "?"}
         textStyle={{
           fontSize: 28 / PixelRatio.getFontScale(),
           paddingHorizontal: 20,

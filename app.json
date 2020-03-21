@@ -4,27 +4,34 @@
     "slug": "sezinApp",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "notification": {
+      "icon": "./assets/notification-icon.png",
+      "color": "#484848",
+      "androidMode": "default"
+    },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash1.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "icon": "./assets/icon-apple.png",
+      "supportsTablet": true,
+      "bundleIdentifier": "sezinmobil",
+      "buildNumber": "2.0.0"
+    },
+    "android": {
+      "icon": "./assets/icon1.png",
+      "package": "com.sezinmobil",
+      "versionCode": 16
     },
     "description": "Sezin E-Work Mobile",
     "githubUrl": "https://github.com/berkelmas/sezinEworkMobile"
