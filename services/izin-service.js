@@ -196,3 +196,25 @@ export const rejectCancelIzin = (id, token) => {
     }
   );
 };
+
+export const calculateWorkDayIzin = (
+  token,
+  startDate,
+  finishDate,
+  leaveType
+) => {
+  return axios.post(
+    `${config.apiEndpoint}Hr/calculateWorkDay`,
+    {
+      token,
+      startDate,
+      finishDate,
+      leaveType
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};

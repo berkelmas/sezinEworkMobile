@@ -103,7 +103,7 @@ const NewBusinessReportScreen = props => {
       )
         .then(res => {
           setLoadingState(false);
-          if (!res.hasError) {
+          if (!res.data.hasError) {
             props.navigation.navigate("Home", {
               toastColor: colors.green,
               toastText: "Saha Takip Raporu Başarı İle Kaydedildi."
@@ -197,7 +197,6 @@ const NewBusinessReportScreen = props => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20
   },
   toastText: {

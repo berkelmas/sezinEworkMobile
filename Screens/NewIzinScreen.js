@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
+  Text,
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard
@@ -25,7 +26,8 @@ import { useSelector } from "react-redux";
 
 import {
   createNewIzinRequest,
-  createNewPartialDayIzinRequest
+  createNewPartialDayIzinRequest,
+  calculateWorkDayIzin
 } from "../services/izin-service";
 
 // create a component
@@ -41,6 +43,7 @@ const NewIzinScreen = props => {
     finishHour: null,
     description: null
   });
+  const [calculatedWorkDay, setCalculatedWorkDay] = useState(0);
 
   useEffect(() => {
     if (
@@ -53,6 +56,22 @@ const NewIzinScreen = props => {
       setFormState(prev => ({ ...prev, finishDate: new Date() }));
     }
   }, [formState.leaveType]);
+
+  useEffect(() => {
+    calculateWorkDayIzin(
+      accessToken,
+      formState.startDate,
+      formState.finishDate,
+      formState.leaveType
+    )
+      .then(res => {
+        setCalculatedWorkDay(res.data.result);
+        console.log(res.data.result);
+      })
+      .catch(err => {
+        toast.current.show("İzin Günü Hesaplamasında Hata!", 1000);
+      });
+  }, [formState]);
 
   const handleSubmit = () => {
     const {
@@ -137,7 +156,18 @@ const NewIzinScreen = props => {
           onPressLeft={() => props.navigation.goBack()}
         />
         <SezinTitle text="Yeni İzin Talebi" />
-        <SezinDescription text="Bu bölümden yeni izin taleplerinde bulunabilirsiniz." />
+        <SezinDescription
+          text={
+            <Text>
+              Bu bölümden yeni izin taleplerinde bulunabilirsiniz. Seçtiğiniz
+              tarihler{" "}
+              <Text style={{ color: colors.blue }}>
+                {calculatedWorkDay} gün
+              </Text>{" "}
+              izin kapsamaktadır.
+            </Text>
+          }
+        />
         <SezinDatePicker
           onDateChange={startDate =>
             setFormState(prev => ({ ...prev, startDate }))

@@ -39,7 +39,7 @@ const ChangePasswordScreen = props => {
       changePasswordService(formState.passwordOne, accessToken)
         .then(res => {
           setLoadingState(false);
-          if (!res.hasError) {
+          if (!res.data.hasError) {
             props.navigation.navigate("ProfilePage", {
               toastColor: colors.green,
               toastText: "Şifreniz Başarı İle Değiştirildi."
