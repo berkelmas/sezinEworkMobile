@@ -60,7 +60,9 @@ const SezinIzinler = props => {
                   <Text style={styles.placeStyle}>
                     {_convertIzinStatus(item.leaveRequestStatuTypeValue, 15)}
                   </Text>
+
                   <Text style={styles.titleStyle}>{item.leaveRequestType}</Text>
+
                   <Text style={styles.dateStyle}>
                     {moment(item.startDateValue)
                       .locale("tr")

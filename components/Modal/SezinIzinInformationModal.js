@@ -45,7 +45,11 @@ const SezinIzinInformationModal = props => {
               {/* DESCRIPTION */}
               <SezinDescription
                 textStyle={{ paddingTop: 10 }}
-                text={props.izin.description}
+                text={
+                  props.izin.cancelDescription
+                    ? props.izin.cancelDescription
+                    : props.izin.rejectDescription
+                }
               />
             </View>
 

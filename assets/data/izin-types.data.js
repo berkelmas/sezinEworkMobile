@@ -24,6 +24,14 @@ export const izinTypes = [
     value: "6"
   },
   {
+    label: "Evlilik İzni",
+    value: "7"
+  },
+  {
+    label: "Ücretsiz Doğum İzni",
+    value: "8"
+  },
+  {
     label: "Diğer İzin",
     value: "3"
   }

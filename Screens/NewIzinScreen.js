@@ -1,5 +1,5 @@
 //import liraries
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -41,6 +41,18 @@ const NewIzinScreen = props => {
     finishHour: null,
     description: null
   });
+
+  useEffect(() => {
+    if (
+      formState.leaveType === "2" ||
+      formState.leaveType === "7" ||
+      formState.leaveType === "5" ||
+      formState.leaveType === "1" ||
+      formState.leaveType === "4"
+    ) {
+      setFormState(prev => ({ ...prev, finishDate: new Date() }));
+    }
+  }, [formState.leaveType]);
 
   const handleSubmit = () => {
     const {
@@ -132,7 +144,13 @@ const NewIzinScreen = props => {
           }
           placeholderText="İzin Başlangıcı"
         />
-        {formState.leaveType !== "2" && (
+        {!(
+          formState.leaveType === "2" ||
+          formState.leaveType === "7" ||
+          formState.leaveType === "5" ||
+          formState.leaveType === "1" ||
+          formState.leaveType === "4"
+        ) && (
           <SezinDatePicker
             onDateChange={finishDate =>
               setFormState(prev => ({ ...prev, finishDate }))

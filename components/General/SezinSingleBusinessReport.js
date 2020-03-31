@@ -6,8 +6,11 @@ import {
   StyleSheet,
   Image,
   PixelRatio,
-  ViewPropTypes
+  ViewPropTypes,
+  ScrollView,
+  TouchableWithoutFeedback
 } from "react-native";
+import { WebView } from "react-native-webview";
 import PropTypes from "prop-types";
 import { Tooltip } from "react-native-elements";
 
@@ -15,14 +18,25 @@ import moment from "moment";
 import "moment/locale/tr"; // without this line it didn't work
 
 // ASSETS
-import IzinImage1 from "../../assets/images/izin/izin-image-1.png";
+import RaporImage1 from "../../assets/images/rapor.jpg";
 import { colors } from "../../assets/styles/colors";
+
+import { createHTML } from "../../utilities/create-html.functions";
 
 // create a component
 const SezinSingleBusinessReport = props => {
+  const [height, setHeight] = useState(0);
+
+  const webViewScript = `
+    setTimeout(function() { 
+      window.ReactNativeWebView.postMessage(document.documentElement.scrollHeight); 
+    }, 500);
+    true; // note: this is required, or you'll sometimes get silent failures
+  `;
+
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
-      <Image source={IzinImage1} style={styles.imageStyle} />
+      <Image source={RaporImage1} style={styles.imageStyle} />
       {/* CONTENT CONTAINER */}
       <View style={{ padding: 10 }}>
         <Text style={styles.placeText}>
@@ -31,7 +45,22 @@ const SezinSingleBusinessReport = props => {
             .format("ll")}
         </Text>
         <Text style={styles.titleText}>{props.title}</Text>
-        <Text style={styles.descriptionText}>{props.description}</Text>
+
+        <View style={{ height }}>
+          <WebView
+            automaticallyAdjustContentInsets={false}
+            useWebKit={true}
+            startInLoadingState={true}
+            source={{ html: createHTML(props.description) }}
+            onMessage={event => {
+              console.log(event.nativeEvent);
+              setHeight(parseInt(event.nativeEvent.data));
+            }}
+            javaScriptEnabled={true}
+            injectedJavaScript={webViewScript}
+            domStorageEnabled={true}
+          />
+        </View>
 
         <View
           style={{
@@ -63,12 +92,12 @@ const SezinSingleBusinessReport = props => {
 
                 elevation: 9
               }}
-              height={40 + props.userList.length * 16}
+              height={40 + props.userList.slice(0, 20).length * 20}
               width={200}
               backgroundColor={colors.lightGray}
               popover={
                 <View>
-                  {props.userList.map((item, index) => (
+                  {props.userList.slice(0, 20).map((item, index) => (
                     <Text
                       key={index}
                       style={{
@@ -80,6 +109,30 @@ const SezinSingleBusinessReport = props => {
                       - {item}
                     </Text>
                   ))}
+                  {props.userList.length >= 20 && (
+                    <Text
+                      style={{
+                        fontFamily: "Airbnb-Light",
+                        fontSize: 15,
+                        color: colors.dark
+                      }}
+                    >
+                      ...
+                    </Text>
+                  )}
+                  {props.userList.length === 0 && (
+                    <>
+                      <Text
+                        style={{
+                          fontFamily: "Airbnb-Light",
+                          fontSize: 15,
+                          color: colors.dark
+                        }}
+                      >
+                        Kullanıcı Yok
+                      </Text>
+                    </>
+                  )}
                 </View>
               }
             >
@@ -125,7 +178,7 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     borderRadius: 4,
-    height: 300,
+    height: 200,
     width: "100%",
     resizeMode: "cover"
   },

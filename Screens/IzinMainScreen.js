@@ -154,6 +154,7 @@ const IzinMainScreen = props => {
         izinler={lastFourIzinRequests}
         onIzinPress={izin => openModal(izin)}
       />
+
       <SezinButton
         onPress={props.navigation.navigate.bind(this, "MyIzinRequests")}
         containerStyle={{ marginTop: 20, paddingHorizontal: 20 }}
@@ -169,6 +170,7 @@ const IzinMainScreen = props => {
         useNativeDriver={true}
         animationIn="fadeInUpBig"
         onSwipeComplete={() => setModalIzinOpen(false)}
+        onBackdropPress={() => setModalIzinOpen(false)}
         swipeDirection={["down", "left", "right", "up"]}
         isVisible={modalIzinOpen}
         hideModalContentWhileAnimating={true}

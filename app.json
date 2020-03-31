@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "2.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "notification": {
@@ -26,7 +26,7 @@
       "icon": "./assets/icon-apple.png",
       "supportsTablet": true,
       "bundleIdentifier": "sezinmobil",
-      "buildNumber": "2.0.0"
+      "buildNumber": "3.0.0"
     },
     "android": {
       "icon": "./assets/icon1.png",

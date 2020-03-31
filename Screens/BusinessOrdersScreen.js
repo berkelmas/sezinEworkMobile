@@ -73,6 +73,36 @@ const BusinessOrdersScreen = props => {
     setTopLoadingState(true);
     // EMPTY LIST
     setBusinessOrders([]);
+
+    if (assignedByMe) {
+      getBusinessOrderByMe(1, 5, accessToken)
+        .then(res => {
+          if (res.data.result.length > 0) {
+            setCurrentPage(prev => prev + 1);
+            setBusinessOrders(prev => [...prev, ...res.data.result]);
+          } else {
+            setDataEnd(true);
+          }
+          setTopLoadingState(false);
+        })
+        .catch(err => {
+          setTopLoadingState(false);
+        });
+    } else {
+      getBusinessOrdersOnMe(1, 5, accessToken)
+        .then(res => {
+          if (res.data.result.length > 0) {
+            setCurrentPage(prev => prev + 1);
+            setBusinessOrders(prev => [...prev, ...res.data.result]);
+          } else {
+            setDataEnd(true);
+          }
+          setTopLoadingState(false);
+        })
+        .catch(err => {
+          setTopLoadingState(false);
+        });
+    }
   }, [assignedByMe]);
 
   useEffect(() => {
@@ -85,45 +115,74 @@ const BusinessOrdersScreen = props => {
         setTopLoadingState(true);
         // EMPTY LIST
         setBusinessOrders([]);
+        if (assignedByMe) {
+          getBusinessOrderByMe(1, 5, accessToken)
+            .then(res => {
+              if (res.data.result.length > 0) {
+                setCurrentPage(prev => prev + 1);
+                setBusinessOrders(prev => [...prev, ...res.data.result]);
+              } else {
+                setDataEnd(true);
+              }
+              setTopLoadingState(false);
+            })
+            .catch(err => {
+              setTopLoadingState(false);
+            });
+        } else {
+          getBusinessOrdersOnMe(1, 5, accessToken)
+            .then(res => {
+              if (res.data.result.length > 0) {
+                setCurrentPage(prev => prev + 1);
+                setBusinessOrders(prev => [...prev, ...res.data.result]);
+              } else {
+                setDataEnd(true);
+              }
+              setTopLoadingState(false);
+            })
+            .catch(err => {
+              setTopLoadingState(false);
+            });
+        }
       }
     );
     return () => didBlurSubscription.remove();
   }, []);
 
   // MAKE API CALL AFTER PAGE IS EQUAL TO 1 AGAIN
-  useEffect(() => {
-    if (currentPage === 1) {
-      if (assignedByMe) {
-        getBusinessOrderByMe(currentPage, 5, accessToken)
-          .then(res => {
-            if (res.data.result.length > 0) {
-              setCurrentPage(prev => prev + 1);
-              setBusinessOrders(prev => [...prev, ...res.data.result]);
-            } else {
-              setDataEnd(true);
-            }
-            setTopLoadingState(false);
-          })
-          .catch(err => {
-            setTopLoadingState(false);
-          });
-      } else {
-        getBusinessOrdersOnMe(currentPage, 5, accessToken)
-          .then(res => {
-            if (res.data.result.length > 0) {
-              setCurrentPage(prev => prev + 1);
-              setBusinessOrders(prev => [...prev, ...res.data.result]);
-            } else {
-              setDataEnd(true);
-            }
-            setTopLoadingState(false);
-          })
-          .catch(err => {
-            setTopLoadingState(false);
-          });
-      }
-    }
-  }, [currentPage]);
+  // useEffect(() => {
+  //   if (currentPage === 1) {
+  //     if (assignedByMe) {
+  //       getBusinessOrderByMe(currentPage, 5, accessToken)
+  //         .then(res => {
+  //           if (res.data.result.length > 0) {
+  //             setCurrentPage(prev => prev + 1);
+  //             setBusinessOrders(prev => [...prev, ...res.data.result]);
+  //           } else {
+  //             setDataEnd(true);
+  //           }
+  //           setTopLoadingState(false);
+  //         })
+  //         .catch(err => {
+  //           setTopLoadingState(false);
+  //         });
+  //     } else {
+  //       getBusinessOrdersOnMe(currentPage, 5, accessToken)
+  //         .then(res => {
+  //           if (res.data.result.length > 0) {
+  //             setCurrentPage(prev => prev + 1);
+  //             setBusinessOrders(prev => [...prev, ...res.data.result]);
+  //           } else {
+  //             setDataEnd(true);
+  //           }
+  //           setTopLoadingState(false);
+  //         })
+  //         .catch(err => {
+  //           setTopLoadingState(false);
+  //         });
+  //     }
+  //   }
+  // }, [currentPage]);
 
   const _loadData = () => {
     setLoadingState(true);

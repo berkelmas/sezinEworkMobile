@@ -14,9 +14,9 @@ export const createNewBusinessReport = (
     {
       title,
       description,
+      finishDate,
       sendUserId,
-      groupId,
-      finishDate
+      groupId
     },
     {
       headers: {

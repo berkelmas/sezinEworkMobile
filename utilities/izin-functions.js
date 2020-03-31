@@ -49,9 +49,21 @@ const _renderTooltip = (text, width, fontSize = 20) => {
 export const _convertIzinStatus = (param, fontSize = 20) => {
   switch (param) {
     case 0:
-      return _renderTooltip("Bölge Sorumlusunda Onay Bekliyor", 270, fontSize);
+      return (
+        <Text
+          style={{ ...styles.bottomRightTexts, color: colors.blue, fontSize }}
+        >
+          B. Sorumlusunda
+        </Text>
+      );
     case 1:
-      return _renderTooltip("Yönetim Onayı Bekliyor", fontSize);
+      return (
+        <Text
+          style={{ ...styles.bottomRightTexts, color: colors.blue, fontSize }}
+        >
+          Y. Onayında
+        </Text>
+      );
     case 2:
       return (
         <Text
@@ -73,10 +85,12 @@ export const _convertIzinStatus = (param, fontSize = 20) => {
         </Text>
       );
     case 4:
-      return _renderTooltip(
-        "Türkiye Saha Sorumlusunda Onay Bekliyor",
-        300,
-        fontSize
+      return (
+        <Text
+          style={{ ...styles.bottomRightTexts, color: colors.blue, fontSize }}
+        >
+          T. Sorumlusunda
+        </Text>
       );
     case 5:
       return (
@@ -102,8 +116,20 @@ export const _convertIzinStatus = (param, fontSize = 20) => {
           Reddedildi
         </Text>
       );
+    case 8:
+      return (
+        <Text
+          style={{ ...styles.bottomRightTexts, color: colors.blue, fontSize }}
+        >
+          IK'da Bekliyor
+        </Text>
+      );
     default:
-      break;
+      return (
+        <Text
+          style={{ ...styles.bottomRightTexts, color: colors.red, fontSize }}
+        ></Text>
+      );
   }
 };
 

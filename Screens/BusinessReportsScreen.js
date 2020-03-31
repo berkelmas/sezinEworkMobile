@@ -42,42 +42,71 @@ const BusinessReportsScreen = props => {
     setTopLoadingState(true);
     // EMPTY LIST
     setBusinessReports([]);
+    if (createdByMe) {
+      getBusinessReportsByMe(1, 5, accessToken)
+        .then(res => {
+          if (res.data.result.length > 0) {
+            setCurrentPage(prev => prev + 1);
+            setBusinessReports(prev => [...prev, ...res.data.result]);
+          } else {
+            setDataEnd(true);
+          }
+          setTopLoadingState(false);
+        })
+        .catch(err => {
+          setTopLoadingState(false);
+        });
+    } else {
+      getBusinessReportsOnMe(1, 5, accessToken)
+        .then(res => {
+          if (res.data.result.length > 0) {
+            setCurrentPage(prev => prev + 1);
+            setBusinessReports(prev => [...prev, ...res.data.result]);
+          } else {
+            setDataEnd(true);
+          }
+          setTopLoadingState(false);
+        })
+        .catch(err => {
+          setTopLoadingState(false);
+        });
+    }
   }, [createdByMe]);
 
   // MAKE API CALL AFTER PAGE IS EQUAL TO 1 AGAIN
-  useEffect(() => {
-    if (currentPage === 1) {
-      if (createdByMe) {
-        getBusinessReportsByMe(currentPage, 5, accessToken)
-          .then(res => {
-            if (res.data.result.length > 0) {
-              setCurrentPage(prev => prev + 1);
-              setBusinessReports(prev => [...prev, ...res.data.result]);
-            } else {
-              setDataEnd(true);
-            }
-            setTopLoadingState(false);
-          })
-          .catch(err => {
-            setTopLoadingState(false);
-          });
-      } else {
-        getBusinessReportsOnMe(currentPage, 5, accessToken)
-          .then(res => {
-            if (res.data.result.length > 0) {
-              setCurrentPage(prev => prev + 1);
-              setBusinessReports(prev => [...prev, ...res.data.result]);
-            } else {
-              setDataEnd(true);
-            }
-            setTopLoadingState(false);
-          })
-          .catch(err => {
-            setTopLoadingState(false);
-          });
-      }
-    }
-  }, [currentPage]);
+  // useEffect(() => {
+  //   if (currentPage === 1) {
+  //     if (createdByMe) {
+  //       getBusinessReportsByMe(currentPage, 5, accessToken)
+  //         .then(res => {
+  //           if (res.data.result.length > 0) {
+  //             setCurrentPage(prev => prev + 1);
+  //             setBusinessReports(prev => [...prev, ...res.data.result]);
+  //           } else {
+  //             setDataEnd(true);
+  //           }
+  //           setTopLoadingState(false);
+  //         })
+  //         .catch(err => {
+  //           setTopLoadingState(false);
+  //         });
+  //     } else {
+  //       getBusinessReportsOnMe(currentPage, 5, accessToken)
+  //         .then(res => {
+  //           if (res.data.result.length > 0) {
+  //             setCurrentPage(prev => prev + 1);
+  //             setBusinessReports(prev => [...prev, ...res.data.result]);
+  //           } else {
+  //             setDataEnd(true);
+  //           }
+  //           setTopLoadingState(false);
+  //         })
+  //         .catch(err => {
+  //           setTopLoadingState(false);
+  //         });
+  //     }
+  //   }
+  // }, [currentPage]);
 
   const _loadData = () => {
     setLoadingState(true);
@@ -195,7 +224,7 @@ const BusinessReportsScreen = props => {
             return (
               <View style={styles.footerTextContainer}>
                 <Text style={styles.footerText}>
-                  Gösterilecek Duyuru Kalmadı.
+                  Gösterilecek Saha Raporu Kalmadı.
                 </Text>
               </View>
             );

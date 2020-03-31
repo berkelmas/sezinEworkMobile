@@ -137,7 +137,7 @@ const HomeScreen = props => {
 
   useEffect(() => {
     const _notificationSubscription = Notifications.addListener(() =>
-      alert("Notification geldi...")
+      console.log("Notification geldi...")
     );
     return () => {
       _notificationSubscription.remove();
@@ -226,6 +226,7 @@ const HomeScreen = props => {
         useNativeDriver={true}
         animationIn="fadeInUpBig"
         onSwipeComplete={() => setModalAnnouncementOpen(false)}
+        onBackdropPress={() => setModalAnnouncementOpen(false)}
         swipeDirection={["down", "left", "right", "up"]}
         isVisible={modalAnnouncementOpen}
       >

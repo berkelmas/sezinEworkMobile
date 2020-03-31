@@ -96,16 +96,21 @@ const NewBusinessReportScreen = props => {
       createNewBusinessReport(
         accessToken,
         selectedTitle,
-        selectedUsers,
-        selectedGroups,
+        selectedDescription,
+        selectedUsers.map(item => item.id),
+        selectedGroups.map(item => item.id),
         selectedEndDate
       )
         .then(res => {
           setLoadingState(false);
-          props.navigation.navigate("Home", {
-            toastColor: colors.green,
-            toastText: "Saha Takip Raporu Başarı İle Kaydedildi."
-          });
+          if (!res.hasError) {
+            props.navigation.navigate("Home", {
+              toastColor: colors.green,
+              toastText: "Saha Takip Raporu Başarı İle Kaydedildi."
+            });
+          } else {
+            toast.current.show(res.message, 1000);
+          }
         })
         .catch(err => {
           setLoadingState(false);
