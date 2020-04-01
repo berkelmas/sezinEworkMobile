@@ -7,19 +7,14 @@ import { colors } from "../../assets/styles/colors";
 import { Item, Input, Label } from "native-base";
 
 const SezinInput = props => {
-  const [inputValue, setInputValue] = useState(
-    props.inputProps && props.inputProps.value
-  );
   return (
     <View style={{ ...props.containerStyle }}>
       <Item floatingLabel error={props.error}>
         <Label style={styles.labelStyle}>{props.label}</Label>
         <Input
           {...props.inputProps}
-          value={inputValue}
           onChangeText={text => {
             props.onChangeText(text);
-            setInputValue(text);
           }}
           multiline={props.multiline ? props.multiline : false}
           secureTextEntry={props.secureEntry}

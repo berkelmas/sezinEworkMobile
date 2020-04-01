@@ -1,5 +1,5 @@
 //import liraries
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { colors } from "../../assets/styles/colors";
@@ -30,7 +30,7 @@ const SezinTomoForm = props => {
 
   const submitForm = () => {
     const { roomHumidity, airConditionState, upsState, roomClean } = formValues;
-    if (roomHumidity && airConditionData && upsState && roomClean) {
+    if (roomHumidity && airConditionState && upsState && roomClean) {
       setLoadingState(true);
       sendTomoForm(
         airConditionState,
@@ -55,6 +55,10 @@ const SezinTomoForm = props => {
     }
   };
 
+  useEffect(() => {
+    console.log(formValues);
+  }, [formValues]);
+
   return (
     <View style={styles.container}>
       <SezinInput
@@ -64,6 +68,17 @@ const SezinTomoForm = props => {
           setFormValues(prev => ({ ...prev, roomHumidity }))
         }
       />
+
+      <SezinInput
+        inputProps={{ keyboardType: "numeric" }}
+        containerStyle={{ marginTop: 20 }}
+        label="Klima Sıcaklığı"
+        onChangeText={airConditionState =>
+          setFormValues(prev => ({ ...prev, airConditionState }))
+        }
+      />
+
+      {/* 
       <SezinPicker
         placeholderText="Klima Durumu"
         items={airConditionData}
@@ -71,6 +86,7 @@ const SezinTomoForm = props => {
           setFormValues(prev => ({ ...prev, airConditionState }))
         }
       />
+      */}
       <SezinPicker
         placeholderText="UPS Durumu"
         items={upsType}

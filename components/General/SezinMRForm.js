@@ -1,9 +1,10 @@
 //import liraries
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import PropTypes from "prop-types";
 import { withNavigation } from "react-navigation";
 import { useSelector } from "react-redux";
+import { MaskService } from "react-native-masked-text";
 
 // SEZIN CUSTOM INPUTS
 import SezinInput from "../Inputs/SezinInput";
@@ -92,19 +93,43 @@ const SezinMRForm = props => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
         <SezinInput
-          inputProps={{ keyboardType: "numeric" }}
+          inputProps={{
+            keyboardType: "numeric",
+            value: MaskService.toMask(
+              "custom",
+              formValues.heliumLevel ? formValues.heliumLevel : "",
+              { mask: "99.99" }
+            )
+          }}
           label="Helyum Seviyesi"
           containerStyle={{ marginTop: 20, width: "45%", marginRight: "10%" }}
           onChangeText={heliumLevel =>
-            setFormValues(prev => ({ ...prev, heliumLevel }))
+            setFormValues(prev => ({
+              ...prev,
+              heliumLevel: MaskService.toMask("custom", heliumLevel, {
+                mask: "99.99"
+              })
+            }))
           }
         />
         <SezinInput
-          inputProps={{ keyboardType: "numeric" }}
+          inputProps={{
+            keyboardType: "numeric",
+            value: MaskService.toMask(
+              "custom",
+              formValues.pressureLevel ? formValues.pressureLevel : "",
+              { mask: "9.999" }
+            )
+          }}
           label="Basınç Seviyesi"
           containerStyle={{ marginTop: 20, width: "45%" }}
           onChangeText={pressureLevel =>
-            setFormValues(prev => ({ ...prev, pressureLevel }))
+            setFormValues(prev => ({
+              ...prev,
+              pressureLevel: MaskService.toMask("custom", pressureLevel, {
+                mask: "9.999"
+              })
+            }))
           }
         />
         <SezinInput
@@ -117,18 +142,18 @@ const SezinMRForm = props => {
         />
         <SezinInput
           inputProps={{ keyboardType: "numeric" }}
-          label="Oda Nem Seviyesi"
+          label="Oda Nem"
           containerStyle={{ marginTop: 20, width: "45%" }}
           onChangeText={roomHumidity =>
             setFormValues(prev => ({ ...prev, roomHumidity }))
           }
         />
 
-        <SezinPicker
-          contentContainerStyle={{ width: "45%", marginRight: "10%" }}
-          placeholderText="Klima Durumu"
-          items={airConditionData}
-          onValueChange={airConditionState =>
+        <SezinInput
+          inputProps={{ keyboardType: "numeric" }}
+          label="Klima Sıcaklığı"
+          containerStyle={{ marginTop: 20, width: "45%", marginRight: "10%" }}
+          onChangeText={airConditionState =>
             setFormValues(prev => ({ ...prev, airConditionState }))
           }
         />
