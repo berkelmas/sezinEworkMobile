@@ -14,12 +14,12 @@ export const createNewIzinRequest = (
       startDate,
       finishDate,
       leaveType,
-      description
+      description,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -40,35 +40,37 @@ export const createNewPartialDayIzinRequest = (
       leaveType: 2,
       description,
       startHour,
-      finishHour
+      finishHour,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
 
-export const getTotalIzin = token => {
+export const getTotalIzin = (token) => {
   return axios.get(`${config.apiEndpoint}Hr/getTotalLeaveCount`, {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
 };
 
 export const getOwnIzinRequests = (pageNumber, pageSize, token) => {
   return axios.post(
-    `${config.apiEndpoint}Hr/getOwnLeaveFormPaging`,
+    `${config.apiEndpoint}Hr/getMyLeaveForm`,
     {
       pageNumber,
-      pageSize
+      pageSize,
+      sortField: "startDate",
+      sort: "desc",
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -78,12 +80,12 @@ export const cancelOwnIzinRequest = (Id, cancelDescription, token) => {
     `${config.apiEndpoint}Hr/cancelOwnLeaveRequest`,
     {
       Id,
-      cancelDescription
+      cancelDescription,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -92,12 +94,12 @@ export const getSingleIzinById = (id, token) => {
   return axios.post(
     `${config.apiEndpoint}Hr/GetLeaveFormById`,
     {
-      id
+      id,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -108,15 +110,15 @@ export const getWaitingApproveOrDenyIzinPaging = (
   token
 ) => {
   return axios.post(
-    `${config.apiEndpoint}Hr/getWaitingLeavePaging`,
+    `${config.apiEndpoint}Hr/GetWaitingLeaveWithCriteria`,
     {
       pageSize,
-      pageNumber
+      pageNumber,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -125,12 +127,12 @@ export const approveIzin = (id, token) => {
   return axios.post(
     `${config.apiEndpoint}Hr/approve`,
     {
-      id
+      id,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -140,12 +142,12 @@ export const rejectIzin = (id, rejectDescription, token) => {
     `${config.apiEndpoint}Hr/reject`,
     {
       id,
-      rejectDescription
+      rejectDescription,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -156,15 +158,15 @@ export const getWaitingCancelApproveOrRejectIzin = (
   token
 ) => {
   return axios.post(
-    `${config.apiEndpoint}Hr/GetWaitingCancelLeavePaging`,
+    `${config.apiEndpoint}Hr/getWaitingCancelLeaveByCriteria`,
     {
       pageNumber,
-      pageSize
+      pageSize,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -173,12 +175,12 @@ export const approveCancelIzin = (id, token) => {
   return axios.post(
     `${config.apiEndpoint}Hr/acceptCancel`,
     {
-      id
+      id,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -187,12 +189,12 @@ export const rejectCancelIzin = (id, token) => {
   return axios.post(
     `${config.apiEndpoint}Hr/rejectCancel`,
     {
-      id
+      id,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
@@ -209,12 +211,12 @@ export const calculateWorkDayIzin = (
       token,
       startDate,
       finishDate,
-      leaveType
+      leaveType,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };

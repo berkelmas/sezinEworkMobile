@@ -18,29 +18,29 @@ import { useSelector } from "react-redux";
 import ErrorStateComponent from "../components/Micro/ErrorStateComponent";
 
 // create a component
-const AllAnnouncementsScreen = props => {
-  const accessToken = useSelector(state => state.AuthReducer.accessToken);
+const AllAnnouncementsScreen = (props) => {
+  const accessToken = useSelector((state) => state.AuthReducer.accessToken);
   const [announcements, setAnnouncements] = React.useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [endState, setEndState] = useState(false);
   const [loadingState, setLoadingState] = React.useState(false);
   const [errorState, setErrorState] = useState(false);
 
-  const pushNewAnnouncements = pageSize => {
+  const pushNewAnnouncements = (pageSize) => {
     if (accessToken && !endState && !loadingState) {
       setLoadingState(true);
       getAnnouncements(currentPage, pageSize, accessToken)
-        .then(res => {
+        .then((res) => {
           if (res.data.result.length > 0) {
-            setAnnouncements(prev => [...prev, ...res.data.result]);
-            setCurrentPage(prev => prev + 1);
+            setAnnouncements((prev) => [...prev, ...res.data.result]);
+            setCurrentPage((prev) => prev + 1);
             setLoadingState(false);
           } else {
             setLoadingState(false);
             setEndState(true);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           setErrorState(true);
           setLoadingState(false);
         });
@@ -73,9 +73,9 @@ const AllAnnouncementsScreen = props => {
           <SezinSingleAnnouncement
             contentContainerStyle={{
               marginBottom: 25,
-              marginTop: index === 0 ? 20 : 0
+              marginTop: index === 0 ? 20 : 0,
             }}
-            content={`${index} ${item.description}`}
+            content={`${item.description}`}
             {...item}
           />
         )}
@@ -90,7 +90,7 @@ const AllAnnouncementsScreen = props => {
               onPressLeft={() => props.navigation.toggleDrawer()}
               leftIconName="bars"
               containerStyle={{
-                paddingTop: 30
+                paddingTop: 30,
               }}
             />
             <SezinTitle text="Duyurular" textStyle={{}} />
@@ -111,7 +111,7 @@ const AllAnnouncementsScreen = props => {
                   backgroundColor: "white",
                   alignSelf: "center",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <MaterialIndicator color={colors.blue} size={50} />
@@ -123,14 +123,14 @@ const AllAnnouncementsScreen = props => {
                 style={{
                   height: 60,
                   width: "100%",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <Text
                   style={{
                     fontFamily: "Airbnb-Book",
                     fontSize: 15,
-                    color: colors.gray
+                    color: colors.gray,
                   }}
                 >
                   Gösterilecek Duyuru Kalmadı.

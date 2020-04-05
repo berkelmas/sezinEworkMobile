@@ -1,14 +1,6 @@
 import axios from "axios";
 import config from "../assets/config";
 
-export const getNewBusinessOrderDocumentNumber = token => {
-  return axios.get(`${config.apiEndpoint}WorkOrder/getDocumentationNo`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-};
-
 export const createNewBusinessOrder = (
   token,
   title,
@@ -16,8 +8,7 @@ export const createNewBusinessOrder = (
   sendUserId,
   groupId,
   priority,
-  finishDate,
-  documentationNo
+  finishDate
 ) => {
   return axios.post(
     `${config.apiEndpoint}WorkOrder/createWorkOrder`,
@@ -28,91 +19,85 @@ export const createNewBusinessOrder = (
       finishDate,
       sendUserId,
       groupId,
-      documentationNo
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
 
 export const getBusinessOrdersOnMe = (pageNumber, pageSize, token) => {
   return axios.post(
-    `${config.apiEndpoint}WorkOrder/getOwnWorkOrderWithPaging`,
+    `${config.apiEndpoint}WorkOrder/GetOwnWorkOrders`,
     {
       pageNumber,
-      pageSize
+      pageSize,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
 
 export const getBusinessOrderByMe = (pageNumber, pageSize, token) => {
   return axios.post(
-    `${config.apiEndpoint}WorkOrder/myCreateWorkPaging`,
+    `${config.apiEndpoint}WorkOrder/MyCreateWorkOrders`,
     {
       pageNumber,
-      pageSize
+      pageSize,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
 
-export const getSingleBusinessOrderActivities = (documentationNo, token) => {
+export const getSingleBusinessOrderActivities = (id, token) => {
   return axios.post(
-    `${config.apiEndpoint}WorkOrder/workOrderMobileResponse`,
+    `${config.apiEndpoint}WorkOrder/getWorkOrderDetailById`,
     {
-      documentationNo
+      id,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
 
-export const updateBusinessStatus = (
-  description,
-  status,
-  documentationNo,
-  token
-) => {
+export const updateBusinessStatus = (description, status, id, token) => {
   return axios.post(
     `${config.apiEndpoint}WorkOrder/updateWorkOrder`,
     {
       description,
       status,
-      documentationNo
+      id,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
 
-export const getSingleBusinessOrder = (documentationNo, token) => {
+export const getSingleBusinessOrder = (id, token) => {
   return axios.post(
-    `${config.apiEndpoint}WorkOrder/GetWorkOrderByDocumentationMobile`,
+    `${config.apiEndpoint}WorkOrder/GetWorkOrderById`,
     {
-      documentationNo
+      id,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };

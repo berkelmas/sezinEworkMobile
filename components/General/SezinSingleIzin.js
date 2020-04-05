@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
   PixelRatio,
-  ViewPropTypes
+  ViewPropTypes,
 } from "react-native";
 import PropTypes from "prop-types";
 import {
@@ -15,7 +15,7 @@ import {
   _showIzinCancelButton,
   _showIzinCancelWaitingButton,
   _showIzinDenyDetailsButton,
-  _showIzinCancelDetailsButton
+  _showIzinCancelDetailsButton,
 } from "../../utilities/izin-functions";
 import IzinImage1 from "../../assets/images/izin/izin-image-1.png";
 import { colors } from "../../assets/styles/colors";
@@ -24,7 +24,8 @@ import moment from "moment";
 import "moment/locale/tr"; // without this line it didn't work
 
 // create a component
-const SezinSingleIzin = props => {
+const SezinSingleIzin = (props) => {
+  console.log(props);
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
       <Image source={IzinImage1} style={styles.imageStyle} />
@@ -41,7 +42,7 @@ const SezinSingleIzin = props => {
             flexDirection: "row",
             justifyContent: "space-between",
             paddingTop: 15,
-            paddingBottom: 5
+            paddingBottom: 5,
           }}
         >
           <Text style={styles.bottomTexts}>Durum:</Text>
@@ -54,14 +55,12 @@ const SezinSingleIzin = props => {
             flexDirection: "row",
             justifyContent: "space-between",
             paddingTop: 15,
-            paddingBottom: 5
+            paddingBottom: 5,
           }}
         >
           <Text style={styles.bottomTexts}>Başlangıç Tarihi:</Text>
           <Text style={{ ...styles.bottomRightTexts, color: colors.blue }}>
-            {moment(props.startDateValue)
-              .locale("tr")
-              .format("ll")}
+            {moment(props.startDate).locale("tr").format("ll")}
           </Text>
         </View>
 
@@ -75,10 +74,10 @@ const SezinSingleIzin = props => {
                 overlayColor={colors.darkRed}
                 text="Talebi İptal Et"
                 containerStyle={{
-                  marginVertical: 10
+                  marginVertical: 10,
                 }}
                 buttonTextStyle={{
-                  fontSize: 19
+                  fontSize: 19,
                 }}
               />
             )}
@@ -90,10 +89,10 @@ const SezinSingleIzin = props => {
                 overlayColor={colors.darkBlue}
                 text="İptal Talebi Beklemede"
                 containerStyle={{
-                  marginVertical: 10
+                  marginVertical: 10,
                 }}
                 buttonTextStyle={{
-                  fontSize: 19
+                  fontSize: 19,
                 }}
               />
             )}
@@ -106,10 +105,10 @@ const SezinSingleIzin = props => {
                 overlayColor={colors.darkBlue}
                 text="Ret Açıklaması"
                 containerStyle={{
-                  marginVertical: 10
+                  marginVertical: 10,
                 }}
                 buttonTextStyle={{
-                  fontSize: 19
+                  fontSize: 19,
                 }}
               />
             )}
@@ -122,10 +121,10 @@ const SezinSingleIzin = props => {
                 overlayColor={colors.darkBlue}
                 text="İptal Açıklaması"
                 containerStyle={{
-                  marginVertical: 10
+                  marginVertical: 10,
                 }}
                 buttonTextStyle={{
-                  fontSize: 19
+                  fontSize: 19,
                 }}
               />
             )}
@@ -144,43 +143,43 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
 
-    elevation: 4
+    elevation: 4,
   },
   imageStyle: {
     borderRadius: 4,
     height: 200,
     width: "100%",
-    resizeMode: "cover"
+    resizeMode: "cover",
   },
   placeText: {
     color: colors.green,
     fontSize: 15 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Book"
+    fontFamily: "Airbnb-Book",
   },
   titleText: {
     color: colors.dark,
     fontSize: 21 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Book"
+    fontFamily: "Airbnb-Book",
   },
   descriptionText: {
     color: colors.gray,
     fontSize: 15 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Light"
+    fontFamily: "Airbnb-Light",
   },
   bottomTexts: {
     color: colors.dark,
     fontSize: 15 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Light"
+    fontFamily: "Airbnb-Light",
   },
   bottomRightTexts: {
     fontSize: 20 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Light"
-  }
+    fontFamily: "Airbnb-Light",
+  },
 });
 
 SezinSingleIzin.propTypes = {
@@ -192,7 +191,7 @@ SezinSingleIzin.propTypes = {
   onCancelRequestButtonPressed: PropTypes.func,
   onIzinCancelWaitingButtonPressed: PropTypes.func,
   onIzinDenyDetailsButtonPressed: PropTypes.func,
-  onIzinCancelDetailsButtonPressed: PropTypes.func
+  onIzinCancelDetailsButtonPressed: PropTypes.func,
 };
 
 //make this component available to the app

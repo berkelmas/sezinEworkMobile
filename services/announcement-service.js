@@ -3,15 +3,17 @@ import config from "../assets/config";
 
 export const getAnnouncements = (pageNumber, pageSize, token) => {
   return axios.post(
-    `${config.apiEndpoint}System/getNoticePaging`,
+    `${config.apiEndpoint}System/getAllNoticeByCriteria`,
     {
       pageNumber,
-      pageSize
+      pageSize,
+      sortField: "startDate",
+      sort: "desc",
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };

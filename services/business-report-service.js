@@ -16,42 +16,42 @@ export const createNewBusinessReport = (
       description,
       finishDate,
       sendUserId,
-      groupId
+      groupId,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
 
 export const getBusinessReportsByMe = (pageNumber, pageSize, token) => {
   return axios.post(
-    `${config.apiEndpoint}WorkOrder/CreateAreaTrackByMePaging`,
+    `${config.apiEndpoint}WorkOrder/createAreaTrackByMe`,
     {
       pageNumber,
-      pageSize
+      pageSize,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };
 
 export const getBusinessReportsOnMe = (pageNumber, pageSize, token) => {
   return axios.post(
-    `${config.apiEndpoint}WorkOrder/GetOwnAreaTrackPaging`,
+    `${config.apiEndpoint}WorkOrder/GetMyAreaTrack`,
     {
       pageNumber,
-      pageSize
+      pageSize,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 };

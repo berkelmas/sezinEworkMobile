@@ -7,15 +7,17 @@ import {
   StyleSheet,
   Image,
   PixelRatio,
-  ViewPropTypes
+  ViewPropTypes,
 } from "react-native";
 import PropTypes from "prop-types";
 import IzinImage1 from "../../assets/images/izin/izin-image-1.png";
 import { colors } from "../../assets/styles/colors";
 import SezinLoadingButton from "../Buttons/SezinLoadingButton";
+import moment from "moment";
+import "moment/locale/tr"; // without this line it didn't work
 
 // create a component
-const SezinSingleIzinOptions = props => {
+const SezinSingleIzinOptions = (props) => {
   return (
     <View style={{ ...styles.container, ...props.contentContainerStyle }}>
       <Image source={IzinImage1} style={styles.imageStyle} />
@@ -35,7 +37,7 @@ const SezinSingleIzinOptions = props => {
         <View style={styles.askedByContainer}>
           <Text style={styles.bottomTexts}>İzin Başlangıcı:</Text>
           <Text style={{ ...styles.bottomRightTexts, color: colors.blue }}>
-            {props.startDate}
+            {moment(props.startDate).locale("tr").format("ll")}
           </Text>
         </View>
 
@@ -47,7 +49,7 @@ const SezinSingleIzinOptions = props => {
             overlayColor={colors.darkRed}
             text={props.denyButtonText}
             buttonTextStyle={{
-              fontSize: 20
+              fontSize: 20,
             }}
             containerStyle={{ flex: 1, marginRight: 20 }}
             buttonHeight={26}
@@ -59,7 +61,7 @@ const SezinSingleIzinOptions = props => {
             overlayColor={colors.darkGreen}
             text={props.approveButtonText}
             buttonTextStyle={{
-              fontSize: 20
+              fontSize: 20,
             }}
             containerStyle={{ flex: 1 }}
             buttonHeight={26}
@@ -78,42 +80,42 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
 
-    elevation: 4
+    elevation: 4,
   },
   imageStyle: {
     borderRadius: 4,
     height: 300,
     width: "100%",
-    resizeMode: "cover"
+    resizeMode: "cover",
   },
   placeText: {
     color: colors.green,
     fontSize: 15 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Book"
+    fontFamily: "Airbnb-Book",
   },
   titleText: {
     color: colors.dark,
     fontSize: 21 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Book"
+    fontFamily: "Airbnb-Book",
   },
   descriptionText: {
     color: colors.gray,
     fontSize: 15 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Light"
+    fontFamily: "Airbnb-Light",
   },
   bottomTexts: {
     color: colors.dark,
     fontSize: 15 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Light"
+    fontFamily: "Airbnb-Light",
   },
   bottomRightTexts: {
     fontSize: 20 / PixelRatio.getFontScale(),
-    fontFamily: "Airbnb-Light"
+    fontFamily: "Airbnb-Light",
   },
   bottomButtonsContainer: {
     flexDirection: "row",
@@ -121,15 +123,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     marginTop: "4%",
-    paddingBottom: "4%"
+    paddingBottom: "4%",
   },
   askedByContainer: {
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 15,
-    paddingBottom: 5
-  }
+    paddingBottom: 5,
+  },
 });
 
 SezinSingleIzinOptions.propTypes = {
@@ -145,7 +147,7 @@ SezinSingleIzinOptions.propTypes = {
   denyLoading: PropTypes.bool,
   approveLoading: PropTypes.bool,
   approveButtonText: PropTypes.string,
-  denyButtonText: PropTypes.string
+  denyButtonText: PropTypes.string,
 };
 
 //make this component available to the app

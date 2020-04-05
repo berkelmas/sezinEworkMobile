@@ -21,14 +21,14 @@ import {
   getBusinessOrdersOnMe,
   getSingleBusinessOrderActivities,
   updateBusinessStatus,
-  getSingleBusinessOrder
+  getSingleBusinessOrder,
 } from "../services/business-order-service";
 import GetInfoBeforeActionModal from "../components/Modal/GetInfoBeforeActionModal";
 
 // create a component
-const BusinessOrdersScreen = props => {
+const BusinessOrdersScreen = (props) => {
   const toast = useRef(null);
-  const accessToken = useSelector(state => state.AuthReducer.accessToken);
+  const accessToken = useSelector((state) => state.AuthReducer.accessToken);
 
   // MAIN DATA
   const [businessOrders, setBusinessOrders] = useState(null);
@@ -47,12 +47,12 @@ const BusinessOrdersScreen = props => {
   // ACTIVITY INFORMATION FOR SELECTED BUSINESS ORDER.
   const [
     selectedBusinessOrderActivityInformation,
-    setSelectedBusinessOrderActivityForInformation
+    setSelectedBusinessOrderActivityForInformation,
   ] = useState(null);
   // LOADING STATE FOR SELECTED BUSINESS ORDER TO SHOW LOADING SPINNER ON MODAL
   const [
     businessOrderActivityLoading,
-    setBusinessOrderActivityLoading
+    setBusinessOrderActivityLoading,
   ] = useState(false);
 
   // OPERATION MODAL
@@ -60,7 +60,7 @@ const BusinessOrdersScreen = props => {
   const [isOperateModalOpen, setIsOperateModalOpen] = useState(false);
   const [
     operateBusinessOrderDescription,
-    setOperateBusinessOrderDescription
+    setOperateBusinessOrderDescription,
   ] = useState(null);
   const [operateBusinessStatus, setOperateBusinessStatus] = useState(null);
   const [operateBusinessLoading, setOperateBusinessLoading] = useState(false);
@@ -76,30 +76,30 @@ const BusinessOrdersScreen = props => {
 
     if (assignedByMe) {
       getBusinessOrderByMe(1, 5, accessToken)
-        .then(res => {
+        .then((res) => {
           if (res.data.result.length > 0) {
-            setCurrentPage(prev => prev + 1);
-            setBusinessOrders(prev => [...prev, ...res.data.result]);
+            setCurrentPage((prev) => prev + 1);
+            setBusinessOrders((prev) => [...prev, ...res.data.result]);
           } else {
             setDataEnd(true);
           }
           setTopLoadingState(false);
         })
-        .catch(err => {
+        .catch((err) => {
           setTopLoadingState(false);
         });
     } else {
       getBusinessOrdersOnMe(1, 5, accessToken)
-        .then(res => {
+        .then((res) => {
           if (res.data.result.length > 0) {
-            setCurrentPage(prev => prev + 1);
-            setBusinessOrders(prev => [...prev, ...res.data.result]);
+            setCurrentPage((prev) => prev + 1);
+            setBusinessOrders((prev) => [...prev, ...res.data.result]);
           } else {
             setDataEnd(true);
           }
           setTopLoadingState(false);
         })
-        .catch(err => {
+        .catch((err) => {
           setTopLoadingState(false);
         });
     }
@@ -108,7 +108,7 @@ const BusinessOrdersScreen = props => {
   useEffect(() => {
     const didBlurSubscription = props.navigation.addListener(
       "didFocus",
-      payload => {
+      (payload) => {
         // RELOAD ON ROUTE CHANGE
         setCurrentPage(1);
         setDataEnd(false);
@@ -117,30 +117,30 @@ const BusinessOrdersScreen = props => {
         setBusinessOrders([]);
         if (assignedByMe) {
           getBusinessOrderByMe(1, 5, accessToken)
-            .then(res => {
+            .then((res) => {
               if (res.data.result.length > 0) {
-                setCurrentPage(prev => prev + 1);
-                setBusinessOrders(prev => [...prev, ...res.data.result]);
+                setCurrentPage((prev) => prev + 1);
+                setBusinessOrders((prev) => [...prev, ...res.data.result]);
               } else {
                 setDataEnd(true);
               }
               setTopLoadingState(false);
             })
-            .catch(err => {
+            .catch((err) => {
               setTopLoadingState(false);
             });
         } else {
           getBusinessOrdersOnMe(1, 5, accessToken)
-            .then(res => {
+            .then((res) => {
               if (res.data.result.length > 0) {
-                setCurrentPage(prev => prev + 1);
-                setBusinessOrders(prev => [...prev, ...res.data.result]);
+                setCurrentPage((prev) => prev + 1);
+                setBusinessOrders((prev) => [...prev, ...res.data.result]);
               } else {
                 setDataEnd(true);
               }
               setTopLoadingState(false);
             })
-            .catch(err => {
+            .catch((err) => {
               setTopLoadingState(false);
             });
         }
@@ -189,28 +189,28 @@ const BusinessOrdersScreen = props => {
     if (!dataEnd) {
       if (assignedByMe) {
         getBusinessOrderByMe(currentPage, 5, accessToken)
-          .then(res => {
+          .then((res) => {
             if (res.data.result.length > 0) {
-              setCurrentPage(prev => prev + 1);
-              setBusinessOrders(prev => [...prev, ...res.data.result]);
+              setCurrentPage((prev) => prev + 1);
+              setBusinessOrders((prev) => [...prev, ...res.data.result]);
             }
             setDataEnd(true);
             setLoadingState(false);
           })
-          .catch(err => {
+          .catch((err) => {
             setLoadingState(false);
           });
       } else {
         getBusinessOrdersOnMe(currentPage, 5, accessToken)
-          .then(res => {
+          .then((res) => {
             if (res.data.result.length > 0) {
-              setCurrentPage(prev => prev + 1);
-              setBusinessOrders(prev => [...prev, ...res.data.result]);
+              setCurrentPage((prev) => prev + 1);
+              setBusinessOrders((prev) => [...prev, ...res.data.result]);
             }
             setDataEnd(true);
             setLoadingState(false);
           })
-          .catch(err => {
+          .catch((err) => {
             setLoadingState(false);
           });
       }
@@ -219,7 +219,7 @@ const BusinessOrdersScreen = props => {
     }
   };
 
-  const changeBusinessStatus = item => {
+  const changeBusinessStatus = (item) => {
     if (
       operateBusinessOrderDescription &&
       operateBusinessOrderDescription !== ""
@@ -228,27 +228,24 @@ const BusinessOrdersScreen = props => {
       updateBusinessStatus(
         operateBusinessOrderDescription,
         operateBusinessStatus,
-        item.documentationNo,
+        item.id,
         accessToken
       )
-        .then(res => {
+        .then((res) => {
           if (!res.data.hasError) {
-            getSingleBusinessOrder(item.documentationNo, accessToken)
-              .then(res => {
+            getSingleBusinessOrder(item.id, accessToken)
+              .then((res) => {
                 if (!res.data.hasError) {
-                  setBusinessOrders(prev => {
+                  setBusinessOrders((prev) => {
                     // setOperateBusinessLoading(false);
                     // setIsOperateModalOpen(false);
-                    const newList = prev.map(item => {
-                      if (
-                        item.documentationNo === res.data.result.documentationNo
-                      ) {
+                    const newList = prev.map((item) => {
+                      if (item.id === res.data.result.id) {
                         return res.data.result;
                       } else {
                         return item;
                       }
                     });
-                    console.log(newList);
                     toast.current.show("İş emri başarı ile güncellendi.", 1000);
                     return newList;
                   });
@@ -261,7 +258,7 @@ const BusinessOrdersScreen = props => {
                   return null;
                 }
               })
-              .catch(err => {
+              .catch((err) => {
                 // HANDLE ERROR
                 setOperateBusinessLoading(false);
                 setIsOperateModalOpen(false);
@@ -277,7 +274,7 @@ const BusinessOrdersScreen = props => {
             return null;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           // HANDLE ERROR
           setOperateBusinessLoading(false);
           setIsOperateModalOpen(false);
@@ -294,7 +291,7 @@ const BusinessOrdersScreen = props => {
     setOperateBusinessLoading(false);
   }, [businessOrders]);
 
-  const _renderBusinessStatus = color => {
+  const _renderBusinessStatus = (color) => {
     switch (color) {
       case "red":
         return 1;
@@ -302,12 +299,14 @@ const BusinessOrdersScreen = props => {
         return 2;
       case "green":
         return 3;
+      case "darkred":
+        return 4;
       default:
         break;
     }
   };
 
-  const _renderPriority = param => {
+  const _renderPriority = (param) => {
     switch (param) {
       case 0:
         return "Düşük Öncelikli İş Emri";
@@ -324,12 +323,12 @@ const BusinessOrdersScreen = props => {
     <View style={styles.container}>
       <FlatList
         data={businessOrders}
-        keyExtractor={(item, index) => `${item.documentationNo}`}
+        keyExtractor={(item, index) => `${item.id}`}
         renderItem={({ item, index }) => (
           <SezinSingleBusinessOrder
             contentContainerStyle={{
               marginBottom: 25,
-              marginTop: index === 0 ? 20 : 0
+              marginTop: index === 0 ? 20 : 0,
             }}
             place={_renderPriority(item.priorityEnum)}
             {...item}
@@ -342,14 +341,14 @@ const BusinessOrdersScreen = props => {
               setBusinessOrderActivityLoading(true);
               setIsInformationModalOpen(true);
 
-              getSingleBusinessOrderActivities(
-                item.documentationNo,
-                accessToken
-              ).then(res => {
-                console.log(res.data.result);
-                setSelectedBusinessOrderActivityForInformation(res.data.result);
-                setBusinessOrderActivityLoading(false);
-              });
+              getSingleBusinessOrderActivities(item.id, accessToken).then(
+                (res) => {
+                  setSelectedBusinessOrderActivityForInformation(
+                    res.data.result
+                  );
+                  setBusinessOrderActivityLoading(false);
+                }
+              );
             }}
             onChangeBusinessOrderStatusPressed={() => {
               setIsOperateModalOpen(true);
@@ -368,7 +367,7 @@ const BusinessOrdersScreen = props => {
               onPressLeft={() => props.navigation.toggleDrawer()}
               leftIconName="bars"
               containerStyle={{
-                paddingTop: 30
+                paddingTop: 30,
               }}
             />
             <SezinTitle text="İş Emirleri" textStyle={{}} />
@@ -402,7 +401,7 @@ const BusinessOrdersScreen = props => {
                   backgroundColor: "white",
                   alignSelf: "center",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <MaterialIndicator color={colors.blue} size={60} />
@@ -442,7 +441,7 @@ const BusinessOrdersScreen = props => {
       <GetInfoBeforeActionModal
         isModalOpen={isOperateModalOpen}
         onBackdropPress={() => setIsOperateModalOpen(false)}
-        onChangeModalText={text => setOperateBusinessOrderDescription(text)}
+        onChangeModalText={(text) => setOperateBusinessOrderDescription(text)}
         onCloseButtonPressed={() => setIsOperateModalOpen(false)}
         onApproveButtonPressed={changeBusinessStatus.bind(
           this,
@@ -456,7 +455,7 @@ const BusinessOrdersScreen = props => {
         headerText="Durum Yönetimi"
         approveButtonText="Kaydet"
         checkboxNeeded={true}
-        onChangeCheckbox={color =>
+        onChangeCheckbox={(color) =>
           setOperateBusinessStatus(_renderBusinessStatus(color))
         }
       />
@@ -469,7 +468,7 @@ const BusinessOrdersScreen = props => {
         ref={toast}
         style={{
           ...styles.toastContainerStyle,
-          backgroundColor: colors.green
+          backgroundColor: colors.green,
         }}
       />
     </View>
@@ -479,12 +478,12 @@ const BusinessOrdersScreen = props => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   badgeContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 15
+    marginTop: 15,
   },
   footerSpinnerContainer: {
     height: 100,
@@ -492,30 +491,30 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignSelf: "center",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   footerTextContainer: {
     height: 60,
     width: "100%",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   footerText: {
     fontFamily: "Airbnb-Book",
     fontSize: 15,
-    color: colors.gray
+    color: colors.gray,
   },
   toastText: {
     fontFamily: "Airbnb-Book",
     color: "white",
-    fontSize: 16
+    fontSize: 16,
   },
   toastContainerStyle: {
     paddingHorizontal: 15,
     paddingVertical: 10,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 //make this component available to the app

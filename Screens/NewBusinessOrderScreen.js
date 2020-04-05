@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import Toast from "react-native-easy-toast";
 import { colors } from "../assets/styles/colors";
@@ -24,17 +24,14 @@ import SezinDescription from "../components/Typography/SezinDescription";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getAllGroupsAction,
-  getAllUsersAction
+  getAllUsersAction,
 } from "../store/actions/ResourcesActions";
-import {
-  getNewBusinessOrderDocumentNumber,
-  createNewBusinessOrder
-} from "../services/business-order-service";
+import { createNewBusinessOrder } from "../services/business-order-service";
 
 // create a component
-const NewBusinessOrderScreen = props => {
+const NewBusinessOrderScreen = (props) => {
   const toast = useRef(null);
-  const accessToken = useSelector(state => state.AuthReducer.accessToken);
+  const accessToken = useSelector((state) => state.AuthReducer.accessToken);
   const [loadingState, setLoadingState] = useState(false);
 
   // DATA LOADING FOR INPUTS
@@ -43,8 +40,8 @@ const NewBusinessOrderScreen = props => {
   const dispatch = useDispatch();
 
   // resources for the form
-  const users = useSelector(state => state.ResourcesReducer.users);
-  const groups = useSelector(state => state.ResourcesReducer.groups);
+  const users = useSelector((state) => state.ResourcesReducer.users);
+  const groups = useSelector((state) => state.ResourcesReducer.groups);
 
   const [usersPairs, setUsersPairs] = useState(null);
   const [groupsPairs, setGroupsPairs] = useState(null);
@@ -69,7 +66,7 @@ const NewBusinessOrderScreen = props => {
   useEffect(() => {
     if (users.length) {
       setUsersPairs(
-        users.map(user => ({ label: user.showName, value: user.id }))
+        users.map((user) => ({ label: user.showName, value: user.id }))
       );
       setUsersLoadingState(false);
     }
@@ -78,9 +75,9 @@ const NewBusinessOrderScreen = props => {
   useEffect(() => {
     if (groups.length) {
       setGroupsPairs(
-        groups.map(group => ({
+        groups.map((group) => ({
           label: group.name,
-          value: group.id
+          value: group.id,
         }))
       );
       setGroupsLoadingState(false);
@@ -96,38 +93,34 @@ const NewBusinessOrderScreen = props => {
       selectedEndDate
     ) {
       setLoadingState(true);
-      getNewBusinessOrderDocumentNumber(accessToken).then(res => {
-        const docNumber = res.data.result;
-        createNewBusinessOrder(
-          accessToken,
-          selectedTitle,
-          selectedDescription,
-          selectedUsers,
-          selectedGroups,
-          selectedPriority,
-          selectedEndDate,
-          docNumber
-        )
-          .then(res => {
-            if (!res.data.hasError) {
-              props.navigation.navigate("Home", {
-                toastColor: colors.green,
-                toastText: "İş Emri Başarı İle Kaydedildi."
-              });
-              setLoadingState(false);
-            } else {
-              setLoadingState(false);
-              toast.current.show(res.data.message, 1000);
-            }
-          })
-          .catch(err => {
+      createNewBusinessOrder(
+        accessToken,
+        selectedTitle,
+        selectedDescription,
+        selectedUsers,
+        selectedGroups,
+        selectedPriority,
+        selectedEndDate
+      )
+        .then((res) => {
+          if (!res.data.hasError) {
+            props.navigation.navigate("Home", {
+              toastColor: colors.green,
+              toastText: "İş Emri Başarı İle Kaydedildi.",
+            });
             setLoadingState(false);
-            toast.current.show(
-              "Yeni iş emri iletiminde sorun meydana geldi.",
-              1000
-            );
-          });
-      });
+          } else {
+            setLoadingState(false);
+            toast.current.show(res.data.message, 1000);
+          }
+        })
+        .catch((err) => {
+          setLoadingState(false);
+          toast.current.show(
+            "Yeni iş emri iletiminde sorun meydana geldi.",
+            1000
+          );
+        });
     } else {
       toast.current.show("Tüm alanları doldurmanız gerekmektedir.", 500);
     }
@@ -159,8 +152,8 @@ const NewBusinessOrderScreen = props => {
             placeholderText="Görev Verilen Kişi"
             contentContainerStyle={{ marginTop: 30 }}
             items={usersPairs}
-            onSelectionChange={val =>
-              setSelectedUsers(val.map(item => item.value))
+            onSelectionChange={(val) =>
+              setSelectedUsers(val.map((item) => item.value))
             }
           />
 
@@ -169,8 +162,8 @@ const NewBusinessOrderScreen = props => {
             placeholderText="Personel Grubu"
             contentContainerStyle={{ marginTop: 30 }}
             items={groupsPairs}
-            onSelectionChange={val =>
-              setSelectedGroups(val.map(item => item.value))
+            onSelectionChange={(val) =>
+              setSelectedGroups(val.map((item) => item.value))
             }
           />
 
@@ -178,7 +171,7 @@ const NewBusinessOrderScreen = props => {
             style={{
               flexDirection: "row",
               flexWrap: "wrap",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <SezinPicker
@@ -187,7 +180,7 @@ const NewBusinessOrderScreen = props => {
               items={[
                 { label: "Önemli", value: "2" },
                 { label: "Normal", value: "1" },
-                { label: "Düşük", value: "0" }
+                { label: "Düşük", value: "0" },
               ]}
               onValueChange={setSelectedPriority.bind(this)}
             />
@@ -218,7 +211,7 @@ const NewBusinessOrderScreen = props => {
           ref={toast}
           style={{
             ...styles.toastContainerStyle,
-            backgroundColor: colors.red
+            backgroundColor: colors.red,
           }}
         />
       </ScrollView>
@@ -230,23 +223,23 @@ const NewBusinessOrderScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   toastText: {
     fontFamily: "Airbnb-Book",
     color: "white",
-    fontSize: 16
+    fontSize: 16,
   },
   toastContainerStyle: {
     paddingHorizontal: 15,
     paddingVertical: 10,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 NewBusinessOrderScreen.navigationOptions = {
-  header: null
+  header: null,
 };
 
 //make this component available to the app
